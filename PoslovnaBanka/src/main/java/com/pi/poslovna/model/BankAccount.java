@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity(name = "Racun")
 public class BankAccount {
@@ -25,14 +27,33 @@ public class BankAccount {
 	private boolean active;
 	
 	@Column(name = "Raspoloziva_sredstva")
-	private String money;
+	private String money; 
 	
-	//nedostaje jos identifikator za klijenta 
+	@ManyToOne
+	@Column(name = "Valuta")
+	private Currency currency;
+	
+	@OneToMany
+	@Column(name = "Banka")
+	private Bank bank;
+	
+	//PODACI O KLIJENTU
+/*	private String ime;
+	private String prezime;
+	private String naziv;
+	private int jmbg;
+	private int pib;
+	private String adresa;
+	private String mesto;
+	private CllientType type;
+	
+*/	
 	
 	public BankAccount() {
 		
 	}
 
+	
 	public Long getId() {
 		return id;
 	}
@@ -72,5 +93,23 @@ public class BankAccount {
 	public void setMoney(String money) {
 		this.money = money;
 	}
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
+	}
+
+	public Bank getBank() {
+		return bank;
+	}
+
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
+	
+	
 	
 }

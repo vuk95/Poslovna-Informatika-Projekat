@@ -1,4 +1,4 @@
-package com.pi.poslovna.clients;
+package com.pi.poslovna.model.clients;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,21 +6,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "Fizicka_lica")
-public class Individuals {
+@Entity(name = "Pravna_lica")
+public class LegalEntities {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	
-	@Column(name = "Ime" , nullable = false)
+	@Column(name = "Naziv" , nullable = false)
 	private String name;
 	
-	@Column(name = "Prezime" , nullable = false)
-	private String lastname;
+	@Column(name = "Odgovorno_lice" , nullable = false)
+	private String responsiblePerson;
 	
-	@Column(name = "JMBG" , nullable = false)
-	private int jmbg;
+	@Column(name = "Poreski_idenifikacioni_broj" , nullable = false)
+	private int PIB;
 	
 	@Column(name = "Mesto" , nullable = false)
 	private String place;
@@ -34,17 +34,24 @@ public class Individuals {
 	@Column(name = "Telefon")
 	private String phone;
 	
-	public Individuals() {
+	@Column(name = "Fax")
+	private String fax;
+	
+	public LegalEntities() {
 		
 	}
 
+	
+	
 	public Long getId() {
 		return Id;
 	}
 
+
 	public void setId(Long id) {
 		Id = id;
 	}
+
 
 	public String getName() {
 		return name;
@@ -54,20 +61,20 @@ public class Individuals {
 		this.name = name;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getResponsiblePerson() {
+		return responsiblePerson;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setResponsiblePerson(String responsiblePerson) {
+		this.responsiblePerson = responsiblePerson;
 	}
 
-	public int getJmbg() {
-		return jmbg;
+	public int getPIB() {
+		return PIB;
 	}
 
-	public void setJmbg(int jmbg) {
-		this.jmbg = jmbg;
+	public void setPIB(int pIB) {
+		PIB = pIB;
 	}
 
 	public String getPlace() {
@@ -100,6 +107,14 @@ public class Individuals {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
 	}
 	
 	
