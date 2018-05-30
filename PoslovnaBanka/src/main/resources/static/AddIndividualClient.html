@@ -1,0 +1,99 @@
+<html>
+
+<head>
+	<title>AddIndividualClient</title>
+</head>
+
+<script>
+
+$(document).ready(function(){
+	
+			$("#add").click(function(){
+				//pripremamo JSON koji cemo poslati
+				formData = JSON.stringify({
+	                ime:$("#inputForm [name='ime']").val(),
+	                prezime:$("#inputForm [name='prezime']").val(),
+	                jmbg:$("#inputForm [name='jmbg']").val(),
+	                mesto:$("#inputForm [name='mesto']").val(),
+	                adresa:$("#inputForm [name='adresa']").val(),
+	                telefon:$("#inputForm [name='telefon']").val(),
+	                email:$("#inputForm [name='email']").val(),
+	            });
+				$.ajax({
+					url: "/individual/addIndividuals",
+					type: "POST",
+					data: formData,
+					//saljemo json i ocekujemo json nazad
+					contentType: "application/json",
+					datatype: 'json',
+					success: function(data){
+						
+					
+					if(data == false){
+						alert("User with this username does not exist!");
+					}
+					else{
+						alert("You have successfuly logged in!");
+						window.location.href = "pocetna.html";
+					}
+				},
+				error: function(jqxhr,textStatus,errorThrown){
+					alert(errorThrown);
+				}
+			});
+		});	
+		});
+
+</script>
+
+
+<body>
+	
+   <h3>Dodaj novo fizicko lice: </h3>			
+	<form id="inputForm" method="post">
+	<table>
+		
+		<tr>
+			<td>Ime:</td>				
+			<td><input type="text" name="ime" id="ime"></td>
+		</tr>
+
+		<tr>
+			<td>Prezime:</td>				
+			<td><input type="text" name="prezime" id="prezime"></td>
+		</tr>
+		
+		<tr>
+			<td>JMBG:</td>				
+			<td><input type="text" name="jmbg" id="jmbg"></td>
+		</tr>
+		
+		<tr>
+			<td>Mesto:</td>				
+			<td><input type="text" name="mesto" id="mesto"></td>
+		</tr>
+
+		<tr>
+			<td>Adresa:</td>				
+			<td><input type="text" name="adresa" id="adresa"></td>
+		</tr>
+		
+		<tr>
+			<td>Telefon:</td>				
+			<td><input type="text" name="telefon" id="telefon"></td>
+		</tr>
+		
+		<tr>
+			<td>Email:</td>				
+			<td><input type="text" name="email" id="email"></td>
+		</tr>
+		
+		<tr>
+			<td><input type = "submit" value = "Add" id="add"></td>
+		</tr>		
+		
+	</table>
+	</form>
+</body>
+
+</html>

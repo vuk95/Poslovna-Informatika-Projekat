@@ -1,4 +1,4 @@
-package com.pi.poslovna.service;
+package com.pi.poslovna.service.impl;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pi.poslovna.model.users.User;
 import com.pi.poslovna.repository.UserRepository;
+import com.pi.poslovna.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
