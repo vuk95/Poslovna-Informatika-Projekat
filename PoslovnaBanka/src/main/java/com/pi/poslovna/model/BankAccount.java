@@ -29,13 +29,17 @@ public class BankAccount {
 	@Column(name = "Raspoloziva_sredstva")
 	private String money; 
 	
-	@ManyToOne
-	@Column(name = "Valuta")
-	private Currency currency;
-	
-	@OneToMany
-	@Column(name = "Banka")
-	private Bank bank;
+//  OVDE POSTOJE GRESKE!
+//	Zakomentarisani su i geteri i seteri za ova 2 polja
+//	
+//	@ManyToOne()
+//	@Column(name = "Valuta")
+//	private Currency currency;
+//	
+//	@OneToMany
+//	@Column(name = "Banka")
+//	private Bank bank;
+
 	
 	//PODACI O KLIJENTU
 /*	private String ime;
@@ -94,22 +98,21 @@ public class BankAccount {
 		this.money = money;
 	}
 
-	public Currency getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(Currency currency) {
-		this.currency = currency;
-	}
-
-	public Bank getBank() {
-		return bank;
-	}
-
-	public void setBank(Bank bank) {
-		this.bank = bank;
-	}
-	
+//	public Currency getCurrency() {
+//		return currency;
+//	}
+//
+//	public void setCurrency(Currency currency) {
+//		this.currency = currency;
+//	}
+//
+//	public Bank getBank() {
+//		return bank;
+//	}
+//
+//	public void setBank(Bank bank) {
+//		this.bank = bank;
+//	}
 	
 	
 }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+	<script src="scripts/tether.min.js"></script>
+	<script src="scripts/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css"/>
+
+	<title>Login</title>
+</head>
+<body>
+	<div class="container">
+		<div class="col-md-6">
+			<form th:action="@{/login}" method="POST">
+				<h2>Unesite svoj e-mail i lozinku</h2>
+				
+				<div th:if="${param.error}" class="alert alert-danger">
+					<h5>Pogresan e-mail ili lozinka.</h5>
+				</div>
+				
+				<div th:if="${param.logout}" class="alert alert-info">
+					<h5>Uspesno ste se izlogovali.</h5>
+				</div>
+				
+				<label for="email">Email:</label>
+				<input type="text" id="email" name="email" class="form-control input-lg" required="true" autofocus="true" />
+				<br/>
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" class="form-control input-lg" required="true"/>
+				<br/>
+				<input type="submit" value="Login" class="btn btn-lg btn-primary btn-block"/>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
