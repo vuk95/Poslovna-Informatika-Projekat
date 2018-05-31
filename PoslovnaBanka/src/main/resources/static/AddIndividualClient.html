@@ -28,13 +28,12 @@ $(document).ready(function(){
 					datatype: 'json',
 					success: function(data){
 						
-					
 					if(data == false){
-						alert("User with this username does not exist!");
+						alert("Client already exist!");
 					}
 					else{
-						alert("You have successfuly logged in!");
-						window.location.href = "pocetna.html";
+						alert("You have successfuly add client!");
+						window.location.href = "pocetna.html"; //ne postoji, trebalo bi da vrati 404
 					}
 				},
 				error: function(jqxhr,textStatus,errorThrown){
