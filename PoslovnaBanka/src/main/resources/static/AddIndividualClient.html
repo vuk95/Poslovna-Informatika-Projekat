@@ -1,11 +1,8 @@
 <html>
 
 <head>
-<script src="scripts/jquery-3.2.1.min.js"></script>
-<script src="scripts/tether.min.js"></script>
 	<title>AddIndividualClient</title>
-</head>
-
+<script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
 <script>
 
 $(document).ready(function(){
@@ -21,32 +18,30 @@ $(document).ready(function(){
 	                telefon:$("#inputForm [name='telefon']").val(),
 	                email:$("#inputForm [name='email']").val(),
 	            });
+				
+				alert("Test: " + formData);
+				
 				$.ajax({
-					url: "/individual/addIndividuals",
 					type: "POST",
-					data: formData,
-					//saljemo json i ocekujemo json nazad
+					url: "/individual/addIndividuals",
 					contentType: "application/json",
-					datatype: 'json',
-					success: function(data){
-						
-					if(data == false){
-						alert("Client already exist!");
+					dataType: 'json',
+					data: formData,
+
+					success : function(data) {
+						alert("Uradjen je add");
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						alert("AJAX ERROR: " + errorThrown);
 					}
-					else{
-						alert("You have successfuly add client!");
-						window.location.href = "pocetna.html"; //ne postoji, trebalo bi da vrati 404
-					}
-				},
-				error: function(jqxhr,textStatus,errorThrown){
-					alert(errorThrown);
-				}
+				
+				
 			});
 		});	
 		});
 
 </script>
-
+</head>
 
 <body>
 	
@@ -94,7 +89,7 @@ $(document).ready(function(){
 		</tr>		
 		
 	</table>
-	</form>
+</form>
 </body>
 
 </html>

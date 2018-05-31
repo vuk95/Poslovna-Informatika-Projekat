@@ -9,7 +9,6 @@ import com.pi.poslovna.repository.IndividualClientRepository;
 import com.pi.poslovna.service.IndividualClientService;
 
 @Service
-@Transactional
 public class IndividualClientServiceImpl implements IndividualClientService{
 
 	@Autowired
