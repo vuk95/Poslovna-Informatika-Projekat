@@ -1,14 +1,14 @@
 <html>
 
 <head>
-<script src="scripts/jquery-3.2.1.min.js"></script>
-<script src="scripts/tether.min.js"></script>
-<script src="scripts/bootstrap.min.js"></script>
-<script src="scripts/functions.js"></script>
-<link rel="stylesheet" type="text/css" href="stylesheets/design.css">
-<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
-<meta charset="UTF-8">
-<title>IndividualClients</title>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+	<script src="scripts/tether.min.js"></script>
+	<script src="scripts/bootstrap.min.js"></script>
+	<script src="scripts/functions.js"></script>
+	<link rel="stylesheet" type="text/css" href="stylesheets/design.css">
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<title>IndividualClients</title>
 <script>
 
 $(document).ready(function(){
@@ -22,6 +22,11 @@ $(document).ready(function(){
 							+ + "<td class=\"id\">" + data[i].id + "</td>"
 							+ "<td class=\"name\">" + data[i].name + "</td>"
 							+ "<td class=\"lastname\">" + data[i].lastname + "</td>"
+							+ "<td class=\"jmbg\">" + data[i].jmbg + "</td>"
+							+ "<td class=\"place\">" + data[i].place + "</td>"
+							+ "<td class=\"address\">" + data[i].address + "</td>"
+							+ "<td class=\"email\">" + data[i].email + "</td>"
+							+ "<td class=\"phone\">" + data[i].phone + "</td>"
 						+ "</tr>"
 					$("#dataTable").append(newRow)
 				}
@@ -53,7 +58,7 @@ $(document).ready(function(){
             place:$("#inputForm [name='place']").val(),
             address:$("#inputForm [name='address']").val(),
             email:$("#inputForm [name='email']").val(),
-            telephone:$("#inputForm [name='telephone']").val(),
+            phone:$("#inputForm [name='telephone']").val(),
         });
 		$.ajax({
 			url: "/individual",
@@ -65,9 +70,13 @@ $(document).ready(function(){
 			success: function(data) {
 				newRow = 
 						"<tr>"
-							+ "<td class=\"id\">" + data.id + "</td>"
 							+ "<td class=\"name\">" + data.name + "</td>"
 							+ "<td class=\"lastname\">" + data.lastname + "</td>"
+							+ "<td class=\"jmbg\">" + data.jmbg + "</td>"
+							+ "<td class=\"place\">" + data.place + "</td>"
+							+ "<td class=\"address\">" + data.address + "</td>"
+							+ "<td class=\"email\">" + data.email + "</td>"
+							+ "<td class=\"phone\">" + data.phone + "</td>"
 						+ "</tr>"
 				$("#dataTable").append(newRow)
 			  }
@@ -109,11 +118,13 @@ text-align:center;
 		
 		<table id="dataTable" class="table">
 			<tr class="header">
-				<th>Id</th>
 				<th>Ime</th>
 				<th>Prezime</th>
-				<th width=20px></th>
-				<th width=20px></th>
+				<th>JMBG</th>
+				<th>Mesto</th>
+				<th>Adresa</th>
+				<th>Email</th>
+				<th>Telefon</th>
 			</tr>
 		</table>
 
@@ -124,7 +135,7 @@ text-align:center;
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">New individual</h5>
+		        <h5 class="modal-title" id="exampleModalLabel">Novo fizicko lice</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
