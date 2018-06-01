@@ -1,5 +1,7 @@
 package com.pi.poslovna.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,12 @@ public class IndividualClientServiceImpl implements IndividualClientService{
 	@Override
 	public Individuals save(Individuals i) {
 		return repository.save(i);
+	}
+
+	@Override
+	public List<Individuals> findAll() {
+		// TODO Auto-generated method stub
+		return repository.findAll();
 	}
 	
 	

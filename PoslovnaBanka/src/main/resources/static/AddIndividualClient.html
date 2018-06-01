@@ -1,95 +1,129 @@
 <html>
 
 <head>
-	<title>AddIndividualClient</title>
-<script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+<script src="scripts/tether.min.js"></script>
+<script src="scripts/bootstrap.min.js"></script>
+<script src="scripts/functions.js"></script>
+<link rel="stylesheet" type="text/css" href="stylesheets/design.css">
+<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+<meta charset="UTF-8">
+<title>IndividualClients</title>
 <script>
 
 $(document).ready(function(){
-	
-			$("#add").click(function(){
-				//pripremamo JSON koji cemo poslati
-				formData = JSON.stringify({
-	                ime:$("#inputForm [name='ime']").val(),
-	                prezime:$("#inputForm [name='prezime']").val(),
-	                jmbg:$("#inputForm [name='jmbg']").val(),
-	                mesto:$("#inputForm [name='mesto']").val(),
-	                adresa:$("#inputForm [name='adresa']").val(),
-	                telefon:$("#inputForm [name='telefon']").val(),
-	                email:$("#inputForm [name='email']").val(),
-	            });
-				
-				alert("Test: " + formData);
-				
-				$.ajax({
-					type: "POST",
-					url: "/individual/addIndividuals",
-					contentType: "application/json",
-					dataType: 'json',
-					data: formData,
-
-					success : function(data) {
-						alert("Uradjen je add");
-					},
-					error : function(XMLHttpRequest, textStatus, errorThrown) {
-						alert("AJAX ERROR: " + errorThrown);
-					}
-				
-				
+	$.ajax({
+		url : "http://localhost:8083/individual/getIndividuals"
+	}).then(
+			function(data) {
+				for (i = 0; i < data.length; i++) {
+					newRow = 
+						"<tr>"
+							+ "<td class=\"name\">" + data[i].name + "</td>"
+							+ "<td class=\"lastname\">" + data[i].lastname + "</td>"
+						+ "</tr>"
+					$("#dataTable").append(newRow)
+				}
 			});
-		});	
-		});
+		
+	$("#add").click(function(){
+		//pripremamo JSON koji cemo poslati
+		formData = JSON.stringify({
+            name:$("#inputForm [name='name']").val(),
+            lastname:$("#inputForm [name='lastname']").val(),
+            jmbg:$("#inputForm [name='jmbg']").val(),
+            place:$("#inputForm [name='place']").val(),
+            address:$("#inputForm [name='address']").val(),
+            email:$("#inputForm [name='email']").val(),
+            telephone:$("#inputForm [name='telephone']").val(),
+        });
+		$.ajax({
+			url: "/individual",
+			type: "POST",
+			data: formData,
+			//saljemo json i ocekujemo json nazad
+			contentType: "application/json",
+			datatype: 'json',
+			success: function(data) {
+				newRow = 
+						"<tr>"
+							+ "<td class=\"name\">" + data.name + "</td>"
+							+ "<td class=\"lastname\">" + data.lastname + "</td>"
+						+ "</tr>"
+				$("#dataTable").append(newRow)
+			  }
+			});
+		$('#inputModal').modal('toggle');
+	});
+			
+});
 
 </script>
 </head>
 
 <body>
+	<ul>
+	<li class="group-start"><a href="#inputModal" data-toggle="modal" data-target="#inputModal"><img src="images/add.gif" /></a></li>
+	</ul>
 	
-   <h3>Dodaj novo fizicko lice: </h3>			
-	<form id="inputForm" method="post">
-	<table>
-		
-		<tr>
-			<td>Ime:</td>				
-			<td><input type="text" name="ime" id="ime"></td>
-		</tr>
-
-		<tr>
-			<td>Prezime:</td>				
-			<td><input type="text" name="prezime" id="prezime"></td>
-		</tr>
-		
-		<tr>
-			<td>JMBG:</td>				
-			<td><input type="text" name="jmbg" id="jmbg"></td>
-		</tr>
-		
-		<tr>
-			<td>Mesto:</td>				
-			<td><input type="text" name="mesto" id="mesto"></td>
-		</tr>
-
-		<tr>
-			<td>Adresa:</td>				
-			<td><input type="text" name="adresa" id="adresa"></td>
-		</tr>
-		
-		<tr>
-			<td>Telefon:</td>				
-			<td><input type="text" name="telefon" id="telefon"></td>
-		</tr>
-		
-		<tr>
-			<td>Email:</td>				
-			<td><input type="text" name="email" id="email"></td>
-		</tr>
-		
-		<tr>
-			<td><button type="button" class="btn btn-primary" id="add">Potvrda</button></td>
-		</tr>		
-		
-	</table>
-</form>
+	<h1>Individuals</h1>
+		<table id="dataTable" class="table">
+			<tr class="header">
+				<th>Ime</th>
+				<th>Prezime</th>
+			</tr>
+		</table>
+	
+	<div class="modal fade" id="inputModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">New individual</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form id="inputForm">
+		      <div class="modal-body">
+					<input type="hidden" name="id" id="id" />
+				<p>
+					<label for="ime">Ime</label> <input type="text" name="name"
+						id="ime"/>
+				</p>
+				<p>
+					<label for="prezime">Prezime</label> <input type="text" name="lastname"
+						id="prezime" />
+				</p>
+				<p>
+					<label for="jmbg">JMBG</label> <input type="text" name="jmbg"
+						id="jmbg" />
+				</p>
+				<p>
+					<label for="mesto">Mesto</label> <input type="text" name="place"
+						id="mesto" />
+				</p>
+				<p>
+					<label for="adresa">Adresa</label> <input type="text" name="address"
+						id="adresa" />
+				</p>		
+				<p>
+					<label for="email">Email</label> <input type="email" name="email"
+						id="email" />
+				</p>
+				<p>
+					<label for="telefon">Telefon</label> <input type="text" name="telephone"
+						id="telefon" />
+				</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+		        <button type="button" class="btn btn-primary" id="add">Potvrda</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+	
 </body>
 
 </html>
