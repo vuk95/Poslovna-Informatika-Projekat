@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<script src="scripts/jquery-3.2.1.min.js"></script>
+<script src="scripts/jquery-3.2.1.min.js"></script>
 <script src="scripts/tether.min.js"></script>
 <script src="scripts/bootstrap.min.js"></script>
 <script src="scripts/functions.js"></script>
@@ -19,6 +19,7 @@ $(document).ready(function(){
 				for (i = 0; i < data.length; i++) {
 					newRow = 
 						"<tr>"
+							+ + "<td class=\"id\">" + data[i].id + "</td>"
 							+ "<td class=\"name\">" + data[i].name + "</td>"
 							+ "<td class=\"lastname\">" + data[i].lastname + "</td>"
 						+ "</tr>"
@@ -26,6 +27,23 @@ $(document).ready(function(){
 				}
 			});
 		
+	$("#first").click(function(){
+		goFirst()
+	 });
+	
+	$("#last").click(function(){
+		goLast()
+	 });
+	
+	$("#next").click(function(){
+		goNext()
+	 });
+	
+	$("#prev").click(function(){
+		goPrevious()
+	 });
+	
+	
 	$("#add").click(function(){
 		//pripremamo JSON koji cemo poslati
 		formData = JSON.stringify({
@@ -47,6 +65,7 @@ $(document).ready(function(){
 			success: function(data) {
 				newRow = 
 						"<tr>"
+							+ "<td class=\"id\">" + data.id + "</td>"
 							+ "<td class=\"name\">" + data.name + "</td>"
 							+ "<td class=\"lastname\">" + data.lastname + "</td>"
 						+ "</tr>"
@@ -62,17 +81,44 @@ $(document).ready(function(){
 </head>
 
 <body>
-	<ul>
-	<li class="group-start"><a href="#inputModal" data-toggle="modal" data-target="#inputModal"><img src="images/add.gif" /></a></li>
-	</ul>
 	
-	<h1>Individuals</h1>
+	
+<style>
+
+h1 {
+
+text-align:center;
+
+}
+
+</style>
+
+<div class="formContainer">
+		<ul>
+			<li><a href="#searchModal" data-toggle="modal" data-target="#searchModal" id="search"><img src="images/search.gif" /></a></li>
+			<li><a href="#" id="refresh"><img src="images/refresh.gif" /></a></li>
+			<li class="group-start"><a id="first"><img src="images/first.gif" /></a></li>
+			<li><a id="prev"><img src="images/prev.gif" /></a></li>
+			<li><a id="next"><img src="images/next.gif" /></a></li>
+			<li><a id="last"><img src="images/last.gif" /></a></li>
+			<li class="group-start"><a href="#inputModal" data-toggle="modal" data-target="#inputModal"><img src="images/add.gif" /></a></li>
+			<li><a id="nextform"><img src="images/nextform.gif" /></a></li>
+		</ul>
+
+		<h1>Fizicka lica: </h1>
+		
 		<table id="dataTable" class="table">
 			<tr class="header">
+				<th>Id</th>
 				<th>Ime</th>
 				<th>Prezime</th>
+				<th width=20px></th>
+				<th width=20px></th>
 			</tr>
 		</table>
+
+</div>
+	
 	
 	<div class="modal fade" id="inputModal" tabindex="-1" role="dialog">
 		  <div class="modal-dialog" role="document">
