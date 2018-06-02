@@ -27,6 +27,10 @@ $(document).ready(function(){
 							+ "<td class=\"address\">" + data[i].address + "</td>"
 							+ "<td class=\"email\">" + data[i].email + "</td>"
 							+ "<td class=\"phone\">" + data[i].phone + "</td>"
+							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#bankAccountModal\" href='/api/countries/" + data[i].id + "'>" 
+							+ "<img src='images/create.png'/></a></td>"
+							+ "<td><a class=\"remove\" href='/api/countries/" + data[i].id + "'>" 
+							+ "<img src='images/remove.gif'/></a></td>"
 						+ "</tr>"
 					$("#dataTable").append(newRow)
 				}
@@ -77,6 +81,7 @@ $(document).ready(function(){
 							+ "<td class=\"address\">" + data.address + "</td>"
 							+ "<td class=\"email\">" + data.email + "</td>"
 							+ "<td class=\"phone\">" + data.phone + "</td>"
+							
 						+ "</tr>"
 				$("#dataTable").append(newRow)
 			  },
@@ -100,7 +105,7 @@ $(document).on("click", "tr", function(event) {
 	
 <div class="formContainer">
 		<ul>
-			<li><a href="#searchModal" data-toggle="modal" data-target="#searchModal" id="search"><img src="images/search.gif" /></a></li>
+			<li><a href="#searchModal" data-toggle="modal" data-target="#searchModal" id="search"><img src="images/search1.png" /></a></li>
 			<li><a href="#" id="refresh"><img src="images/refresh.gif" /></a></li>
 			<li class="group-start"><a id="first"><img src="images/first.gif" /></a></li>
 			<li><a id="prev"><img src="images/prev.gif" /></a></li>
@@ -121,10 +126,54 @@ $(document).on("click", "tr", function(event) {
 				<th>Adresa</th>
 				<th>Email</th>
 				<th>Telefon</th>
+				<th width=20px></th>
+				<th width=20px></th>
 			</tr>
 		</table>
 
 </div>
+	
+	<!-- Modalni dijalog za otvaranje racuna klijenta-->
+		<div class="modal" id="bankAccountModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Racun:</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form id="bankAccountForm">
+		      <div class="modal-body">
+					<input type="hidden" name="id" id="id" />
+				<p>
+					<label for="oznaka">Broj racuna:</label> <input type="text" name="code"
+						id="oznaka" />
+				</p>
+				<p>
+					<label for="naziv">Datum otvaranja racuna:</label> <input type="text" name="name"
+						id="naziv" />
+				</p>
+				
+				<p>
+					<label for="naziv">Raspoloziva sredstva:</label> <input type="text" name="name"
+						id="naziv" />
+				</p>
+				
+				<p>
+					<label for="naziv">Vazeci:</label> <input  type="checkbox" name="vazeci" value="true"  disabled="disabled" checked="checked"/>
+				</p>
+						
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+		        <button type="button" class="btn btn-primary" id="addBankAcount">Potvrda</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+	
 	
 	
 	<div class="modal fade" id="inputModal" tabindex="-1" role="dialog">
