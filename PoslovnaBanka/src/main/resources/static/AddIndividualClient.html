@@ -79,6 +79,9 @@ $(document).ready(function(){
 							+ "<td class=\"phone\">" + data.phone + "</td>"
 						+ "</tr>"
 				$("#dataTable").append(newRow)
+			  },
+			  error: function(data) {
+				  alert('Nevalidan unos!')
 			  }
 			});
 		$('#inputModal').modal('toggle');
@@ -91,17 +94,6 @@ $(document).ready(function(){
 
 <body>
 	
-	
-<style>
-
-h1 {
-
-text-align:center;
-
-}
-
-</style>
-
 <div class="formContainer">
 		<ul>
 			<li><a href="#searchModal" data-toggle="modal" data-target="#searchModal" id="search"><img src="images/search.gif" /></a></li>
@@ -110,11 +102,11 @@ text-align:center;
 			<li><a id="prev"><img src="images/prev.gif" /></a></li>
 			<li><a id="next"><img src="images/next.gif" /></a></li>
 			<li><a id="last"><img src="images/last.gif" /></a></li>
-			<li class="group-start"><a href="#inputModal" data-toggle="modal" data-target="#inputModal"><img src="images/add.gif" /></a></li>
+			<li class="group-start"><a href="#inputModal" data-toggle="modal" data-target="#inputModal" data-toggle="tooltip" title = "Registruj fizicko lice"><img src="images/add.gif" /></a></li>
 			<li><a id="nextform"><img src="images/nextform.gif" /></a></li>
 		</ul>
 
-		<h1>Fizicka lica: </h1>
+		<h1>Registrovana fizička lica: </h1>
 		
 		<table id="dataTable" class="table">
 			<tr class="header">
@@ -152,7 +144,7 @@ text-align:center;
 						id="prezime" />
 				</p>
 				<p>
-					<label for="jmbg">JMBG</label> <input type="text" name="jmbg"
+					<label for="jmbg">JMBG</label> <input type="number" name="jmbg"
 						id="jmbg" />
 				</p>
 				<p>
@@ -168,7 +160,7 @@ text-align:center;
 						id="email" />
 				</p>
 				<p>
-					<label for="telefon">Telefon</label> <input type="text" name="telephone"
+					<label for="telefon">Telefon</label> <input type="number" name="telephone"
 						id="telefon" />
 				</p>
 		      </div>

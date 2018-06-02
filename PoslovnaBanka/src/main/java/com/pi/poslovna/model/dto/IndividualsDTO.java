@@ -1,10 +1,12 @@
 package com.pi.poslovna.model.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
 
 public class IndividualsDTO {
 	
@@ -15,7 +17,8 @@ public class IndividualsDTO {
 	private String lastname;
 	@NotNull
 	@Size(min=13, max=13, message="JMBG mora imati tacno 13 karaktera")
-	private int jmbg;
+	@Pattern(regexp="^(0|[1-9][0-9]*)$")
+	private String jmbg;
 	@NotEmpty
 	private String place;
 	@NotEmpty
@@ -44,10 +47,10 @@ public class IndividualsDTO {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-	public int getJmbg() {
+	public String getJmbg() {
 		return jmbg;
 	}
-	public void setJmbg(int jmbg) {
+	public void setJmbg(String jmbg) {
 		this.jmbg = jmbg;
 	}
 	public String getPlace() {
@@ -75,7 +78,7 @@ public class IndividualsDTO {
 		this.phone = phone;
 	}
 	
-	public IndividualsDTO(String name, String lastname, int jmbg, String place, String address, String email,
+	public IndividualsDTO(String name, String lastname, String jmbg, String place, String address, String email,
 			String phone) {
 		
 		this.name = name;

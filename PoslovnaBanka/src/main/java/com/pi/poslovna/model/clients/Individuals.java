@@ -13,25 +13,25 @@ public class Individuals {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	
-	@Column(name = "Ime" , nullable = false)
+	@Column(name = "Ime", columnDefinition="VARCHAR(40)")
 	private String name;
 	
-	@Column(name = "Prezime" , nullable = false)
+	@Column(name = "Prezime", columnDefinition="VARCHAR(40)")
 	private String lastname;
 	
-	@Column(name = "JMBG" , nullable = false)
-	private int jmbg;
+	@Column(name = "JMBG")
+	private String jmbg;
 	
-	@Column(name = "Mesto" , nullable = false)
+	@Column(name = "Mesto", columnDefinition="VARCHAR(40)")
 	private String place;
 	
-	@Column(name = "Adresa" , nullable = false)
+	@Column(name = "Adresa", columnDefinition="VARCHAR(40)")
 	private String address;
 	
-	@Column(name = "Email")
+	@Column(name = "Email", columnDefinition="VARCHAR(40)")
 	private String email;
 	
-	@Column(name = "Telefon")
+	@Column(name = "Telefon", columnDefinition="VARCHAR(40)")
 	private String phone;
 	
 	public Individuals() {
@@ -62,11 +62,11 @@ public class Individuals {
 		this.lastname = lastname;
 	}
 
-	public int getJmbg() {
+	public String getJmbg() {
 		return jmbg;
 	}
 
-	public void setJmbg(int jmbg) {
+	public void setJmbg(String jmbg) {
 		this.jmbg = jmbg;
 	}
 
