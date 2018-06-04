@@ -63,6 +63,7 @@ $(document).ready(function(){
 		ind = index+1;
 		
 		formData = JSON.stringify({
+			id:$("#updateForm [name='id']").val(),
 			name:$("#inputForm [name='name']").val(),
             lastname:$("#inputForm [name='lastname']").val(),
             jmbg:$("#inputForm [name='jmbg']").val(),
@@ -228,46 +229,7 @@ $(document).on("click", ".remove", function(event){
 
 </div>
 	
-	<!-- Modalni dijalog za otvaranje racuna klijenta-->
-		<div class="modal" id="bankAccountModal" tabindex="-1" role="dialog">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Racun:</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <form id="bankAccountForm">
-		      <div class="modal-body">
-					<input type="hidden" name="id" id="id" />
-				<p>
-					<label for="oznaka">Broj racuna:</label> <input type="text" name="code"
-						id="oznaka" />
-				</p>
-				<p>
-					<label for="naziv">Datum otvaranja racuna:</label> <input type="text" name="name"
-						id="naziv" />
-				</p>
-				
-				<p>
-					<label for="naziv">Raspoloziva sredstva:</label> <input type="text" name="name"
-						id="naziv" />
-				</p>
-				
-				<p>
-					<label for="naziv">Vazeci:</label> <input  type="checkbox" name="vazeci" value="true"  disabled="disabled" checked="checked"/>
-				</p>
-						
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
-		        <button type="button" class="btn btn-primary" id="addBankAcount">Potvrda</button>
-		      </div>
-		      </form>
-		    </div>
-		  </div>
-		</div>
+	
 	
 	
 	<!-- Modalni dijalog za update -->

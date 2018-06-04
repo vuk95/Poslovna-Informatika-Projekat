@@ -41,6 +41,18 @@ public class IndividualClientController {
 		return new ResponseEntity<>(toIndividualsDTO.convert(individuals), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/{id}" ,method = RequestMethod.GET)
+	public ResponseEntity<IndividualsDTO> getIndividual(@PathVariable Long id) {
+		
+		Individuals person = clientService.findOne(id);
+		
+		if(person == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} 
+		
+		return new ResponseEntity<>(toIndividualsDTO.convert(person),HttpStatus.OK);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<?> addIndividuals(@Validated @RequestBody IndividualsDTO individualDTO, Errors errors){
 		
@@ -53,28 +65,29 @@ public class IndividualClientController {
 	}
 	
 	@RequestMapping(value = "/{id}" , method = RequestMethod.DELETE)
-	public ResponseEntity<Individuals> deleteIndividuals(@PathVariable Long id) {
+	public ResponseEntity<IndividualsDTO> deleteIndividuals(@PathVariable Long id) {
 		
 		Individuals deletedIndiviual = clientService.delete(id); 
 		
-		return new ResponseEntity<>(deletedIndiviual,HttpStatus.OK);
+		return new ResponseEntity<>(toIndividualsDTO.convert(deletedIndiviual),HttpStatus.OK);
 	}
 	
-	public ResponseEntity<Individuals> updateIndividuals(@RequestBody Individuals individual) {
+	@RequestMapping(method = RequestMethod.PUT , consumes="application/json" )
+	public ResponseEntity<IndividualsDTO> updateIndividuals(@RequestBody IndividualsDTO individualDTO) {
 		
-		Individuals persons = clientService.findOne(individual.getId());
+		Individuals persons = clientService.findOne(toIndividuals.convert(individualDTO).getId());
 		
-		persons.setName(individual.getName());
-		persons.setLastname(individual.getLastname());
-		persons.setJmbg(individual.getJmbg());
-		persons.setAddress(individual.getAddress());
-		persons.setPlace(individual.getPlace());
-		persons.setEmail(individual.getEmail());
-		persons.setPhone(individual.getPhone());
+		persons.setName(toIndividuals.convert(individualDTO).getName());
+		persons.setLastname(toIndividuals.convert(individualDTO).getLastname());
+		persons.setJmbg(toIndividuals.convert(individualDTO).getJmbg());
+		persons.setAddress(toIndividuals.convert(individualDTO).getAddress());
+		persons.setPlace(toIndividuals.convert(individualDTO).getPlace());
+		persons.setEmail(toIndividuals.convert(individualDTO).getEmail());
+		persons.setPhone(toIndividuals.convert(individualDTO).getPhone());
 		
 		clientService.save(persons);
 		
-		return new ResponseEntity<>(persons,HttpStatus.OK);
+		return new ResponseEntity<>(toIndividualsDTO.convert(persons),HttpStatus.OK);
 	} 
 }
 
