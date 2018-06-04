@@ -10,6 +10,7 @@ import com.pi.poslovna.model.clients.Individuals;
 import com.pi.poslovna.repository.IndividualClientRepository;
 import com.pi.poslovna.service.IndividualClientService;
 
+@Transactional
 @Service
 public class IndividualClientServiceImpl implements IndividualClientService{
 
@@ -22,10 +23,32 @@ public class IndividualClientServiceImpl implements IndividualClientService{
 	}
 
 	@Override
+	public Individuals findOne(Long id) {
+		return repository.findOne(id);
+	}
+	
+	
+	@Override
 	public List<Individuals> findAll() {
-		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
+
+	@Override
+	public Individuals delete(Long id) {
+		
+	Individuals individual = repository.findOne(id);
+	
+	if(individual == null) {
+		
+		throw new IllegalArgumentException("Tried to delete"
+				+ "non-existant person");
+
+	}
+		repository.delete(individual);
+		
+		return individual;
+	}
+
 	
 	
 

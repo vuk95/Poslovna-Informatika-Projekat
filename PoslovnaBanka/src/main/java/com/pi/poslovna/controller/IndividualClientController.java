@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,4 +51,30 @@ public class IndividualClientController {
 		Individuals newIndividual = clientService.save(toIndividuals.convert(individualDTO));
 		return new ResponseEntity<>(toIndividualsDTO.convert(newIndividual), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/{id}" , method = RequestMethod.DELETE)
+	public ResponseEntity<Individuals> deleteIndividuals(@PathVariable Long id) {
+		
+		Individuals deletedIndiviual = clientService.delete(id); 
+		
+		return new ResponseEntity<>(deletedIndiviual,HttpStatus.OK);
+	}
+	
+	public ResponseEntity<Individuals> updateIndividuals(@RequestBody Individuals individual) {
+		
+		Individuals persons = clientService.findOne(individual.getId());
+		
+		persons.setName(individual.getName());
+		persons.setLastname(individual.getLastname());
+		persons.setJmbg(individual.getJmbg());
+		persons.setAddress(individual.getAddress());
+		persons.setPlace(individual.getPlace());
+		persons.setEmail(individual.getEmail());
+		persons.setPhone(individual.getPhone());
+		
+		clientService.save(persons);
+		
+		return new ResponseEntity<>(persons,HttpStatus.OK);
+	} 
 }
+

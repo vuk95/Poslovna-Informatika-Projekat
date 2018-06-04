@@ -27,10 +27,12 @@ $(document).ready(function(){
 							+ "<td class=\"address\">" + data[i].address + "</td>"
 							+ "<td class=\"email\">" + data[i].email + "</td>"
 							+ "<td class=\"phone\">" + data[i].phone + "</td>"
-							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#bankAccountModal\" href='/api/countries/" + data[i].id + "'>" 
-							+ "<img src='images/create.png'/></a></td>"
-							+ "<td><a class=\"remove\" href='/api/countries/" + data[i].id + "'>" 
+							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/individual/" + data[i].id + "'>" 
+							+ "<img src='images/edit.gif'/></a></td>"
+							+ "<td><a class=\"remove\" href='/individual/" + data[i].id + "'>" 
 							+ "<img src='images/remove.gif'/></a></td>"
+							+ "<td><a class=\"create\" data-toggle=\"modal\" data-target=\"#bankAccountModal\" href='/api/countries/" + data[i].id + "'>" 
+							+ "<img src='images/create.png'/></a></td>"
 						+ "</tr>"
 					$("#dataTable").append(newRow)
 				}
@@ -51,6 +53,51 @@ $(document).ready(function(){
 	$("#prev").click(function(){
 		goPrevious()
 	 });
+	
+	$("#update").click(function(event){
+		//pripremamo JSON koji cemo poslati
+		event.preventDefault(); 
+		tr_parent = $(this).closest("tr")
+		highlighted = $(".highlighted");
+		index =  $("tr").index(highlighted);
+		ind = index+1;
+		
+		formData = JSON.stringify({
+			name:$("#inputForm [name='name']").val(),
+            lastname:$("#inputForm [name='lastname']").val(),
+            jmbg:$("#inputForm [name='jmbg']").val(),
+            place:$("#inputForm [name='place']").val(),
+            address:$("#inputForm [name='address']").val(),
+            email:$("#inputForm [name='email']").val(),
+            phone:$("#inputForm [name='telephone']").val(),
+        });
+		$.ajax({
+			url: "http://localhost:8083/individual",
+			type: "PUT",
+			data: formData,
+			//saljemo json i ocekujemo json nazad
+			contentType: "application/json",
+			datatype: 'json',
+			success: function(data) {
+				var setter = $("tr:nth-child("+ ind +") td:nth-child(1)").text();
+				var setter2 = $("tr:nth-child("+ ind +") td:nth-child(2)").text();
+				var setter3 = $("tr:nth-child("+ ind +") td:nth-child(3)").text();
+				var setter4 = $("tr:nth-child("+ ind +") td:nth-child(4)").text();
+				var setter5 = $("tr:nth-child("+ ind +") td:nth-child(5)").text();
+				var setter6 = $("tr:nth-child("+ ind +") td:nth-child(6)").text();
+				var setter7 = $("tr:nth-child("+ ind +") td:nth-child(7)").text();
+				
+				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='name']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(2)").text($("#updateForm [name='lastname']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='jmbg']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='place']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='address']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='email']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='telephone']").val());
+			  }
+			});
+		$('#updateModal').modal('toggle');
+	});
 	
 	
 	$("#add").click(function(){
@@ -98,6 +145,53 @@ $(document).on("click", "tr", function(event) {
 	highlightRow(this)
 });
 
+$(document).on("click", ".edit", function(event){
+	//ne salji get zahtev
+		event.preventDefault(); 
+	
+		var url = $(this).attr("href")
+		//red koji se treba izbrisati ako je brisanje na serveru bilo uspesno
+		$.ajax({
+        	url: url,
+        	success: function(data){
+        		//ukloni i na strani 
+				$("#updateModal").modal('show');
+				$("#updateForm [name='id']").val(data.id);
+				$("#updateForm [name='name']").val(data.name);
+				$("#updateForm [name='lastname']").val(data.lastname);
+				$("#updateForm [name='jmbg']").val(data.jmbg);
+				$("#updateForm [name='place']").val(data.place);
+				$("#updateForm [name='address']").val(data.address);
+				$("#updateForm [name='email']").val(data.email);
+				$("#updateForm [name='telephone']").val(data.phone);
+	        }
+		});
+});
+
+
+
+$(document).on("click", ".remove", function(event){
+	//ne salji get zahtev
+	event.preventDefault(); 
+	
+	var confirmed = confirm("Da li ste sigurni da zelite da obrišete?");
+	if(confirmed){
+	
+		var url = $(this).attr("href")
+		//red koji se treba izbrisati ako je brisanje na serveru bilo uspesno
+		tr_parent = $(this).closest("tr")
+		$.ajax({
+        	url: url,
+        	type: "DELETE",
+        	success: function(){
+        		//ukloni i na strani 
+				tr_parent.remove()
+	        }
+		});
+	}
+});
+
+
 </script>
 </head>
 
@@ -126,6 +220,7 @@ $(document).on("click", "tr", function(event) {
 				<th>Adresa</th>
 				<th>Email</th>
 				<th>Telefon</th>
+				<th width=20px></th>
 				<th width=20px></th>
 				<th width=20px></th>
 			</tr>
@@ -174,6 +269,59 @@ $(document).on("click", "tr", function(event) {
 		  </div>
 		</div>
 	
+	
+	<!-- Modalni dijalog za update -->
+		<div class="modal" id="updateModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Izmeni državu</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form id="updateForm">
+		      <div class="modal-body">
+					<input type="hidden" name="id" id="id" />
+				<p>
+					<label for="ime">Ime</label> <input type="text" name="name"
+						id="ime"/>
+				</p>
+				<p>
+					<label for="prezime">Prezime</label> <input type="text" name="lastname"
+						id="prezime" />
+				</p>
+				<p>
+					<label for="jmbg">JMBG</label> <input type="number" name="jmbg"
+						id="jmbg" />
+				</p>
+				<p>
+					<label for="mesto">Mesto</label> <input type="text" name="place"
+						id="mesto" />
+				</p>
+				<p>
+					<label for="adresa">Adresa</label> <input type="text" name="address"
+						id="adresa" />
+				</p>		
+				<p>
+					<label for="email">Email</label> <input type="email" name="email"
+						id="email" />
+				</p>
+				<p>
+					<label for="telefon">Telefon</label> <input type="number" name="telephone"
+						id="telefon" />
+				</p>
+						
+		      </div>
+		      
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+		        <button type="button" class="btn btn-primary" id="update">Potvrda</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
 	
 	
 	<div class="modal fade" id="inputModal" tabindex="-1" role="dialog">
