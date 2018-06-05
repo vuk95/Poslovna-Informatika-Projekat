@@ -54,6 +54,10 @@ $(document).ready(function(){
 		goPrevious()
 	 });
 	
+	$("#refresh").click(function(){
+		location.reload();
+	 });
+	
 	$("#update").click(function(event){
 		//pripremamo JSON koji cemo poslati
 		event.preventDefault(); 
@@ -139,8 +143,55 @@ $(document).ready(function(){
 			});
 		$('#inputModal').modal('toggle');
 	});
-			
-});
+		
+ /*	$("#find").click(function(){
+		//pripremamo JSON koji cemo poslati
+		var data = {}
+		data["name"] = $("#searchForm [name='name']").val();
+		data["lastname"] = $("#searchForm [name='lastname']").val();
+		data["jmbg"] = $("#searchForm [name='jmbg']").val();
+		data["place"] = $("#searchForm [name='place']").val();
+		data["address"] = $("#searchForm [name='address']").val();
+		data["email"] = $("#searchForm [name='email']").val();
+		data["phone"] = $("#searchForm [name='telephone']").val();
+		
+		$.ajax({
+			url: "/individual/findIndividuals",
+			type: "GET",
+			data: data,
+			//saljemo json i ocekujemo json nazad
+			contentType: "application/json",
+			datatype: 'json',
+			success: function(data) {
+				
+				$("#dataTable tr:gt(0)").remove();
+				
+				for (i = 0; i < data.length; i++) {
+					newRow = 
+						"<tr>"
+							+ "<td class=\"name\">" + data[i].name + "</td>"
+							+ "<td class=\"lastname\">" + data[i].lastname + "</td>"
+							+ "<td class=\"jmbg\">" + data[i].jmbg + "</td>"
+							+ "<td class=\"place\">" + data[i].place + "</td>"
+							+ "<td class=\"address\">" + data[i].address + "</td>"
+							+ "<td class=\"email\">" + data[i].email + "</td>"
+							+ "<td class=\"phone\">" + data[i].phone + "</td>"
+							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/individual/" + data[i].id + "'>" 
+							+ "<img src='images/edit.gif'/></a></td>"
+							+ "<td><a class=\"remove\" href='/individual/" + data[i].id + "'>" 
+							+ "<img src='images/remove.gif'/></a></td>"
+						+ "</tr>"
+						
+						$("#dataTable").append(newRow);
+					
+				}
+				
+			}
+		});
+		$('#searchModal').modal('toggle');
+	});
+ */
+ });
 
 $(document).on("click", "tr", function(event) {
 	highlightRow(this)
@@ -192,6 +243,25 @@ $(document).on("click", ".remove", function(event){
 	}
 });
 
+function sync(item){
+    ime = item.find(".name").html()
+    prezime = item.find(".lastname").html()
+    jmbg = item.find(".jmbg").html()
+    mesto = item.find(".place").html()
+    adresa = item.find(".address").html()
+    email = item.find(".email").html()
+    telefon = item.find(".telephone").html()
+    id = item.find(".idCell").html()
+    $("#ime").val(ime);
+    $("#prezime").val(prezime);
+    $("#jmbg").val(jmbg);
+    $("#mesto").val(mesto);
+    $("#adresa").val(adresa);
+    $("#email").val(email);
+    $("#telefon").val(telefon);
+    $("#id").val(id);
+}
+
 
 </script>
 </head>
@@ -229,7 +299,57 @@ $(document).on("click", ".remove", function(event){
 
 </div>
 	
-	
+	<!-- Modalni dijalog za pretragu -->
+		<div class="modal" id="searchModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Nadji fizicka lica</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form id="searchForm">
+		      <div class="modal-body">
+					<input type="hidden" name="id" id="id" />
+				<p>
+					<label for="ime">Ime</label> <input type="text" name="name"
+						id="ime"/>
+				</p>
+				<p>
+					<label for="prezime">Prezime</label> <input type="text" name="lastname"
+						id="prezime" />
+				</p>
+				<p>
+					<label for="jmbg">JMBG</label> <input type="number" name="jmbg"
+						id="jmbg" />
+				</p>
+				<p>
+					<label for="mesto">Mesto</label> <input type="text" name="place"
+						id="mesto" />
+				</p>
+				<p>
+					<label for="adresa">Adresa</label> <input type="text" name="address"
+						id="adresa" />
+				</p>		
+				<p>
+					<label for="email">Email</label> <input type="email" name="email"
+						id="email" />
+				</p>
+				<p>
+					<label for="telefon">Telefon</label> <input type="number" name="telephone"
+						id="telefon" />
+				</p>
+				
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+		        <button type="button" class="btn btn-primary" id="find">Potvrda</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
 	
 	
 	<!-- Modalni dijalog za update -->

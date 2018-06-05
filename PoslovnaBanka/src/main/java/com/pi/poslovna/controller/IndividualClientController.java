@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pi.poslovna.converters.IndividualsDTOToIndividuals;
@@ -73,7 +74,7 @@ public class IndividualClientController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT , consumes="application/json" )
-	public ResponseEntity<IndividualsDTO> updateIndividuals(@RequestBody IndividualsDTO individualDTO) {
+	public ResponseEntity<?> updateIndividuals(@RequestBody IndividualsDTO individualDTO) {
 		
 		Individuals persons = clientService.findOne(toIndividuals.convert(individualDTO).getId());
 		
@@ -88,6 +89,7 @@ public class IndividualClientController {
 		clientService.save(persons);
 		
 		return new ResponseEntity<>(toIndividualsDTO.convert(persons),HttpStatus.OK);
-	} 
+	}
+	
 }
 

@@ -7,5 +7,7 @@ import com.pi.poslovna.model.clients.Individuals;
 
 @Repository
 public interface IndividualClientRepository extends JpaRepository<Individuals, Long>{
-
+		
+	//List<Individuals> findByAllParametresIgnoreCaseContaining(String name,String lastname,String jmbg,String place,String address,String email,String phone);
+	
 }

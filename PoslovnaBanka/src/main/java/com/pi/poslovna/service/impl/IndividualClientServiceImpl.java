@@ -49,7 +49,14 @@ public class IndividualClientServiceImpl implements IndividualClientService{
 		return individual;
 	}
 
-	
+/*	@Override
+	public List<Individuals> findIndividuals(String name, String lastname, String jmbg, String place, String address,
+			String email, String phone) {
+		
+		return repository.findByAllParametresIgnoreCaseContaining(name, lastname, jmbg, place, address, email, phone);
+	}
+
+*/	
 	
 
 	
