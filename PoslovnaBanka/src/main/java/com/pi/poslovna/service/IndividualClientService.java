@@ -10,7 +10,7 @@ public interface IndividualClientService {
 	public Individuals findOne(Long id);
 	public List<Individuals> findAll();
 	public Individuals delete(Long id);
-	//public List<Individuals> findIndividuals(String name,String lastname,String jmbg,String place,String address,String email,String phone);
+	public List<Individuals> findIndividuals(String name,String lastname,String jmbg,String place,String address,String email,String phone);
 	
 	
 }

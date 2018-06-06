@@ -84,21 +84,13 @@ $(document).ready(function(){
 			contentType: "application/json",
 			datatype: 'json',
 			success: function(data) {
-				var setter = $("tr:nth-child("+ ind +") td:nth-child(1)").text();
-				var setter2 = $("tr:nth-child("+ ind +") td:nth-child(2)").text();
-				var setter3 = $("tr:nth-child("+ ind +") td:nth-child(3)").text();
-				var setter4 = $("tr:nth-child("+ ind +") td:nth-child(4)").text();
-				var setter5 = $("tr:nth-child("+ ind +") td:nth-child(5)").text();
-				var setter6 = $("tr:nth-child("+ ind +") td:nth-child(6)").text();
-				var setter7 = $("tr:nth-child("+ ind +") td:nth-child(7)").text();
-				
 				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='name']").val());
 				$("tr:nth-child("+ ind +") td:nth-child(2)").text($("#updateForm [name='lastname']").val());
-				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='jmbg']").val());
-				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='place']").val());
-				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='address']").val());
-				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='email']").val());
-				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='telephone']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(3)").text($("#updateForm [name='jmbg']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(4)").text($("#updateForm [name='place']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(5)").text($("#updateForm [name='address']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(6)").text($("#updateForm [name='email']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(7)").text($("#updateForm [name='telephone']").val());
 			  }
 			});
 		$('#updateModal').modal('toggle');
@@ -144,7 +136,7 @@ $(document).ready(function(){
 		$('#inputModal').modal('toggle');
 	});
 		
- /*	$("#find").click(function(){
+ 	$("#find").click(function(){
 		//pripremamo JSON koji cemo poslati
 		var data = {}
 		data["name"] = $("#searchForm [name='name']").val();
@@ -182,15 +174,12 @@ $(document).ready(function(){
 							+ "<img src='images/remove.gif'/></a></td>"
 						+ "</tr>"
 						
-						$("#dataTable").append(newRow);
-					
-				}
-				
+						$("#dataTable").append(newRow);	
+				}		
 			}
 		});
 		$('#searchModal').modal('toggle');
 	});
- */
  });
 
 $(document).on("click", "tr", function(event) {

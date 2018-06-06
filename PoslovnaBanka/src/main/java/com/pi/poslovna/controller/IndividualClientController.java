@@ -91,5 +91,17 @@ public class IndividualClientController {
 		return new ResponseEntity<>(toIndividualsDTO.convert(persons),HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/findIndividuals", method=RequestMethod.GET, consumes="application/json")
+	public ResponseEntity<List<IndividualsDTO>> find(@RequestParam(value = "name", required = false, defaultValue = "") String name, 
+			@RequestParam(value = "lastname", required = false, defaultValue = "") String lastname, @RequestParam(value = "jmbg", required = false, defaultValue = "") String jmbg,
+			@RequestParam(value = "place", required = false, defaultValue = "") String place,
+			@RequestParam(value = "address", required = false, defaultValue = "") String address, @RequestParam(value = "email", required = false, defaultValue = "") String email,
+			@RequestParam(value = "phone", required = false, defaultValue = "") String telephone){
+		
+		List<Individuals> individuals = clientService.findIndividuals(name, lastname, jmbg, place, address, email, telephone);
+		
+		return new ResponseEntity<>(toIndividualsDTO.convert(individuals), HttpStatus.OK);
+	}
+	
 }
 
