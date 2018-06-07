@@ -19,8 +19,8 @@ public class LegalEntities {
 	@Column(name = "Odgovorno_lice" , nullable = false)
 	private String responsiblePerson;
 	
-	@Column(name = "Poreski_idenifikacioni_broj" , nullable = false)
-	private int PIB;
+	@Column(name = "Poreski_identifikacioni_broj" , nullable = false)
+	private String pib;
 	
 	@Column(name = "Mesto" , nullable = false)
 	private String place;
@@ -69,13 +69,17 @@ public class LegalEntities {
 		this.responsiblePerson = responsiblePerson;
 	}
 
-	public int getPIB() {
-		return PIB;
+	
+	public String getPib() {
+		return pib;
 	}
 
-	public void setPIB(int pIB) {
-		PIB = pIB;
+
+
+	public void setPib(String pib) {
+		this.pib = pib;
 	}
+
 
 	public String getPlace() {
 		return place;

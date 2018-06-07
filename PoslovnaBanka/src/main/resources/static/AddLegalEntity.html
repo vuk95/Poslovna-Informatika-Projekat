@@ -1,60 +1,471 @@
 <html>
 
 <head>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+<script src="scripts/tether.min.js"></script>
+<script src="scripts/bootstrap.min.js"></script>
+<script src="scripts/functions.js"></script>
+<link rel="stylesheet" type="text/css" href="stylesheets/design.css">
+<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+<meta charset="UTF-8">
 	<title>AddLegalEntity</title>
+
+<script>
+
+$(document).ready(function(){
+	$.ajax({
+		url : "http://localhost:8083/legalEntity/getEntities"
+	}).then(
+			function(data) {
+				for (i = 0; i < data.length; i++) {
+					newRow = 
+						"<tr>"
+							+ + "<td class=\"id\">" + data[i].id + "</td>"
+							+ "<td class=\"name\">" + data[i].name + "</td>"
+							+ "<td class=\"responsiblePerson\">" + data[i].responsiblePerson + "</td>"
+							+ "<td class=\"pib\">" + data[i].pib + "</td>"
+							+ "<td class=\"place\">" + data[i].place + "</td>"
+							+ "<td class=\"address\">" + data[i].address + "</td>"
+							+ "<td class=\"email\">" + data[i].email + "</td>"
+							+ "<td class=\"phone\">" + data[i].phone + "</td>"
+							+ "<td class=\"fax\">" + data[i].fax + "</td>"
+							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/individual/" + data[i].id + "'>" 
+							+ "<img src='images/edit.gif'/></a></td>"
+							+ "<td><a class=\"remove\" href='/individual/" + data[i].id + "'>" 
+							+ "<img src='images/remove.gif'/></a></td>"
+							+ "<td><a class=\"create\" data-toggle=\"modal\" data-target=\"#bankAccountModal\" href='/api/countries/" + data[i].id + "'>" 
+							+ "<img src='images/create.png'/></a></td>"
+						+ "</tr>"
+					$("#dataTable").append(newRow)
+				}
+			});
+		
+	$("#first").click(function(){
+		goFirst()
+	 });
+	
+	$("#last").click(function(){
+		goLast()
+	 });
+	
+	$("#next").click(function(){
+		goNext()
+	 });
+	
+	$("#prev").click(function(){
+		goPrevious()
+	 });
+	
+	$("#refresh").click(function(){
+		location.reload();
+	 });
+	
+	$("#update").click(function(event){
+		//pripremamo JSON koji cemo poslati
+		event.preventDefault(); 
+		tr_parent = $(this).closest("tr")
+		highlighted = $(".highlighted");
+		index =  $("tr").index(highlighted);
+		ind = index+1;
+		
+		formData = JSON.stringify({
+			id:$("#updateForm [name='id']").val(),
+			name:$("#inputForm [name='name']").val(),
+            lastname:$("#inputForm [name='lastname']").val(),
+            jmbg:$("#inputForm [name='jmbg']").val(),
+            place:$("#inputForm [name='place']").val(),
+            address:$("#inputForm [name='address']").val(),
+            email:$("#inputForm [name='email']").val(),
+            phone:$("#inputForm [name='telephone']").val(),
+        });
+		$.ajax({
+			url: "http://localhost:8083/individual",
+			type: "PUT",
+			data: formData,
+			//saljemo json i ocekujemo json nazad
+			contentType: "application/json",
+			datatype: 'json',
+			success: function(data) {
+				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='name']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(2)").text($("#updateForm [name='lastname']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(3)").text($("#updateForm [name='jmbg']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(4)").text($("#updateForm [name='place']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(5)").text($("#updateForm [name='address']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(6)").text($("#updateForm [name='email']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(7)").text($("#updateForm [name='telephone']").val());
+			  }
+			});
+		$('#updateModal').modal('toggle');
+	});
+	
+	
+	$("#add").click(function(){
+		//pripremamo JSON koji cemo poslati
+		formData = JSON.stringify({
+            name:$("#inputForm [name='name']").val(),
+            lastname:$("#inputForm [name='lastname']").val(),
+            jmbg:$("#inputForm [name='jmbg']").val(),
+            place:$("#inputForm [name='place']").val(),
+            address:$("#inputForm [name='address']").val(),
+            email:$("#inputForm [name='email']").val(),
+            phone:$("#inputForm [name='telephone']").val(),
+        });
+		$.ajax({
+			url: "/individual",
+			type: "POST",
+			data: formData,
+			//saljemo json i ocekujemo json nazad
+			contentType: "application/json",
+			datatype: 'json',
+			success: function(data) {
+				newRow = 
+						"<tr>"
+							+ "<td class=\"name\">" + data.name + "</td>"
+							+ "<td class=\"lastname\">" + data.lastname + "</td>"
+							+ "<td class=\"jmbg\">" + data.jmbg + "</td>"
+							+ "<td class=\"place\">" + data.place + "</td>"
+							+ "<td class=\"address\">" + data.address + "</td>"
+							+ "<td class=\"email\">" + data.email + "</td>"
+							+ "<td class=\"phone\">" + data.phone + "</td>"
+							
+						+ "</tr>"
+				$("#dataTable").append(newRow)
+			  },
+			  error: function(data) {
+				  alert('Nevalidan unos!')
+			  }
+			});
+		$('#inputModal').modal('toggle');
+	});
+		
+ 	$("#find").click(function(){
+		//pripremamo JSON koji cemo poslati
+		var data = {}
+		data["name"] = $("#searchForm [name='name']").val();
+		data["lastname"] = $("#searchForm [name='lastname']").val();
+		data["jmbg"] = $("#searchForm [name='jmbg']").val();
+		data["place"] = $("#searchForm [name='place']").val();
+		data["address"] = $("#searchForm [name='address']").val();
+		data["email"] = $("#searchForm [name='email']").val();
+		data["phone"] = $("#searchForm [name='telephone']").val();
+		
+		$.ajax({
+			url: "/individual/findIndividuals",
+			type: "GET",
+			data: data,
+			//saljemo json i ocekujemo json nazad
+			contentType: "application/json",
+			datatype: 'json',
+			success: function(data) {
+				
+				$("#dataTable tr:gt(0)").remove();
+				
+				for (i = 0; i < data.length; i++) {
+					newRow = 
+						"<tr>"
+							+ "<td class=\"name\">" + data[i].name + "</td>"
+							+ "<td class=\"lastname\">" + data[i].lastname + "</td>"
+							+ "<td class=\"jmbg\">" + data[i].jmbg + "</td>"
+							+ "<td class=\"place\">" + data[i].place + "</td>"
+							+ "<td class=\"address\">" + data[i].address + "</td>"
+							+ "<td class=\"email\">" + data[i].email + "</td>"
+							+ "<td class=\"phone\">" + data[i].phone + "</td>"
+							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/individual/" + data[i].id + "'>" 
+							+ "<img src='images/edit.gif'/></a></td>"
+							+ "<td><a class=\"remove\" href='/individual/" + data[i].id + "'>" 
+							+ "<img src='images/remove.gif'/></a></td>"
+						+ "</tr>"
+						
+						$("#dataTable").append(newRow);	
+				}		
+			}
+		});
+		$('#searchModal').modal('toggle');
+	});
+ });
+
+$(document).on("click", "tr", function(event) {
+	highlightRow(this)
+});
+
+$(document).on("click", ".edit", function(event){
+	//ne salji get zahtev
+		event.preventDefault(); 
+	
+		var url = $(this).attr("href")
+		//red koji se treba izbrisati ako je brisanje na serveru bilo uspesno
+		$.ajax({
+        	url: url,
+        	success: function(data){
+        		//ukloni i na strani 
+				$("#updateModal").modal('show');
+				$("#updateForm [name='id']").val(data.id);
+				$("#updateForm [name='name']").val(data.name);
+				$("#updateForm [name='lastname']").val(data.lastname);
+				$("#updateForm [name='jmbg']").val(data.jmbg);
+				$("#updateForm [name='place']").val(data.place);
+				$("#updateForm [name='address']").val(data.address);
+				$("#updateForm [name='email']").val(data.email);
+				$("#updateForm [name='telephone']").val(data.phone);
+	        }
+		});
+});
+
+
+
+$(document).on("click", ".remove", function(event){
+	//ne salji get zahtev
+	event.preventDefault(); 
+	
+	var confirmed = confirm("Da li ste sigurni da zelite da obrišete?");
+	if(confirmed){
+	
+		var url = $(this).attr("href")
+		//red koji se treba izbrisati ako je brisanje na serveru bilo uspesno
+		tr_parent = $(this).closest("tr")
+		$.ajax({
+        	url: url,
+        	type: "DELETE",
+        	success: function(){
+        		//ukloni i na strani 
+				tr_parent.remove()
+	        }
+		});
+	}
+});
+
+function sync(item){
+    ime = item.find(".name").html()
+    prezime = item.find(".lastname").html()
+    jmbg = item.find(".jmbg").html()
+    mesto = item.find(".place").html()
+    adresa = item.find(".address").html()
+    email = item.find(".email").html()
+    telefon = item.find(".telephone").html()
+    id = item.find(".idCell").html()
+    $("#ime").val(ime);
+    $("#prezime").val(prezime);
+    $("#jmbg").val(jmbg);
+    $("#mesto").val(mesto);
+    $("#adresa").val(adresa);
+    $("#email").val(email);
+    $("#telefon").val(telefon);
+    $("#id").val(id);
+}
+
+
+</script>	
 </head>
 
 <body>
+
+<div class="formContainer">
+		<ul>
+			<li><a href="#searchModal" data-toggle="modal" data-target="#searchModal" id="search"><img src="images/search1.png" /></a></li>
+			<li><a href="#" id="refresh"><img src="images/refresh.gif" /></a></li>
+			<li class="group-start"><a id="first"><img src="images/first.gif" /></a></li>
+			<li><a id="prev"><img src="images/prev.gif" /></a></li>
+			<li><a id="next"><img src="images/next.gif" /></a></li>
+			<li><a id="last"><img src="images/last.gif" /></a></li>
+			<li class="group-start"><a href="#inputModal" data-toggle="modal" data-target="#inputModal" data-toggle="tooltip" title = "Registruj fizicko lice"><img src="images/add.gif" /></a></li>
+			<li><a id="nextform"><img src="images/nextform.gif" /></a></li>
+		</ul>
+		
+		<h1>Registrovana pravna lica: </h1>
+			
+		<table id="dataTable" class="table">
+			<tr class="header">
+				<th>Naziv</th>
+				<th>Odgovorno lice</th>
+				<th>PIB</th>
+				<th>Mesto</th>
+				<th>Adresa</th>
+				<th>Email</th>
+				<th>Telefon</th>
+				<th>Fax</th>
+				<th width=20px></th>
+				<th width=20px></th>
+				<th width=20px></th>
+			</tr>
+		</table>
+
+</div>
 	
-   <h3>Dodaj novo pravno lice: </h3>			
-	<table>
-		
-		<tr>
-			<td>Naziv:</td>				
-			<td><input type="text"></td>
-		</tr>
-
-		<tr>
-			<td>Odgovorno lice:</td>				
-			<td><input type="text"></td>
-		</tr>
-		
-		<tr>
-			<td>PIB:</td>				
-			<td><input type="text"></td>
-		</tr>
-		
-		<tr>
-			<td>Mesto:</td>				
-			<td><input type="text"></td>
-		</tr>
-
-		<tr>
-			<td>Adresa:</td>				
-			<td><input type="text"></td>
-		</tr>
-		
-		<tr>
-			<td>Telefon:</td>				
-			<td><input type="text"></td>
-		</tr>
-		
-		<tr>
-			<td>Email:</td>				
-			<td><input type="text"></td>
-		</tr>
-		
-		<tr>
-			<td>Fax:</td>				
-			<td><input type="text"></td>
-		</tr>
-		
-		<tr>
-			<td><input type = "submit" value = "Add"></td>
-		</tr>		
-
-	</table>
-
+	
+		<!-- Modalni dijalog za pretragu -->
+		<div class="modal" id="searchModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Nadji fizicka lica</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form id="searchForm">
+		      <div class="modal-body">
+					<input type="hidden" name="id" id="id" />
+			<p>
+					<label for="ime">Naziv</label> <input type="text" name="name"
+						id="ime"/>
+				</p>
+				<p>
+					<label for="odgovornoLice">Odgovorno lice</label> <input type="text" name="lastname"
+						id="odgovornoLice" />
+				</p>
+				<p>
+					<label for="pib">PIB</label> <input type="number" name="pib"
+						id="pib" />
+				</p>
+				<p>
+					<label for="mesto">Mesto</label> <input type="text" name="place"
+						id="mesto" />
+				</p>
+				<p>
+					<label for="adresa">Adresa</label> <input type="text" name="address"
+						id="adresa" />
+				</p>		
+				<p>
+					<label for="email">Email</label> <input type="email" name="email"
+						id="email" />
+				</p>
+				<p>
+					<label for="telefon">Telefon</label> <input type="number" name="telephone"
+						id="telefon" />
+				</p>
+				
+				<p>
+					<label for="fax">Fax</label> <input type="number" name="fax"
+						id="fax" />
+				</p>
+				
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+		        <button type="button" class="btn btn-primary" id="find">Potvrda</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+	
+	
+	<!-- Modalni dijalog za update -->
+		<div class="modal" id="updateModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Izmeni državu</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form id="updateForm">
+		      <div class="modal-body">
+					<input type="hidden" name="id" id="id" />
+				<p>
+					<label for="ime">Naziv</label> <input type="text" name="name"
+						id="ime"/>
+				</p>
+				<p>
+					<label for="odgovornoLice">Odgovorno lice</label> <input type="text" name="lastname"
+						id="odgovornoLice" />
+				</p>
+				<p>
+					<label for="pib">PIB</label> <input type="number" name="pib"
+						id="pib" />
+				</p>
+				<p>
+					<label for="mesto">Mesto</label> <input type="text" name="place"
+						id="mesto" />
+				</p>
+				<p>
+					<label for="adresa">Adresa</label> <input type="text" name="address"
+						id="adresa" />
+				</p>		
+				<p>
+					<label for="email">Email</label> <input type="email" name="email"
+						id="email" />
+				</p>
+				<p>
+					<label for="telefon">Telefon</label> <input type="number" name="telephone"
+						id="telefon" />
+				</p>
+				
+				<p>
+					<label for="fax">Fax</label> <input type="number" name="fax"
+						id="fax" />
+				</p>
+						
+		      </div>
+		      
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+		        <button type="button" class="btn btn-primary" id="update">Potvrda</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+	
+	<!-- Modalni dialog za dodavanje novog pravnog lica -->
+	<div class="modal fade" id="inputModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Novo pravno lice</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form id="inputForm">
+		      <div class="modal-body">
+					<input type="hidden" name="id" id="id" />
+				<p>
+					<label for="ime">Naziv</label> <input type="text" name="name"
+						id="ime"/>
+				</p>
+				<p>
+					<label for="odgovornoLice">Odgovorno lice</label> <input type="text" name="lastname"
+						id="odgovornoLice" />
+				</p>
+				<p>
+					<label for="pib">PIB</label> <input type="number" name="pib"
+						id="pib" />
+				</p>
+				<p>
+					<label for="mesto">Mesto</label> <input type="text" name="place"
+						id="mesto" />
+				</p>
+				<p>
+					<label for="adresa">Adresa</label> <input type="text" name="address"
+						id="adresa" />
+				</p>		
+				<p>
+					<label for="email">Email</label> <input type="email" name="email"
+						id="email" />
+				</p>
+				<p>
+					<label for="telefon">Telefon</label> <input type="number" name="telephone"
+						id="telefon" />
+				</p>
+				
+				<p>
+					<label for="fax">Fax</label> <input type="number" name="fax"
+						id="fax" />
+				</p>
+				
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+		        <button type="button" class="btn btn-primary" id="add">Potvrda</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+	
+	  
 </body>
 
 </html>
