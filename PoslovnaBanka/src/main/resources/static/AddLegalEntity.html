@@ -29,11 +29,11 @@ $(document).ready(function(){
 							+ "<td class=\"email\">" + data[i].email + "</td>"
 							+ "<td class=\"phone\">" + data[i].phone + "</td>"
 							+ "<td class=\"fax\">" + data[i].fax + "</td>"
-							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/individual/" + data[i].id + "'>" 
+							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/legalEntity/" + data[i].id + "'>" 
 							+ "<img src='images/edit.gif'/></a></td>"
-							+ "<td><a class=\"remove\" href='/individual/" + data[i].id + "'>" 
+							+ "<td><a class=\"remove\" href='/legalEntity/" + data[i].id + "'>" 
 							+ "<img src='images/remove.gif'/></a></td>"
-							+ "<td><a class=\"create\" data-toggle=\"modal\" data-target=\"#bankAccountModal\" href='/api/countries/" + data[i].id + "'>" 
+							+ "<td><a class=\"create\" data-toggle=\"modal\" data-target=\"#bankAccountModal\" href='/legalEntity/" + data[i].id + "'>" 
 							+ "<img src='images/create.png'/></a></td>"
 						+ "</tr>"
 					$("#dataTable").append(newRow)
@@ -71,12 +71,13 @@ $(document).ready(function(){
 		formData = JSON.stringify({
 			id:$("#updateForm [name='id']").val(),
 			name:$("#inputForm [name='name']").val(),
-            lastname:$("#inputForm [name='lastname']").val(),
-            jmbg:$("#inputForm [name='jmbg']").val(),
+			responsiblePerson:$("#inputForm [name='responsiblePerson']").val(),
+            pib:$("#inputForm [name='jmbg']").val(),
             place:$("#inputForm [name='place']").val(),
             address:$("#inputForm [name='address']").val(),
             email:$("#inputForm [name='email']").val(),
             phone:$("#inputForm [name='telephone']").val(),
+            fax:$("#inputForm [name='fax']").val(),
         });
 		$.ajax({
 			url: "http://localhost:8083/individual",
@@ -87,12 +88,13 @@ $(document).ready(function(){
 			datatype: 'json',
 			success: function(data) {
 				$("tr:nth-child("+ ind +") td:nth-child(1)").text($("#updateForm [name='name']").val());
-				$("tr:nth-child("+ ind +") td:nth-child(2)").text($("#updateForm [name='lastname']").val());
-				$("tr:nth-child("+ ind +") td:nth-child(3)").text($("#updateForm [name='jmbg']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(2)").text($("#updateForm [name='responsiblePerson']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(3)").text($("#updateForm [name='pib']").val());
 				$("tr:nth-child("+ ind +") td:nth-child(4)").text($("#updateForm [name='place']").val());
 				$("tr:nth-child("+ ind +") td:nth-child(5)").text($("#updateForm [name='address']").val());
 				$("tr:nth-child("+ ind +") td:nth-child(6)").text($("#updateForm [name='email']").val());
 				$("tr:nth-child("+ ind +") td:nth-child(7)").text($("#updateForm [name='telephone']").val());
+				$("tr:nth-child("+ ind +") td:nth-child(8)").text($("#updateForm [name='fax']").val());
 			  }
 			});
 		$('#updateModal').modal('toggle');
@@ -103,15 +105,16 @@ $(document).ready(function(){
 		//pripremamo JSON koji cemo poslati
 		formData = JSON.stringify({
             name:$("#inputForm [name='name']").val(),
-            lastname:$("#inputForm [name='lastname']").val(),
-            jmbg:$("#inputForm [name='jmbg']").val(),
+            responsiblePerson:$("#inputForm [name='responsiblePerson']").val(),
+            pib:$("#inputForm [name='pib']").val(),
             place:$("#inputForm [name='place']").val(),
             address:$("#inputForm [name='address']").val(),
             email:$("#inputForm [name='email']").val(),
             phone:$("#inputForm [name='telephone']").val(),
+            fax:$("#inputForm [name='fax']").val(),
         });
 		$.ajax({
-			url: "/individual",
+			url: "/legalEntity",
 			type: "POST",
 			data: formData,
 			//saljemo json i ocekujemo json nazad
@@ -121,12 +124,13 @@ $(document).ready(function(){
 				newRow = 
 						"<tr>"
 							+ "<td class=\"name\">" + data.name + "</td>"
-							+ "<td class=\"lastname\">" + data.lastname + "</td>"
-							+ "<td class=\"jmbg\">" + data.jmbg + "</td>"
+							+ "<td class=\"responsiblePerson\">" + data.responsiblePerson + "</td>"
+							+ "<td class=\"pib\">" + data.pib + "</td>"
 							+ "<td class=\"place\">" + data.place + "</td>"
 							+ "<td class=\"address\">" + data.address + "</td>"
 							+ "<td class=\"email\">" + data.email + "</td>"
 							+ "<td class=\"phone\">" + data.phone + "</td>"
+							+ "<td class=\"fax\">" + data.fax + "</td>"
 							
 						+ "</tr>"
 				$("#dataTable").append(newRow)
@@ -142,15 +146,16 @@ $(document).ready(function(){
 		//pripremamo JSON koji cemo poslati
 		var data = {}
 		data["name"] = $("#searchForm [name='name']").val();
-		data["lastname"] = $("#searchForm [name='lastname']").val();
-		data["jmbg"] = $("#searchForm [name='jmbg']").val();
+		data["responsiblePerson"] = $("#searchForm [name='responsiblePerson']").val();
+		data["pib"] = $("#searchForm [name='pib']").val();
 		data["place"] = $("#searchForm [name='place']").val();
 		data["address"] = $("#searchForm [name='address']").val();
 		data["email"] = $("#searchForm [name='email']").val();
 		data["phone"] = $("#searchForm [name='telephone']").val();
+		data["fax"] = $("#searchForm [name='fax']").val();
 		
 		$.ajax({
-			url: "/individual/findIndividuals",
+			url: "/legalEntity/findEntities",
 			type: "GET",
 			data: data,
 			//saljemo json i ocekujemo json nazad
@@ -163,16 +168,18 @@ $(document).ready(function(){
 				for (i = 0; i < data.length; i++) {
 					newRow = 
 						"<tr>"
+							+ "<td class=\"id\">" + data[i].id + "</td>"
 							+ "<td class=\"name\">" + data[i].name + "</td>"
-							+ "<td class=\"lastname\">" + data[i].lastname + "</td>"
-							+ "<td class=\"jmbg\">" + data[i].jmbg + "</td>"
+							+ "<td class=\"responsiblePerson\">" + data[i].responsiblePerson + "</td>"
+							+ "<td class=\"pib\">" + data[i].pib + "</td>"
 							+ "<td class=\"place\">" + data[i].place + "</td>"
 							+ "<td class=\"address\">" + data[i].address + "</td>"
 							+ "<td class=\"email\">" + data[i].email + "</td>"
 							+ "<td class=\"phone\">" + data[i].phone + "</td>"
-							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/individual/" + data[i].id + "'>" 
+							+ "<td class=\"fax\">" + data[i].fax + "</td>"
+							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/legalEntity/" + data[i].id + "'>" 
 							+ "<img src='images/edit.gif'/></a></td>"
-							+ "<td><a class=\"remove\" href='/individual/" + data[i].id + "'>" 
+							+ "<td><a class=\"remove\" href='/legalEntity/" + data[i].id + "'>" 
 							+ "<img src='images/remove.gif'/></a></td>"
 						+ "</tr>"
 						
@@ -201,12 +208,13 @@ $(document).on("click", ".edit", function(event){
 				$("#updateModal").modal('show');
 				$("#updateForm [name='id']").val(data.id);
 				$("#updateForm [name='name']").val(data.name);
-				$("#updateForm [name='lastname']").val(data.lastname);
-				$("#updateForm [name='jmbg']").val(data.jmbg);
+				$("#updateForm [name='responsiblePerson']").val(data.responsiblePerson);
+				$("#updateForm [name='pib']").val(data.pib);
 				$("#updateForm [name='place']").val(data.place);
 				$("#updateForm [name='address']").val(data.address);
 				$("#updateForm [name='email']").val(data.email);
 				$("#updateForm [name='telephone']").val(data.phone);
+				$("#updateForm [name='fax']").val(data.fax);
 	        }
 		});
 });
@@ -236,20 +244,22 @@ $(document).on("click", ".remove", function(event){
 
 function sync(item){
     ime = item.find(".name").html()
-    prezime = item.find(".lastname").html()
-    jmbg = item.find(".jmbg").html()
+    odgovornoLice = item.find(".responsiblePerson").html()
+    pib = item.find(".pib").html()
     mesto = item.find(".place").html()
     adresa = item.find(".address").html()
     email = item.find(".email").html()
     telefon = item.find(".telephone").html()
     id = item.find(".idCell").html()
+    fax = item.find(".fax").html()
     $("#ime").val(ime);
-    $("#prezime").val(prezime);
-    $("#jmbg").val(jmbg);
+    $("#odgovornoLice").val(odgovornoLice);
+    $("#pib").val(pib);
     $("#mesto").val(mesto);
     $("#adresa").val(adresa);
     $("#email").val(email);
     $("#telefon").val(telefon);
+    $("#fax").val(fax);
     $("#id").val(id);
 }
 
