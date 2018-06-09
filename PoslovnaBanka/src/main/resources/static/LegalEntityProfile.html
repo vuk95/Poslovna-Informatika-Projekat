@@ -26,7 +26,71 @@
 		</div>
 	</nav>
 	
-	<!-- Modalni dijalog za otvaranje racuna klijenta-->
+					
+	<div class="container">
+		<!-- Deo sa podacima korisnika -->
+		<div class="col-md-6">
+			
+			
+			<table class="table table-hover" id="dataTable">
+				<tr>
+					<td><strong>Email:</strong></td>
+					<td class="email"></td>
+				</tr>
+				<tr>
+					<td><strong>Naziv:</strong></td>
+					<td class="name"></td>
+				</tr>
+				<tr>
+					<td><strong>Odgovorno lice:</strong></td>
+					<td class="responsiblePerson"></td>
+				</tr>
+				
+				<tr>
+					<td><strong>PIB:</strong></td>
+					<td class="pib"></td>
+				</tr>
+				
+				<tr>
+					<td><strong>Adresa:</strong></td>
+					<td class="address"></td>
+				</tr>
+				
+				<tr>
+					<td><strong>Grad:</strong></td>
+					<td class="place"></td>
+				</tr>
+				<tr>
+					<td><strong>Telefon:</strong></td>
+					<td class="phone"></td>
+				</tr>
+				
+				<tr>
+					<td><strong>Fax:</strong></td>
+					<td class="fax"></td>
+				</tr>
+				
+			</table>
+			<p>Ukoliko zelite da ih promenite kliknite <a href="#">ovde.</a></p>	
+		</div>
+		
+		<div class="col-md-6">
+			<div style="height: 400px;" class="alert alert-warning">
+				<h3 >Deo za funkcionalnosti nad klijentima!</h3>
+				 <ul>
+      				<li><a a href="#bankAccountModal" data-toggle="modal" data-target="#bankAccountModal"  id="bankAccount">Otvori racun</a></li>
+      				<li><a href="#">Zatvori racun</a></li>
+      				<li><a href="#">Stanje na racunu</a></li>
+      				<li><a href="#">Prihodi za odredjeni vremenski period</a></li>
+      				<li><a href="#">.....</a></li>
+    			</ul>
+			</div>
+		</div>
+		
+			</div>
+
+
+		<!-- Modalni dijalog za otvaranje racuna klijenta-->
 		<div class="modal" id="bankAccountModal" tabindex="-1" role="dialog">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -66,68 +130,8 @@
 		    </div>
 		  </div>
 		</div>
-	
-	
-	
-	
-	
-					
-	<div class="container">
-		<!-- Deo sa podacima korisnika -->
-		<div class="col-md-6">
-			
-			
-			<table class="table table-hover" id="dataTable">
-				<tr>
-					<td><strong>Email:</strong></td>
-					<td class="email"></td>
-				</tr>
-				<tr>
-					<td><strong>Ime:</strong></td>
-					<td class="name"></td>
-				</tr>
-				<tr>
-					<td><strong>Prezime:</strong></td>
-					<td class="lastname"></td>
-				</tr>
-				
-				<tr>
-					<td><strong>JMBG:</strong></td>
-					<td class="jmbg"></td>
-				</tr>
-				
-				<tr>
-					<td><strong>Adresa:</strong></td>
-					<td class="address"></td>
-				</tr>
-				
-				<tr>
-					<td><strong>Grad:</strong></td>
-					<td class="place"></td>
-				</tr>
-				<tr>
-					<td><strong>Telefon:</strong></td>
-					<td class="phone"></td>
-				</tr>
-			</table>
-			<p>Ukoliko zelite da ih promenite kliknite <a href="#">ovde.</a></p>	
-		</div>
 		
-		<div class="col-md-6">
-			<div style="height: 400px;" class="alert alert-warning">
-				<h3 >Deo za funkcionalnosti nad klijentima!</h3>
-				 <ul>
-      				<li><a href="#bankAccountModal" data-toggle="modal" data-target="#bankAccountModal"  id="bankAccount">Otvori racun</a></li>
-      				<li><a href="#">Zatvori racun</a></li>
-      				<li><a href="#">Stanje na racunu</a></li>
-      				<li><a href="#">Prihodi za odredjeni vremenski period</a></li>
-      				<li><a href="#">.....</a></li>
-    			</ul>
-			</div>
-		</div>
-		
-		
-	</div>
+
 	
 </body>
 </html>

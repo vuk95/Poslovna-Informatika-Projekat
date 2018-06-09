@@ -6,3 +6,5 @@ INSERT INTO fizicka_lica (ime,prezime,jmbg,mesto,adresa,email,telefon) VALUES ("
 
 INSERT INTO pravna_lica (poreski_identifikacioni_broj,adresa,email,fax,naziv,telefon,mesto,odgovorno_lice) VALUES
 ('1234354','Marsala Tita 12','dssd@gmail.com','53534','SanRemoBar','1234432','Vrbas','Pera Peric');
+INSERT INTO pravna_lica (poreski_identifikacioni_broj,adresa,email,fax,naziv,telefon,mesto,odgovorno_lice) VALUES
+('654676876','Sava Kovacevic 25','sk@gmail.com','6554','Capri','897978','Vrbas','Jovan Jovanovic');
