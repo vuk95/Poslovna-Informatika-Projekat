@@ -2,6 +2,8 @@ package com.pi.poslovna.model.users;
 
 import javax.persistence.*;
 
+import com.pi.poslovna.model.Bank;
+
 @Entity(name = "Korisnik")
 public class User {
 	
@@ -15,6 +17,10 @@ public class User {
 	
 	@Column(name = "lozinka", nullable = false)
 	private String password;
+	
+	@ManyToOne
+	@JoinColumn(name = "bank_id", nullable = false)
+	private Bank bank;
 	
 	public User() {
 		
@@ -42,6 +48,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Bank getBank() {
+		return bank;
+	}
+
+	public void setBank(Bank bank) {
+		this.bank = bank;
 	}
 	
 }

@@ -1,0 +1,37 @@
+#bankInfo {
+	border-radius: 5px;
+	border: 1px solid #e7e7e7;
+	display: inline;
+}
+
+#bankInfo h5 {
+	display: inline-block;
+	margin: 2.25%;
+	width: 28.3333%;
+	color: #777777;
+	font-style: italic;
+	font-size: 15px;
+}
+		
+#bankInfo h2 {
+	font-weight: bold;
+	color: #67809f;
+}
+		
+#box {
+	border-radius: 5px;
+	border: 1px solid #e7e7e7;
+	padding: 8px;
+	margin-top: 30px;
+}
+		
+#box h3 {
+	text-align: center;
+	font-style: italic;
+}
+		
+#box hr {
+	background-color: #e7e7e7;
+	height: 1px;
+	border: 0;
+}

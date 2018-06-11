@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+	<script src="scripts/tether.min.js"></script>
+	<script src="scripts/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="stylesheets/style.css">
+	
+	<title>Bank profile</title>
+	
+	<script>
+		$(document).ready(function(){
+			$.ajax({
+				url: "http://localhost:8083/myBank"
+			}).then(
+				function(data) {
+					info = "<h2>" + data.name + "</h2>"
+							+ "<h5>" + data.address + "</h5>"
+							+ "<h5>" + data.email + "</h5>"
+							+ "<h5>" + data.phone + "</h5>"
+					$("#bankInfo").append(info)
+				}		
+			)
+		});
+	</script>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<ul class="nav navbar-nav navbar-left">
+				<li><a href="#">Pocetna</a></li>
+				<li><a href="#">Racuni</a></li>
+				<li><a href="#">Kursna Lista</a></li>
+				<li><a href="#">Klijenti</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><span class="glyphicon glyphicon-user"></span></li>
+				<li><a href="#">User</a></li>
+				<li><a href="/logout">Odjava</a></li>
+			</ul>		
+		</div>
+	</nav>
+	
+	<div class="container">
+		<div class="col-md-12" id="bankInfo">
+			<!-- Bank info here(ajax) -->
+		</div>
+	</div>
+	
+	<div class="container" id="box-container">
+		<div class="col-md-3">
+			<div id="box">	
+				<h3>Fizička lica</h3>
+				<hr>
+				<a href="#">Lista svih fizičkih lica</a><br>
+				<a href="#">Dodaj novo fizičko lice</a>
+			</div>
+		</div>
+		
+		<div class="col-md-3">
+			<div id="box">
+				<h3>Pravna lica</h3>
+				<hr>
+				<a href="#">Lista svih pravnih lica</a><br>
+				<a href="#">Dodaj novo pravno lice</a>
+			</div>
+		</div>
+		
+		<div class="col-md-6">
+			<div id="box">
+				<h3>Kursna lista</h3>
+				<hr>
+				<a href="#">Pogledaj nesto u kursnoj listi</a><br>
+				<a href="#">Dodaj neki novi kurs</a><br>
+				<a href="#">Jos neki link</a><br>
+				<a href="#">Moze jos jedan</a>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="col-md-6">
+			<div id="box">
+				<h3>Import stavki plaćanja</h3>
+				<hr>
+				<a href="#">Nalog za plaćanje</a><br>
+				<a href="#">Nalog za prenos</a><br>
+				<a href="#">Nalog za nešto treće</a>
+			</div>
+		</div>
+		
+		<div class="col-md-6">
+			<div id="box">
+				<h3>Medjubankarski transfer</h3>
+				<hr>
+				<a href="#">Izvršite kliring</a><br>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>
