@@ -102,6 +102,16 @@ public class IndividualClientController {
 		
 		return new ResponseEntity<>(toIndividualsDTO.convert(individuals), HttpStatus.OK);
 	}
+
+	
+	@RequestMapping(value = "/indivudalClient/{id}" , method = 	RequestMethod.GET)
+	public ResponseEntity<Individuals> profile(@PathVariable() Long id) {
+		
+		Individuals person = clientService.findOne(id);
+		
+		return  new ResponseEntity<>(person,HttpStatus.OK);
+	}
+	
 	
 }
 
