@@ -33,3 +33,20 @@ function getFormData($form){
 	    return indexed_array;
 	
 }
+
+function openProfile(id) {
+	$.ajax({
+		url: "individual/indivudalClient" + id,
+		type: "GET",
+		contentType:"application/json",
+		dataType:"json",
+		success: function(data) {
+			if(data != null) {
+				window.location.href = "IndividualsProfile.html";
+			}
+		},
+		error: function(jqxhr,textStatus,errorThrown) {
+			alert(errorThrown);
+		}
+	});
+}

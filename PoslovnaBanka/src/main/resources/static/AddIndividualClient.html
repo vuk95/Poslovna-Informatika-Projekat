@@ -5,6 +5,7 @@
 	<script src="scripts/tether.min.js"></script>
 	<script src="scripts/bootstrap.min.js"></script>
 	<script src="scripts/functions.js"></script>
+	<script src="scripts/addIndividuals.js"></script>
 	<link rel="stylesheet" type="text/css" href="stylesheets/design.css">
 	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
 	<meta charset="UTF-8">
@@ -31,7 +32,7 @@ $(document).ready(function(){
 							+ "<img src='images/edit.gif'/></a></td>"
 							+ "<td><a class=\"remove\" href='/individual/" + data[i].id + "'>" 
 							+ "<img src='images/remove.gif'/></a></td>"
-							+ "<td><a class=\"create\"  href='/individual/indivudalClient/" + data[i].id + "'>" 
+							+ "<td><a class=\"create\"  onclick=\"openProfile("+ data[i].id +")\">" 
 							+ "<img src='images/create.png'/></a></td>"
 						+ "</tr>"
 					$("#dataTable").append(newRow)
