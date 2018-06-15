@@ -32,7 +32,7 @@ $(document).ready(function(){
 							+ "<img src='images/edit.gif'/></a></td>"
 							+ "<td><a class=\"remove\" href='/individual/" + data[i].id + "'>" 
 							+ "<img src='images/remove.gif'/></a></td>"
-							+ "<td><a class=\"create\"  onclick=\"openProfile("+ data[i].id +")\">" 
+							+ "<td><a class=\"create\"  href='/individual/indivudalClient/" + data[i].id +"'>" 
 							+ "<img src='images/create.png'/></a></td>"
 						+ "</tr>"
 					$("#dataTable").append(newRow)
@@ -207,6 +207,29 @@ $(document).on("click", ".edit", function(event){
 				$("#updateForm [name='email']").val(data.email);
 				$("#updateForm [name='telephone']").val(data.phone);
 	        }
+		});
+});
+
+$(document).on("click", ".create", function(event){
+	//ne salji get zahtev
+		event.preventDefault(); 
+	
+		var url = $(this).attr("href")
+		//red koji se treba izbrisati ako je brisanje na serveru bilo uspesno
+		$.ajax({
+        	url: url,
+        	type: "GET",
+    		contentType:"application/json",
+    		dataType:"json",
+        	success: function(data){
+        		if(data != null) {
+    				window.location.href = "IndividualsProfile.html";
+    			}
+    		},
+    		error: function(jqxhr,textStatus,errorThrown) {
+    			alert(errorThrown);
+    		}	 
+				
 		});
 });
 

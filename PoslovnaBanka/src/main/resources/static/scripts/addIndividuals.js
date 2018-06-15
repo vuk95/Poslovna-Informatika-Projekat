@@ -1,5 +1,5 @@
 
-function addIndividuals() {
+/* function addIndividuals() {
 	
 	var $form = $("#addClient");
 	var data = getFormData($form);
@@ -33,6 +33,8 @@ function getFormData($form){
 	    return indexed_array;
 	
 }
+
+*/
 
 function openProfile(id) {
 	$.ajax({
