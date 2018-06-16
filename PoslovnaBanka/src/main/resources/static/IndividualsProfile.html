@@ -9,9 +9,13 @@
 
 <script>
 
-(document).ready(function(){
+$(document).ready(function(){
+	
+	var queryString = decodeURIComponent(window.location.search);
+	queryString = queryString.substring(8);
+	
 	$.ajax({
-		url: "http://localhost:8083/"
+		url: "http://localhost:8083/individual/indivudalClient/" + queryString
 	}).then(
 		function(data) {
 			info = "<tr><td><strong>Name:</strong></td><td>" + data.name + "</td></tr>"

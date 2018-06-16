@@ -103,4 +103,13 @@ public class LegalEntityController {
 		
 		return new ResponseEntity<>(toLegalEntityDTO.convert(le),HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/leClient/{id}" , method = RequestMethod.GET )
+	public ResponseEntity<LegalEntities> profile(@PathVariable Long id) {
+		
+		LegalEntities le = leService.findOne(id);
+		
+		return new ResponseEntity<>(le,HttpStatus.OK);
+	}
+	
 }
