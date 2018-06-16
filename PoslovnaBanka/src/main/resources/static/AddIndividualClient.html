@@ -223,7 +223,8 @@ $(document).on("click", ".create", function(event){
     		dataType:"json",
         	success: function(data){
         		if(data != null) {
-    				window.location.href = "IndividualsProfile.html";
+        			var queryString = "?param1=" + data.id
+    				window.location.href = "IndividualsProfile.html" + queryString;
     			}
     		},
     		error: function(jqxhr,textStatus,errorThrown) {
