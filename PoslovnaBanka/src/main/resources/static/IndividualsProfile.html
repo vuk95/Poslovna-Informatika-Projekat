@@ -18,13 +18,13 @@ $(document).ready(function(){
 		url: "http://localhost:8083/individual/indivudalClient/" + queryString
 	}).then(
 		function(data) {
-			info = "<tr><td><strong>Name:</strong></td><td>" + data.name + "</td></tr>"
+			info = "<table class=\"table table-hover\"><tr><td><strong>Name:</strong></td><td>" + data.name + "</td></tr>"
 					+ "<tr><td><strong>Lastname:</strong></td><td>" + data.lastname + "</td></tr>"
 					+ "<tr><td><strong>Email:</strong></td><td>" + data.email + "</td></tr>"
 					+ "<tr><td><strong>JMBG:</strong></td><td>" + data.jmbg + "</td></tr>"
 					+ "<tr><td><strong>Address:</strong></td><td>" + data.address + "</td></tr>"
 					+ "<tr><td><strong>Place:</strong></td><td>" + data.place + "</td></tr>"
-					+ "<tr><td><strong>Phone:</strong></td><td>" + data.phone + "</td></tr>"
+					+ "<tr><td><strong>Phone:</strong></td><td>" + data.phone + "</td></tr></table>"
 			$("#individualInfo").append(info)
 		}		
 	)
@@ -100,10 +100,10 @@ $(document).ready(function(){
 					
 	<div class="container">
 		<div class="col-md-6">
-			
-			<table class="table table-hover" id="individualInfo">
+			<div id="individualInfo">
 				<!-- Deo sa podacima fizickog lica -->
-			</table>
+			</div>
+
 			<p>Ukoliko zelite da ih promenite kliknite <a href="#">ovde.</a></p>	
 		</div>
 		

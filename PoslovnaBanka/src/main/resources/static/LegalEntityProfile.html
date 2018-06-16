@@ -7,6 +7,33 @@
 	<script src="scripts/jquery-3.2.1.min.js"></script>
 	<script src="scripts/bootstrap.min.js"></script>
 
+<script>
+
+$(document).ready(function(){
+	
+	var queryString = decodeURIComponent(window.location.search);
+	queryString = queryString.substring(8);
+	
+	$.ajax({
+		url: "http://localhost:8083/legalEntity/leClient/" + queryString
+	}).then(
+		function(data) {
+			info = "<table class=\"table table-hover\"><tr><td><strong>Name:</strong></td><td>" + data.name + "</td></tr>"
+					+ "<tr><td><strong>Responsible person:</strong></td><td>" + data.responsiblePerson + "</td></tr>"
+					+ "<tr><td><strong>Email:</strong></td><td>" + data.email + "</td></tr>"
+					+ "<tr><td><strong>PIB:</strong></td><td>" + data.pib + "</td></tr>"
+					+ "<tr><td><strong>Address:</strong></td><td>" + data.address + "</td></tr>"
+					+ "<tr><td><strong>Place:</strong></td><td>" + data.place + "</td></tr>"
+					+ "<tr><td><strong>Phone:</strong></td><td>" + data.phone + "</td></tr>"
+					+ "<tr><td><strong>Fax:</strong></td><td>" + data.fax + "</td></tr></table>"
+			$("#legalEntityInfo").append(info)
+		}		
+	)
+});
+
+</script>
+
+
 </head>
 <body>
 
@@ -30,47 +57,10 @@
 	<div class="container">
 		<!-- Deo sa podacima korisnika -->
 		<div class="col-md-6">
+			<div id="legalEntityInfo">
+				<!-- Deo sa podacima fizickog lica -->
+			</div>
 			
-			
-			<table class="table table-hover" id="dataTable">
-				<tr>
-					<td><strong>Email:</strong></td>
-					<td class="email"></td>
-				</tr>
-				<tr>
-					<td><strong>Naziv:</strong></td>
-					<td class="name"></td>
-				</tr>
-				<tr>
-					<td><strong>Odgovorno lice:</strong></td>
-					<td class="responsiblePerson"></td>
-				</tr>
-				
-				<tr>
-					<td><strong>PIB:</strong></td>
-					<td class="pib"></td>
-				</tr>
-				
-				<tr>
-					<td><strong>Adresa:</strong></td>
-					<td class="address"></td>
-				</tr>
-				
-				<tr>
-					<td><strong>Grad:</strong></td>
-					<td class="place"></td>
-				</tr>
-				<tr>
-					<td><strong>Telefon:</strong></td>
-					<td class="phone"></td>
-				</tr>
-				
-				<tr>
-					<td><strong>Fax:</strong></td>
-					<td class="fax"></td>
-				</tr>
-				
-			</table>
 			<p>Ukoliko zelite da ih promenite kliknite <a href="#">ovde.</a></p>	
 		</div>
 		
