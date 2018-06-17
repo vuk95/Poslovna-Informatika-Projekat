@@ -29,11 +29,11 @@ $(document).ready(function(){
 							+ "<td class=\"email\">" + data[i].email + "</td>"
 							+ "<td class=\"phone\">" + data[i].phone + "</td>"
 							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/individual/" + data[i].id + "'>" 
-							+ "<img src='images/edit.gif'/></a></td>"
+							+ "<img src='images/edit.png'/></a></td>"
 							+ "<td><a class=\"remove\" href='/individual/" + data[i].id + "'>" 
 							+ "<img src='images/remove.gif'/></a></td>"
-							+ "<td><a class=\"create\"  href='/individual/indivudalClient/" + data[i].id +"'>" 
-							+ "<img src='images/create.png'/></a></td>"
+							+ "<td><a class=\"details\"  href='/individual/indivudalClient/" + data[i].id +"'>" 
+							+ "<img src='images/details.gif'/></a></td>"
 						+ "</tr>"
 					$("#dataTable").append(newRow)
 				}
@@ -210,7 +210,7 @@ $(document).on("click", ".edit", function(event){
 		});
 });
 
-$(document).on("click", ".create", function(event){
+$(document).on("click", ".details", function(event){
 	//ne salji get zahtev
 		event.preventDefault(); 
 	

@@ -30,11 +30,11 @@ $(document).ready(function(){
 							+ "<td class=\"phone\">" + data[i].phone + "</td>"
 							+ "<td class=\"fax\">" + data[i].fax + "</td>"
 							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/legalEntity/" + data[i].id + "'>" 
-							+ "<img src='images/edit.gif'/></a></td>"
+							+ "<img src='images/edit.png'/></a></td>"
 							+ "<td><a class=\"remove\" href='/legalEntity/" + data[i].id + "'>" 
 							+ "<img src='images/remove.gif'/></a></td>"
-							+ "<td><a class=\"create\" href='/legalEntity/leClient/" + data[i].id + "'>" 
-							+ "<img src='images/create.png'/></a></td>"
+							+ "<td><a class=\"details\" href='/legalEntity/leClient/" + data[i].id + "'>" 
+							+ "<img src='images/details.gif'/></a></td>"
 						+ "</tr>"
 					$("#dataTable").append(newRow)
 				}
@@ -168,7 +168,6 @@ $(document).ready(function(){
 				for (i = 0; i < data.length; i++) {
 					newRow = 
 						"<tr>"
-							+ "<td class=\"id\">" + data[i].id + "</td>"
 							+ "<td class=\"name\">" + data[i].name + "</td>"
 							+ "<td class=\"responsiblePerson\">" + data[i].responsiblePerson + "</td>"
 							+ "<td class=\"pib\">" + data[i].pib + "</td>"
@@ -178,9 +177,11 @@ $(document).ready(function(){
 							+ "<td class=\"phone\">" + data[i].phone + "</td>"
 							+ "<td class=\"fax\">" + data[i].fax + "</td>"
 							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/legalEntity/" + data[i].id + "'>" 
-							+ "<img src='images/edit.gif'/></a></td>"
+							+ "<img src='images/edit.png'/></a></td>"
 							+ "<td><a class=\"remove\" href='/legalEntity/" + data[i].id + "'>" 
 							+ "<img src='images/remove.gif'/></a></td>"
+							+ "<td><a class=\"details\" href='/legalEntity/leClient/" + data[i].id + "'>" 
+							+ "<img src='images/details.gif'/></a></td>"
 						+ "</tr>"
 						
 						$("#dataTable").append(newRow);	
@@ -219,7 +220,7 @@ $(document).on("click", ".edit", function(event){
 		});
 });
 
-$(document).on("click", ".create", function(event){
+$(document).on("click", ".details", function(event){
 	//ne salji get zahtev
 		event.preventDefault(); 
 	
@@ -342,7 +343,7 @@ function sync(item){
 						id="ime"/>
 				</p>
 				<p>
-					<label for="odgovornoLice">Odgovorno lice</label> <input type="text" name="lastname"
+					<label for="odgovornoLice">Odgovorno lice</label> <input type="text" name="responsiblePerson"
 						id="odgovornoLice" />
 				</p>
 				<p>
@@ -400,7 +401,7 @@ function sync(item){
 						id="ime"/>
 				</p>
 				<p>
-					<label for="odgovornoLice">Odgovorno lice</label> <input type="text" name="lastname"
+					<label for="odgovornoLice">Odgovorno lice</label> <input type="text" name="responsiblePerson"
 						id="odgovornoLice" />
 				</p>
 				<p>
@@ -458,7 +459,7 @@ function sync(item){
 						id="ime"/>
 				</p>
 				<p>
-					<label for="odgovornoLice">Odgovorno lice</label> <input type="text" name="lastname"
+					<label for="odgovornoLice">Odgovorno lice</label> <input type="text" name="responsiblePerson"
 						id="odgovornoLice" />
 				</p>
 				<p>

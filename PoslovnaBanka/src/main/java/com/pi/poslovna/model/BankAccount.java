@@ -1,6 +1,7 @@
 package com.pi.poslovna.model;
 
 import java.sql.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,17 +29,13 @@ public class BankAccount {
 	
 	@Column(name = "Raspoloziva_sredstva")
 	private String money; 
+		
+	@OneToMany
+	@Column(name = "Valuta")
+	private Set<Currency> currencies;
 	
-//  OVDE POSTOJE GRESKE!
-//	Zakomentarisani su i geteri i seteri za ova 2 polja
-//	
-//	@ManyToOne()
-//	@Column(name = "Valuta")
-//	private Currency currency;
-//	
-//	@OneToMany
-//	@Column(name = "Banka")
-//	private Bank bank;
+	@ManyToOne
+	private Bank bank;
 
 	
 	//PODACI O KLIJENTU
@@ -98,21 +95,24 @@ public class BankAccount {
 		this.money = money;
 	}
 
-//	public Currency getCurrency() {
-//		return currency;
-//	}
-//
-//	public void setCurrency(Currency currency) {
-//		this.currency = currency;
-//	}
-//
-//	public Bank getBank() {
-//		return bank;
-//	}
-//
-//	public void setBank(Bank bank) {
-//		this.bank = bank;
-//	}
+	public Set<Currency> getCurrencies() {
+		return currencies;
+	}
+
+	public void setCurrencies(Set<Currency> currencies) {
+		this.currencies = currencies;
+	}
+
+	public Bank getBank() {
+		return bank;
+	}
+
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
+	
+	
+
 	
 	
 }
