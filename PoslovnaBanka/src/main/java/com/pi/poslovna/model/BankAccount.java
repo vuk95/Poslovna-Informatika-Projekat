@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.pi.poslovna.model.clients.ClientType;
+import com.pi.poslovna.model.clients.Individuals;
+import com.pi.poslovna.model.clients.LegalEntities;
+
 @Entity(name = "Racun")
 public class BankAccount {
 
@@ -37,7 +41,15 @@ public class BankAccount {
 	@ManyToOne
 	private Bank bank;
 
+	@ManyToOne
+	private Individuals individual;
 	
+	@ManyToOne
+	private LegalEntities legalEntity;
+	
+	private ClientType clientType;
+	
+		
 	//PODACI O KLIJENTU
 /*	private String ime;
 	private String prezime;
@@ -46,8 +58,7 @@ public class BankAccount {
 	private int pib;
 	private String adresa;
 	private String mesto;
-	private CllientType type;
-	
+		
 */	
 	
 	public BankAccount() {
@@ -110,9 +121,36 @@ public class BankAccount {
 	public void setBank(Bank bank) {
 		this.bank = bank;
 	}
-	
-	
 
+
+	public Individuals getIndividual() {
+		return individual;
+	}
+
+
+	public void setIndividual(Individuals individual) {
+		this.individual = individual;
+	}
+
+
+	public LegalEntities getLegalEntity() {
+		return legalEntity;
+	}
+
+
+	public void setLegalEntity(LegalEntities legalEntity) {
+		this.legalEntity = legalEntity;
+	}
+
+
+	public ClientType getClientType() {
+		return clientType;
+	}
+
+
+	public void setClientType(ClientType clientType) {
+		this.clientType = clientType;
+	}
 	
-	
+		
 }

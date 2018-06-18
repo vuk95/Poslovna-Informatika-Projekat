@@ -34,6 +34,8 @@ public class Individuals {
 	@Column(name = "Telefon", columnDefinition="VARCHAR(40)")
 	private String phone;
 	
+	//private ClientType clientType;
+	
 	public Individuals() {
 		
 	}

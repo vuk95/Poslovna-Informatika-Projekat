@@ -41,7 +41,7 @@ public class LegalEntities {
 		
 	}
 
-	
+	//private ClientType clientType;
 	
 	public Long getId() {
 		return Id;
