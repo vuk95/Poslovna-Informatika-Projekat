@@ -72,7 +72,7 @@ $(document).ready(function(){
 			id:$("#updateForm [name='id']").val(),
 			name:$("#updateForm [name='name']").val(),
 			responsiblePerson:$("#updateForm [name='responsiblePerson']").val(),
-            pib:$("#updateForm [name='jmbg']").val(),
+            pib:$("#updateForm [name='pib']").val(),
             place:$("#updateForm [name='place']").val(),
             address:$("#updateForm [name='address']").val(),
             email:$("#updateForm [name='email']").val(),
@@ -80,7 +80,7 @@ $(document).ready(function(){
             fax:$("#updateForm [name='fax']").val(),
         });
 		$.ajax({
-			url: "http://localhost:8083/individual",
+			url: "http://localhost:8083/legalEntity",
 			type: "PUT",
 			data: formData,
 			//saljemo json i ocekujemo json nazad
@@ -131,11 +131,11 @@ $(document).ready(function(){
 							+ "<td class=\"email\">" + data.email + "</td>"
 							+ "<td class=\"phone\">" + data.phone + "</td>"
 							+ "<td class=\"fax\">" + data.fax + "</td>"
-							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/individual/" + data.id + "'>" 
+							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/legalEntity/" + data.id + "'>" 
 							+ "<img src='images/edit.png'/></a></td>"
-							+ "<td><a class=\"remove\" href='/individual/" + data.id + "'>" 
+							+ "<td><a class=\"remove\" href='/legalEntity/" + data.id + "'>" 
 							+ "<img src='images/remove.gif'/></a></td>"
-							+ "<td><a class=\"details\"  href='/individual/indivudalClient/" + data.id +"'>" 
+							+ "<td><a class=\"details\"  href='/legalEntity/leClient/" + data.id +"'>" 
 							+ "<img src='images/details.gif'/></a></td>"
 							
 						+ "</tr>"
