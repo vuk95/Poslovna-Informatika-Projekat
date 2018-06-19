@@ -37,11 +37,12 @@ public class LegalEntities {
 	@Column(name = "Fax")
 	private String fax;
 	
+	@Column(name = "Tip")
+	private ClientType clientType;
+	
 	public LegalEntities() {
 		
 	}
-
-	//private ClientType clientType;
 	
 	public Long getId() {
 		return Id;
@@ -120,6 +121,13 @@ public class LegalEntities {
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
-	
+
+	public ClientType getClientType() {
+		return clientType;
+	}
+
+	public void setClientType(ClientType clientType) {
+		this.clientType = clientType;
+	}
 	
 }

@@ -131,6 +131,12 @@ $(document).ready(function(){
 							+ "<td class=\"email\">" + data.email + "</td>"
 							+ "<td class=\"phone\">" + data.phone + "</td>"
 							+ "<td class=\"fax\">" + data.fax + "</td>"
+							+ "<td><a class=\"edit\" data-toggle=\"modal\" data-target=\"#updateModal\" href='/individual/" + data.id + "'>" 
+							+ "<img src='images/edit.png'/></a></td>"
+							+ "<td><a class=\"remove\" href='/individual/" + data.id + "'>" 
+							+ "<img src='images/remove.gif'/></a></td>"
+							+ "<td><a class=\"details\"  href='/individual/indivudalClient/" + data.id +"'>" 
+							+ "<img src='images/details.gif'/></a></td>"
 							
 						+ "</tr>"
 				$("#dataTable").append(newRow)

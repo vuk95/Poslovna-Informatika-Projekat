@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import com.pi.poslovna.model.clients.ClientType;
 import com.pi.poslovna.model.clients.LegalEntities;
 import com.pi.poslovna.model.dto.LegalEntityDTO;
 
@@ -29,6 +30,7 @@ public class LegalEntityDTOToLegalEntity implements Converter<LegalEntityDTO, Le
 		entities.setEmail(source.getEmail());
 		entities.setPhone(source.getPhone());
 		entities.setFax(source.getFax());
+		entities.setClientType(ClientType.LEGAL_ENTITY);
 		
 		return entities;
 	}

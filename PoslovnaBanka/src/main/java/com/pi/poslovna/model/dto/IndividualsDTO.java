@@ -7,6 +7,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.pi.poslovna.model.clients.ClientType;
+
 
 public class IndividualsDTO {
 	
@@ -28,6 +30,8 @@ public class IndividualsDTO {
 	private String email;
 	@NotEmpty
 	private String phone;
+	
+	private ClientType type;
 	
 	public Long getId() {
 		return id;
@@ -77,9 +81,16 @@ public class IndividualsDTO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+	public ClientType getType() {
+		return type;
+	}
+	public void setType(ClientType type) {
+		this.type = type;
+	}
 	
 	public IndividualsDTO(String name, String lastname, String jmbg, String place, String address, String email,
-			String phone) {
+			String phone, ClientType type) {
 		
 		this.name = name;
 		this.lastname = lastname;
@@ -88,6 +99,7 @@ public class IndividualsDTO {
 		this.address = address;
 		this.email = email;
 		this.phone = phone;
+		this.type = type;
 	}
 	
 	public IndividualsDTO() {

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import com.pi.poslovna.model.clients.ClientType;
 import com.pi.poslovna.model.clients.Individuals;
 import com.pi.poslovna.model.dto.IndividualsDTO;
 
@@ -28,6 +29,7 @@ public class IndividualsDTOToIndividuals implements Converter<IndividualsDTO,Ind
 		individual.setPhone(source.getPhone());
 		individual.setEmail(source.getEmail());
 		individual.setAddress(source.getAddress());
+		individual.setClientType(ClientType.INDIVIDUAL);
 		
 		return individual;
 	}

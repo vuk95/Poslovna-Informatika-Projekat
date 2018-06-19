@@ -85,6 +85,8 @@ public class IndividualClientController {
 		persons.setPlace(toIndividuals.convert(individualDTO).getPlace());
 		persons.setEmail(toIndividuals.convert(individualDTO).getEmail());
 		persons.setPhone(toIndividuals.convert(individualDTO).getPhone());
+		persons.setClientType(toIndividuals.convert(individualDTO).getClientType());
+		
 		
 		clientService.save(persons);
 		

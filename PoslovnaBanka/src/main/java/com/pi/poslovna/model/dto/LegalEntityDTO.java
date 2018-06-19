@@ -7,6 +7,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.pi.poslovna.model.clients.ClientType;
+
 public class LegalEntityDTO {
 
 	private Long Id;
@@ -38,12 +40,13 @@ public class LegalEntityDTO {
 	@NotEmpty
 	private String fax;
 	
+	private ClientType type;
 	
 	public LegalEntityDTO() {
 		
 	}
 
-	public LegalEntityDTO(String name,String responsiblePerson,String pib,String place,String address,String email,String phone,String fax) {
+	public LegalEntityDTO(String name,String responsiblePerson,String pib,String place,String address,String email,String phone,String fax, ClientType tip) {
 		
 		this.name = name;
 		this.responsiblePerson = responsiblePerson;
@@ -53,6 +56,7 @@ public class LegalEntityDTO {
 		this.email = email;
 		this.phone = phone;
 		this.fax = fax;
+		this.type = tip;
 		
 	}
 	
@@ -140,12 +144,17 @@ public class LegalEntityDTO {
 	public String getFax() {
 		return fax;
 	}
-
-
+	
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
-	
-	
-	
+
+	public ClientType getType() {
+		return type;
+	}
+
+	public void setType(ClientType type) {
+		this.type = type;
+	}
+
 }

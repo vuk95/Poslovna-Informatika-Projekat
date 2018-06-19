@@ -34,7 +34,8 @@ public class Individuals {
 	@Column(name = "Telefon", columnDefinition="VARCHAR(40)")
 	private String phone;
 	
-	//private ClientType clientType;
+	@Column(name = "Tip", columnDefinition="VARCHAR(40)")
+	private ClientType clientType;
 	
 	public Individuals() {
 		
@@ -103,6 +104,15 @@ public class Individuals {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+	public ClientType getClientType() {
+		return clientType;
+	}
+
+	public void setClientType(ClientType clientType) {
+		this.clientType = clientType;
+	}
+	
 	
 	
 }
