@@ -87,7 +87,6 @@ public class IndividualClientController {
 		persons.setPhone(toIndividuals.convert(individualDTO).getPhone());
 		persons.setClientType(toIndividuals.convert(individualDTO).getClientType());
 		
-		
 		clientService.save(persons);
 		
 		return new ResponseEntity<>(toIndividualsDTO.convert(persons),HttpStatus.OK);

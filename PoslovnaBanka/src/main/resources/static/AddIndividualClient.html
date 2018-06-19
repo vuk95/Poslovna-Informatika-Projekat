@@ -69,14 +69,15 @@ $(document).ready(function(){
 		
 		formData = JSON.stringify({
 			id:$("#updateForm [name='id']").val(),
-			name:$("#inputForm [name='name']").val(),
-            lastname:$("#inputForm [name='lastname']").val(),
-            jmbg:$("#inputForm [name='jmbg']").val(),
-            place:$("#inputForm [name='place']").val(),
-            address:$("#inputForm [name='address']").val(),
-            email:$("#inputForm [name='email']").val(),
-            phone:$("#inputForm [name='telephone']").val(),
+			name:$("#updateForm [name='name']").val(),
+            lastname:$("#updateForm [name='lastname']").val(),
+            jmbg:$("#updateForm [name='jmbg']").val(),
+            place:$("#updateForm [name='place']").val(),
+            address:$("#updateForm [name='address']").val(),
+            email:$("#updateForm [name='email']").val(),
+            phone:$("#updateForm [name='telephone']").val(),
         });
+		
 		$.ajax({
 			url: "http://localhost:8083/individual",
 			type: "PUT",

@@ -9,8 +9,8 @@ INSERT INTO korisnik (email,lozinka, bank_id) VALUES ("erste@gmail.com","passwor
 INSERT INTO korisnik (email,lozinka, bank_id) VALUES ("intesa@gmail.com","password", 2);
 
 -- FIZICKA LICA
--- INSERT INTO fizicka_lica (ime,prezime,jmbg,mesto,adresa,email,telefon) VALUES ("Marko","Markovic","1234567","Novi Sad","aaa","a@a","123");
--- INSERT INTO fizicka_lica (ime,prezime,jmbg,mesto,adresa,email,telefon) VALUES ("Marko","Jankovic","1234568","Beograd","aab","a@b","124");
+ INSERT INTO fizicka_lica (ime,prezime,jmbg,mesto,adresa,email,telefon,tip) VALUES ("Marko","Markovic","1234567","Novi Sad","aaa","a@a","123",0);
+ INSERT INTO fizicka_lica (ime,prezime,jmbg,mesto,adresa,email,telefon,tip) VALUES ("Marko","Jankovic","1234568","Beograd","aab","a@b","124",0);
 
 -- PRAVNA LICA
 -- INSERT INTO pravna_lica (poreski_identifikacioni_broj,adresa,email,fax,naziv,telefon,mesto,odgovorno_lice) VALUES
