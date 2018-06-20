@@ -12,4 +12,9 @@ public class UserController {
 	public ModelAndView getLoginPage() {
 		return new ModelAndView("login");
 	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView home() {
+		return new ModelAndView("login");
+	}
 }
