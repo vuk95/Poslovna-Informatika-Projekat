@@ -5,6 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pi.poslovna.model.Bank;
 
 @Entity(name = "Pravna_lica")
 public class LegalEntities {
@@ -39,6 +44,11 @@ public class LegalEntities {
 	
 	@Column(name = "Tip")
 	private ClientType clientType;
+	
+	@ManyToOne
+	@JoinColumn(name = "bank_id")
+	@JsonIgnore
+	private Bank bankLE;
 	
 	public LegalEntities() {
 		
@@ -128,6 +138,14 @@ public class LegalEntities {
 
 	public void setClientType(ClientType clientType) {
 		this.clientType = clientType;
+	}
+
+	public Bank getBankLE() {
+		return bankLE;
+	}
+
+	public void setBankLE(Bank bankLE) {
+		this.bankLE = bankLE;
 	}
 	
 }

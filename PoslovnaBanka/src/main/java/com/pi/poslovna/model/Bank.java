@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.pi.poslovna.model.clients.Individuals;
+import com.pi.poslovna.model.clients.LegalEntities;
 
 @Entity(name = "Banka")
 public class Bank {
@@ -47,6 +48,13 @@ public class Bank {
 			orphanRemoval = true
 	)
 	private List<Individuals> individualClients = new ArrayList<>();
+	
+	@OneToMany(
+			mappedBy = "bankLE",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true
+	)
+	private List<LegalEntities> legalEntityClients = new ArrayList<>();
 	
 	public Bank() {
 		
@@ -133,6 +141,14 @@ public class Bank {
 
 	public void setIndividualClients(List<Individuals> individualClients) {
 		this.individualClients = individualClients;
+	}
+
+	public List<LegalEntities> getLegalEntityClients() {
+		return legalEntityClients;
+	}
+
+	public void setLegalEntityClients(List<LegalEntities> legalEntityClients) {
+		this.legalEntityClients = legalEntityClients;
 	}
 	
 }

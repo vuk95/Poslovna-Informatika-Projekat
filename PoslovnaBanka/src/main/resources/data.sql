@@ -16,7 +16,11 @@ INSERT INTO korisnik (email,lozinka, bank_id) VALUES ("intesa@gmail.com","passwo
  INSERT INTO fizicka_lica (ime,prezime,jmbg,mesto,adresa,email,telefon,tip,bank_id) VALUES ("Dragan","Mance","9834285926718","Zemun","Maksima Gorkog 65","dragan@gmail.com","061343545",0, 2);
 
 -- PRAVNA LICA
--- INSERT INTO pravna_lica (poreski_identifikacioni_broj,adresa,email,fax,naziv,telefon,mesto,odgovorno_lice) VALUES
--- ('1234354','Marsala Tita 12','dssd@gmail.com','53534','SanRemoBar','1234432','Vrbas','Pera Peric');
--- INSERT INTO pravna_lica (poreski_identifikacioni_broj,adresa,email,fax,naziv,telefon,mesto,odgovorno_lice) VALUES
--- ('654676876','Sava Kovacevic 25','sk@gmail.com','6554','Capri','897978','Vrbas','Jovan Jovanovic');
+INSERT INTO pravna_lica (adresa, tip, email, fax, naziv, telefon, poreski_identifikacioni_broj, mesto, odgovorno_lice, bank_id)
+VALUES ("Marsala Tita 12",1,"sanremo@gmail.com","02195432","San Remo","0218403", "0834581274", "Vrbas", "Pera Peric", 1);
+INSERT INTO pravna_lica (adresa, tip, email, fax, naziv, telefon, poreski_identifikacioni_broj, mesto, odgovorno_lice, bank_id)
+VALUES ("Mihajla Pupina 32",1,"galija@gmail.com","02353432","Picerija Galija","0235430", "0367281924", "Zrenjanin", "Leandre Tawamba", 1);
+INSERT INTO pravna_lica (adresa, tip, email, fax, naziv, telefon, poreski_identifikacioni_broj, mesto, odgovorno_lice, bank_id)
+VALUES ("Humska 1",1,"kkpartizan@gmail.com","0113690395","KK Partizan","0113690664", "0705102643", "Beograd", "Predrag Danilovic", 2);
+INSERT INTO pravna_lica (adresa, tip, email, fax, naziv, telefon, poreski_identifikacioni_broj, mesto, odgovorno_lice, bank_id)
+VALUES ("Humska 1",1,"partizan@gmail.com","0113690395","Fudbalski Klub Partizan","0113690664", "100268842", "Beograd", "Milos Vazura", 2);

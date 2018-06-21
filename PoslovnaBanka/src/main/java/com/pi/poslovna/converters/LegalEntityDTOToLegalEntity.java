@@ -3,16 +3,22 @@ package com.pi.poslovna.converters;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import com.pi.poslovna.model.Bank;
 import com.pi.poslovna.model.clients.ClientType;
 import com.pi.poslovna.model.clients.LegalEntities;
 import com.pi.poslovna.model.dto.LegalEntityDTO;
+import com.pi.poslovna.service.BankService;
 
 @Component
 public class LegalEntityDTOToLegalEntity implements Converter<LegalEntityDTO, LegalEntities> {
 
+	@Autowired
+	private BankService bankService;
+	
 	@Override
 	public LegalEntities convert(LegalEntityDTO source) {
 		
@@ -31,6 +37,11 @@ public class LegalEntityDTOToLegalEntity implements Converter<LegalEntityDTO, Le
 		entities.setPhone(source.getPhone());
 		entities.setFax(source.getFax());
 		entities.setClientType(ClientType.LEGAL_ENTITY);
+		
+		if(source.getBankId() != null) {
+			Bank bank = bankService.findOne(source.getBankId());
+			entities.setBankLE(bank);
+		}
 		
 		return entities;
 	}

@@ -1,5 +1,6 @@
 package com.pi.poslovna.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pi.poslovna.converters.LegalEntityDTOToLegalEntity;
 import com.pi.poslovna.converters.LegalEntityToLegalEntityDTO;
+import com.pi.poslovna.model.Bank;
 import com.pi.poslovna.model.clients.LegalEntities;
 import com.pi.poslovna.model.dto.LegalEntityDTO;
+import com.pi.poslovna.model.users.User;
 import com.pi.poslovna.service.LegalEntityService;
+import com.pi.poslovna.service.UserService;
 
 @RestController
 @RequestMapping(value = "/legalEntity")
@@ -33,12 +37,24 @@ public class LegalEntityController {
 	@Autowired
 	private LegalEntityDTOToLegalEntity toLegalEntity;
 	
+	@Autowired
+	private UserService userService;
+	
 	@RequestMapping(value = "getEntities" , method = RequestMethod.GET)
 	public ResponseEntity<List<LegalEntityDTO>> getEntities() {
 		
 		List<LegalEntities> le = leService.findAll();
 		
 		return new ResponseEntity<>(toLegalEntityDTO.convert(le),HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "getBankEntities", method = RequestMethod.GET)
+	public ResponseEntity<List<LegalEntityDTO>> getBankEntities(Principal principal) {
+		User user = userService.getUserByEmail(principal.getName());
+		Bank bank = user.getBank();
+		List<LegalEntities> entities = bank.getLegalEntityClients();
+		
+		return new ResponseEntity<>(toLegalEntityDTO.convert(entities), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -54,13 +70,16 @@ public class LegalEntityController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<?> addLegalEntities(@Validated @RequestBody LegalEntityDTO leDTO, Errors errors){
+	public ResponseEntity<?> addLegalEntities(@Validated @RequestBody LegalEntityDTO leDTO, Errors errors, Principal principal){
+		User user = userService.getUserByEmail(principal.getName());
 		
 		if(errors.hasErrors()) {
 			return new ResponseEntity<String>(errors.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
 		}
 		
+		leDTO.setBankId(user.getBank().getId());
 		LegalEntities newLE = leService.save(toLegalEntity.convert(leDTO));
+		
 		return new ResponseEntity<>(toLegalEntityDTO.convert(newLE), HttpStatus.OK);
 	}
 	

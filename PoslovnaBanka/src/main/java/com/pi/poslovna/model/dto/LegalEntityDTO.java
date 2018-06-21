@@ -42,11 +42,13 @@ public class LegalEntityDTO {
 	
 	private ClientType type;
 	
+	private Long bankId;
+	
 	public LegalEntityDTO() {
 		
 	}
 
-	public LegalEntityDTO(String name,String responsiblePerson,String pib,String place,String address,String email,String phone,String fax, ClientType tip) {
+	public LegalEntityDTO(String name,String responsiblePerson,String pib,String place,String address,String email,String phone,String fax, ClientType tip, Long bankId) {
 		
 		this.name = name;
 		this.responsiblePerson = responsiblePerson;
@@ -57,7 +59,7 @@ public class LegalEntityDTO {
 		this.phone = phone;
 		this.fax = fax;
 		this.type = tip;
-		
+		this.bankId = bankId;
 	}
 	
 	
@@ -155,6 +157,14 @@ public class LegalEntityDTO {
 
 	public void setType(ClientType type) {
 		this.type = type;
+	}
+
+	public Long getBankId() {
+		return bankId;
+	}
+
+	public void setBankId(Long bankId) {
+		this.bankId = bankId;
 	}
 
 }

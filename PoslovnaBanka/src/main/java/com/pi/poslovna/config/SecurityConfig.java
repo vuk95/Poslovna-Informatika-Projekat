@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/").permitAll()
 			.antMatchers("/myBank").hasAuthority("USER")
 			.antMatchers("/individual/**").hasAuthority("USER")
+			.antMatchers("/legalEntity/**").hasAuthority("USER")
 			.and()
 			.formLogin()
 			.defaultSuccessUrl("/MyBank.html", true)
