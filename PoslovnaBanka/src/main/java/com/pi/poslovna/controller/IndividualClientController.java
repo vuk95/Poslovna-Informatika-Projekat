@@ -1,5 +1,6 @@
 package com.pi.poslovna.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pi.poslovna.converters.IndividualsDTOToIndividuals;
 import com.pi.poslovna.converters.IndividualsToIndividualsDTO;
+import com.pi.poslovna.model.Bank;
 import com.pi.poslovna.model.clients.Individuals;
 import com.pi.poslovna.model.dto.IndividualsDTO;
+import com.pi.poslovna.model.users.User;
 import com.pi.poslovna.service.IndividualClientService;
+import com.pi.poslovna.service.UserService;
+
 
 @RestController
 @RequestMapping(value = "/individual")
@@ -33,12 +38,24 @@ public class IndividualClientController {
 	@Autowired
 	private IndividualsDTOToIndividuals toIndividuals;
 	
+	@Autowired
+	private UserService userService;
+	
 	
 	@RequestMapping(value="getIndividuals", method = RequestMethod.GET)
 	public ResponseEntity<List<IndividualsDTO>> getIndividuals() {
 
 		List<Individuals> individuals = clientService.findAll();
 
+		return new ResponseEntity<>(toIndividualsDTO.convert(individuals), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="getBankIndividuals", method = RequestMethod.GET)
+	public ResponseEntity<List<IndividualsDTO>> getBankIndividuals(Principal principal) {
+		User user = userService.getUserByEmail(principal.getName());
+		Bank bank = user.getBank();
+		List<Individuals> individuals = bank.getIndividualClients();
+		
 		return new ResponseEntity<>(toIndividualsDTO.convert(individuals), HttpStatus.OK);
 	}
 	
@@ -55,13 +72,16 @@ public class IndividualClientController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<?> addIndividuals(@Validated @RequestBody IndividualsDTO individualDTO, Errors errors){
+	public ResponseEntity<?> addIndividuals(@Validated @RequestBody IndividualsDTO individualDTO, Errors errors, Principal principal){
+		User user = userService.getUserByEmail(principal.getName());
 		
 		if(errors.hasErrors()) {
 			return new ResponseEntity<String>(errors.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
 		}
 		
+		individualDTO.setBankId(user.getBank().getId());
 		Individuals newIndividual = clientService.save(toIndividuals.convert(individualDTO));
+		
 		return new ResponseEntity<>(toIndividualsDTO.convert(newIndividual), HttpStatus.OK);
 	}
 	

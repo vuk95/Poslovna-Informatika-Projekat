@@ -1,10 +1,17 @@
 package com.pi.poslovna.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.pi.poslovna.model.clients.Individuals;
 
 @Entity(name = "Banka")
 public class Bank {
@@ -33,6 +40,13 @@ public class Bank {
 	
 	@Column(name = "Fax")
 	private String fax;
+	
+	@OneToMany(
+			mappedBy = "bank",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true
+	)
+	private List<Individuals> individualClients = new ArrayList<>();
 	
 	public Bank() {
 		
@@ -112,6 +126,13 @@ public class Bank {
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
-	
+
+	public List<Individuals> getIndividualClients() {
+		return individualClients;
+	}
+
+	public void setIndividualClients(List<Individuals> individualClients) {
+		this.individualClients = individualClients;
+	}
 	
 }

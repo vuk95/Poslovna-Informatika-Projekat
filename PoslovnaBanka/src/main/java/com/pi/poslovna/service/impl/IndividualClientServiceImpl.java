@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pi.poslovna.model.clients.ClientType;
 import com.pi.poslovna.model.clients.Individuals;
 import com.pi.poslovna.repository.IndividualClientRepository;
 import com.pi.poslovna.service.IndividualClientService;

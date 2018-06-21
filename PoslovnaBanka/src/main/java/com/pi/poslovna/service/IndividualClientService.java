@@ -12,5 +12,4 @@ public interface IndividualClientService {
 	public Individuals delete(Long id);
 	public List<Individuals> findIndividuals(String name,String lastname,String jmbg,String place,String address,String email,String phone);
 	
-	
 }

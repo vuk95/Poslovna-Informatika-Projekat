@@ -33,6 +33,8 @@ public class IndividualsDTO {
 	
 	private ClientType type;
 	
+	private Long bankId;
+	
 	public Long getId() {
 		return id;
 	}
@@ -89,8 +91,14 @@ public class IndividualsDTO {
 		this.type = type;
 	}
 	
+	public Long getBankId() {
+		return bankId;
+	}
+	public void setBankId(Long bankId) {
+		this.bankId = bankId;
+	}
 	public IndividualsDTO(String name, String lastname, String jmbg, String place, String address, String email,
-			String phone, ClientType type) {
+			String phone, ClientType type, Long bankId) {
 		
 		this.name = name;
 		this.lastname = lastname;
@@ -100,6 +108,7 @@ public class IndividualsDTO {
 		this.email = email;
 		this.phone = phone;
 		this.type = type;
+		this.bankId = bankId;
 	}
 	
 	public IndividualsDTO() {

@@ -14,7 +14,7 @@
 
 $(document).ready(function(){
 	$.ajax({
-		url : "http://localhost:8083/individual/getIndividuals"
+		url : "http://localhost:8083/individual/getBankIndividuals"
 	}).then(
 			function(data) {
 				for (i = 0; i < data.length; i++) {
