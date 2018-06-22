@@ -22,6 +22,7 @@ import com.pi.poslovna.model.BankAccount;
 import com.pi.poslovna.model.clients.Individuals;
 import com.pi.poslovna.model.dto.IndividualsDTO;
 import com.pi.poslovna.model.users.User;
+import com.pi.poslovna.service.BankAccountService;
 import com.pi.poslovna.service.IndividualClientService;
 import com.pi.poslovna.service.UserService;
 
@@ -41,6 +42,9 @@ public class IndividualClientController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private BankAccountService accountService;
 	
 	
 	@RequestMapping(value="getIndividuals", method = RequestMethod.GET)
@@ -135,10 +139,19 @@ public class IndividualClientController {
 	}
 	
 	//Otvaranje racuna fizickog lica
-	//public ResponseEntity<BankAccount> openBankAccount() {
+	@RequestMapping(value = "/individualClient/{id}/openBankAccount" , method = RequestMethod.POST)
+	public ResponseEntity<BankAccount> openBankAccount(@PathVariable() Long id,@RequestBody BankAccount account) {
+	
+		Individuals person = clientService.findOne(id);
 		
-		//return new ResponseEntity<>(HttpStatus.OK); 
-	//}
+		account.setIndividual(person);
+		account.setBank(person.getBank());
+		account.setClientType(person.getClientType());
+		
+		accountService.save(account);
+		
+		return new ResponseEntity<>(account,HttpStatus.OK); 
+	}
 	
 }
 
