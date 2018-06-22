@@ -1,10 +1,14 @@
 package com.pi.poslovna.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity(name = "Valuta")
 public class Currency {
@@ -20,6 +24,12 @@ public class Currency {
 	private String name;
 	
 	private Boolean domicilna;
+	
+	@ManyToOne
+	private Country country;
+	
+	@OneToMany
+	private Set<CurrencyRate> currencyRates;
 	
 	public Currency() {
 		
@@ -57,6 +67,23 @@ public class Currency {
 	public void setDomicilna(Boolean domicilna) {
 		this.domicilna = domicilna;
 	}
+
+	public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
+	}
+
+	public Set<CurrencyRate> getCurrencyRates() {
+		return currencyRates;
+	}
+
+	public void setCurrencyRates(Set<CurrencyRate> currencyRates) {
+		this.currencyRates = currencyRates;
+	}
+	
 	
 	
 }

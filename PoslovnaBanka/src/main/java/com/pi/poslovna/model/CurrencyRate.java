@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "Kurs_u_valuti")
 public class CurrencyRate {
@@ -21,6 +22,12 @@ public class CurrencyRate {
 
 	@Column(name = "Prodajni")
 	private float sellingExchangeRate;
+	
+	@ManyToOne
+	private Currency currency;
+	
+	@ManyToOne
+	private ExchangeRateList exchangeRateList;
 	
 	public CurrencyRate() {
 		
@@ -67,6 +74,22 @@ public class CurrencyRate {
 		this.sellingExchangeRate = sellingExchangeRate;
 	}
 
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
+	}
+
+	public ExchangeRateList getExchangeRateList() {
+		return exchangeRateList;
+	}
+
+	public void setExchangeRateList(ExchangeRateList exchangeRateList) {
+		this.exchangeRateList = exchangeRateList;
+	}
+	
 	
 	
 	

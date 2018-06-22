@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pi.poslovna.converters.IndividualsDTOToIndividuals;
 import com.pi.poslovna.converters.IndividualsToIndividualsDTO;
 import com.pi.poslovna.model.Bank;
+import com.pi.poslovna.model.BankAccount;
 import com.pi.poslovna.model.clients.Individuals;
 import com.pi.poslovna.model.dto.IndividualsDTO;
 import com.pi.poslovna.model.users.User;
@@ -133,6 +134,11 @@ public class IndividualClientController {
 		return  new ResponseEntity<>(person,HttpStatus.OK);
 	}
 	
+	//Otvaranje racuna fizickog lica
+	//public ResponseEntity<BankAccount> openBankAccount() {
+		
+		//return new ResponseEntity<>(HttpStatus.OK); 
+	//}
 	
 }
 
