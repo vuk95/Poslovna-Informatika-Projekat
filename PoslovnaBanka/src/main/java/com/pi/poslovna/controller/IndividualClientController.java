@@ -139,18 +139,18 @@ public class IndividualClientController {
 	}
 	
 	//Otvaranje racuna fizickog lica
-	@RequestMapping(value = "/individualClient/{id}/openBankAccount" , method = RequestMethod.POST)
-	public ResponseEntity<BankAccount> openBankAccount(@PathVariable() Long id,@RequestBody BankAccount account) {
+	@RequestMapping(value = "/openBankAccount" , method = RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<BankAccount> openBankAccount(@RequestBody BankAccount account) {
 	
-		Individuals person = clientService.findOne(id);
+		//Individuals person = clientService.findOne(id);
 		
-		account.setIndividual(person);
-		account.setBank(person.getBank());
-		account.setClientType(person.getClientType());
+		//account.setIndividual(person);
+		//account.setBank(person.getBank());
+		//account.setClientType(person.getClientType());
 		
-		accountService.save(account);
+		BankAccount newAccount = accountService.save(account);
 		
-		return new ResponseEntity<>(account,HttpStatus.OK); 
+		return new ResponseEntity<>(newAccount,HttpStatus.OK); 
 	}
 	
 }
