@@ -38,7 +38,7 @@ $(document).ready(function(){
             active:$("#bankAccountForm [name='active']").val(),
         });
 		$.ajax({
-			url: "http://localhost:8083/individual/openBankAccount",
+			url: "http://localhost:8083/individual/indivudalClient/" + queryString +  "/openBankAccount",
 			type: "POST",
 			data: formData,
 			//saljemo json i ocekujemo json nazad
@@ -51,7 +51,7 @@ $(document).ready(function(){
 				  alert('Otvaranje racuna nije uspelo!');
 			  }
 			});
-	
+		$('#bankAccountModal').modal('toggle');
 });
 });
 </script>

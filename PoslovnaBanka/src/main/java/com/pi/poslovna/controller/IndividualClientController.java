@@ -40,11 +40,15 @@ public class IndividualClientController {
 	@Autowired
 	private IndividualsDTOToIndividuals toIndividuals;
 	
+	//@Autowired
+	//private BankAccountDTOToBankAccount toBankAccount;
+	
 	@Autowired
 	private UserService userService;
 	
 	@Autowired
 	private BankAccountService accountService;
+	
 	
 	
 	@RequestMapping(value="getIndividuals", method = RequestMethod.GET)
@@ -139,18 +143,22 @@ public class IndividualClientController {
 	}
 	
 	//Otvaranje racuna fizickog lica
-	@RequestMapping(value = "/openBankAccount" , method = RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<BankAccount> openBankAccount(@RequestBody BankAccount account) {
-	
-		//Individuals person = clientService.findOne(id);
+		@RequestMapping(value = "/indivudalClient/{id}/openBankAccount" , method = RequestMethod.POST, consumes="application/json")
+		public ResponseEntity<BankAccount> openBankAccount(@PathVariable() Long id ,@RequestBody BankAccount account) {
 		
-		//account.setIndividual(person);
-		//account.setBank(person.getBank());
-		//account.setClientType(person.getClientType());
-		
-		BankAccount newAccount = accountService.save(account);
-		
-		return new ResponseEntity<>(newAccount,HttpStatus.OK); 
+			Individuals person = clientService.findOne(id);
+			
+			System.out.println("Fizicko lice: " + person.getId());
+			System.out.println("Banka: " + person.getBank().getName());
+			System.out.println("Tip Klijenta: " + person.getClientType());
+			
+			//account.setIndividual(person);
+			//account.setBank(person.getBank());
+			account.setClientType(person.getClientType());
+			
+			BankAccount newAccount = accountService.save(account);
+			
+			return new ResponseEntity<>(newAccount,HttpStatus.OK); 
 	}
 	
 }
