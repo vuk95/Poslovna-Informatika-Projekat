@@ -1,7 +1,9 @@
 package com.pi.poslovna.controller;
 
 import java.security.Principal;
+import java.util.Calendar;
 import java.util.List;
+import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -143,22 +145,21 @@ public class IndividualClientController {
 	}
 	
 	//Otvaranje racuna fizickog lica
-		@RequestMapping(value = "/indivudalClient/{id}/openBankAccount" , method = RequestMethod.POST, consumes="application/json")
-		public ResponseEntity<BankAccount> openBankAccount(@PathVariable() Long id ,@RequestBody BankAccount account) {
+	@RequestMapping(value = "/indivudalClient/{id}/openBankAccount" , method = RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<BankAccount> openBankAccount(@PathVariable() Long id ,@RequestBody BankAccount account) {
+		Individuals person = clientService.findOne(id);
 		
-			Individuals person = clientService.findOne(id);
+		Calendar calendar = Calendar.getInstance();
+		Date today = new Date(calendar.getTime().getTime());
+		
+		account.setOpeningDate(today);
+		account.setIndividual(person);
+		account.setBank(person.getBank());
+		account.setClientType(person.getClientType());
+		
+		BankAccount newAccount = accountService.save(account);
 			
-			System.out.println("Fizicko lice: " + person.getId());
-			System.out.println("Banka: " + person.getBank().getName());
-			System.out.println("Tip Klijenta: " + person.getClientType());
-			
-			//account.setIndividual(person);
-			//account.setBank(person.getBank());
-			account.setClientType(person.getClientType());
-			
-			BankAccount newAccount = accountService.save(account);
-			
-			return new ResponseEntity<>(newAccount,HttpStatus.OK); 
+		return new ResponseEntity<>(newAccount,HttpStatus.OK); 
 	}
 	
 }
