@@ -33,7 +33,6 @@ $(document).ready(function(){
 		//pripremamo JSON koji cemo poslati
 		formData = JSON.stringify({
 			accountNumber:$("#bankAccountForm [name='accountNumber']").val(),
-			openingDate:$("#bankAccountForm [name='openingDate']").val(),
             money:$("#bankAccountForm [name='money']").val(),
             active:$("#bankAccountForm [name='active']").val(),
         });
@@ -92,10 +91,6 @@ $(document).ready(function(){
 				<p>
 					<label for="broj_racuna">Broj racuna:</label> <input type="text" name="accountNumber"
 						id="broj_racuna" />
-				</p>
-				<p>
-					<label for="datum">Datum otvaranja racuna:</label> <input type="text" name="openingDate"
-						id="datum" />
 				</p>
 				
 				<p>

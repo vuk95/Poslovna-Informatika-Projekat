@@ -1,6 +1,8 @@
 package com.pi.poslovna.controller;
 
 import java.security.Principal;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pi.poslovna.converters.LegalEntityDTOToLegalEntity;
 import com.pi.poslovna.converters.LegalEntityToLegalEntityDTO;
 import com.pi.poslovna.model.Bank;
+import com.pi.poslovna.model.BankAccount;
 import com.pi.poslovna.model.clients.LegalEntities;
 import com.pi.poslovna.model.dto.LegalEntityDTO;
 import com.pi.poslovna.model.users.User;
+import com.pi.poslovna.service.BankAccountService;
 import com.pi.poslovna.service.LegalEntityService;
 import com.pi.poslovna.service.UserService;
 
@@ -39,6 +43,9 @@ public class LegalEntityController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private BankAccountService accountService;
 	
 	@RequestMapping(value = "getEntities" , method = RequestMethod.GET)
 	public ResponseEntity<List<LegalEntityDTO>> getEntities() {
@@ -130,5 +137,25 @@ public class LegalEntityController {
 		
 		return new ResponseEntity<>(le,HttpStatus.OK);
 	}
+	
+	//Otvaranje racuna pravnog lica
+	@RequestMapping(value = "/leClient/{id}/openBankAccount" , method = RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<BankAccount> openBankAccount(@PathVariable() Long id ,@RequestBody BankAccount account) {
+		
+		LegalEntities le = leService.findOne(id);
+			
+		Calendar calendar = Calendar.getInstance();
+		Date today = new Date(calendar.getTime().getTime());
+			
+		account.setOpeningDate(today);
+		account.setLegalEntity(le);
+		account.setBank(le.getBankLE());
+		account.setClientType(le.getClientType());
+			
+		BankAccount newAccount = accountService.save(account);
+				
+		return new ResponseEntity<>(newAccount,HttpStatus.OK); 
+		
+		}
 	
 }

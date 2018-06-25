@@ -28,7 +28,32 @@ $(document).ready(function(){
 					+ "<tr><td><strong>Fax:</strong></td><td>" + data.fax + "</td></tr></table>"
 			$("#legalEntityInfo").append(info)
 		}		
-	)
+	);
+	
+	
+	$("#addBankAcount").click(function(){
+		//pripremamo JSON koji cemo poslati
+		formData = JSON.stringify({
+			accountNumber:$("#bankAccountForm [name='accountNumber']").val(),
+            money:$("#bankAccountForm [name='money']").val(),
+            active:$("#bankAccountForm [name='active']").val(),
+        });
+		$.ajax({
+			url: "http://localhost:8083/legalEntity/leClient/" + queryString +  "/openBankAccount",
+			type: "POST",
+			data: formData,
+			//saljemo json i ocekujemo json nazad
+			contentType: "application/json",
+			datatype: 'json',
+			success: function(data) {
+				 alert('Racun je otvoren!');
+			  },
+			  error: function(data) {
+				  alert('Otvaranje racuna nije uspelo!');
+			  }
+			});
+		$('#bankAccountModal').modal('toggle');
+});	
 });
 
 </script>
@@ -94,21 +119,17 @@ $(document).ready(function(){
 		      <div class="modal-body">
 					<input type="hidden" name="id" id="id" />
 				<p>
-					<label for="oznaka">Broj racuna:</label> <input type="text" name="code"
-						id="oznaka" />
-				</p>
-				<p>
-					<label for="naziv">Datum otvaranja racuna:</label> <input type="text" name="name"
-						id="naziv" />
+					<label for="broj_racuna">Broj racuna:</label> <input type="text" name="accountNumber"
+						id="broj_racuna" />
 				</p>
 				
 				<p>
-					<label for="naziv">Raspoloziva sredstva:</label> <input type="text" name="name"
-						id="naziv" />
+					<label for="sredstva">Raspoloziva sredstva:</label> <input type="text" name="money"
+						id="sredstva" />
 				</p>
 				
 				<p>
-					<label for="naziv">Vazeci:</label> <input  type="checkbox" name="vazeci" value="true"  disabled="disabled" checked="checked"/>
+					<label for="vazeci">Vazeci:</label> <input  type="checkbox" name="active"  id="vazeci" value="true"  disabled="disabled" checked="checked"/>
 				</p>
 						
 		      </div>
