@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pi.poslovna.model.BankAccount;
 import com.pi.poslovna.model.clients.Individuals;
 import com.pi.poslovna.repository.IndividualClientRepository;
 import com.pi.poslovna.service.IndividualClientService;
@@ -55,6 +56,15 @@ public class IndividualClientServiceImpl implements IndividualClientService{
 			String email, String phone) {
 		
 		return repository.findByNameIgnoreCaseContainingAndLastnameIgnoreCaseContainingAndJmbgIgnoreCaseContainingAndPlaceIgnoreCaseContainingAndAddressIgnoreCaseContainingAndEmailIgnoreCaseContainingAndPhoneIgnoreCaseContaining(name, lastname, jmbg, place, address, email, phone);
+	}
+
+	@Override
+	public void addBankAccount(BankAccount r, Long Id) {
+		
+		Individuals individual = repository.findOne(Id);
+		individual.getMojiRacuni().add(r);
+		repository.save(individual);
+		
 	}
 
 

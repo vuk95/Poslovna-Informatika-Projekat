@@ -22,6 +22,7 @@ public class BankAccount {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "racun_id")
 	private Long id;
 	
 	@Column(name = "Broj_racuna")

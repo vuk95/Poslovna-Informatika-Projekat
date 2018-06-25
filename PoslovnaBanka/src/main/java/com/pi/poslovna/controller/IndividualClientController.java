@@ -158,7 +158,8 @@ public class IndividualClientController {
 		account.setClientType(person.getClientType());
 		
 		BankAccount newAccount = accountService.save(account);
-			
+		clientService.addBankAccount(newAccount, person.getId());
+		
 		return new ResponseEntity<>(newAccount,HttpStatus.OK); 
 	}
 	
