@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pi.poslovna.model.BankAccount;
+import com.pi.poslovna.model.clients.Individuals;
 import com.pi.poslovna.model.clients.LegalEntities;
 import com.pi.poslovna.repository.LegalEntityRepository;
 import com.pi.poslovna.service.LegalEntityService;
@@ -52,6 +54,13 @@ public class LegalEntityServiceImpl implements LegalEntityService {
 			String address, String email, String phone, String fax) {
 		
 		return repository.findByNameIgnoreCaseContainingAndResponsiblePersonIgnoreCaseContainingAndPibIgnoreCaseContainingAndPlaceIgnoreCaseContainingAndAddressIgnoreCaseContainingAndEmailIgnoreCaseContainingAndPhoneIgnoreCaseContainingAndFaxIgnoreCaseContaining(name, responsiblePerson, pib, place, address, email, phone, fax);
+	}
+
+	@Override
+	public void addBankAccount(BankAccount r, Long Id) {
+		LegalEntities entity = repository.findOne(Id);
+		entity.getMojiRacuni().add(r);
+		repository.save(entity);
 	}
 
 }

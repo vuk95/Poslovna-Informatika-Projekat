@@ -26,6 +26,8 @@ $(document).ready(function(){
 					+ "<tr><td><strong>Place:</strong></td><td>" + data.place + "</td></tr>"
 					+ "<tr><td><strong>Phone:</strong></td><td>" + data.phone + "</td></tr>"
 					+ "<tr><td><strong>Fax:</strong></td><td>" + data.fax + "</td></tr></table>"
+					+ "<td><a class=\"details\"  href='/legalEntity/leClient/" + queryString + "/getBankAccounts'>" 
+					+ "<img src='images/details.gif'/></a></td>"
 			$("#legalEntityInfo").append(info)
 		}		
 	);
@@ -55,6 +57,30 @@ $(document).ready(function(){
 		$('#bankAccountModal').modal('toggle');
 });	
 });
+
+	$(document).on("click", ".details", function(event){
+	
+		event.preventDefault(); 
+	
+		var url = $(this).attr("href")
+		
+		$.ajax({
+        	url: url,
+        	type: "GET",
+    		contentType:"application/json",
+    		dataType:"json",
+        	success: function(data){
+        		if(data != null) {
+        			var qs = decodeURIComponent(window.location.search);
+    				window.location.href = "racuniLegal.html" + qs;
+    			}
+    		},
+    		error: function(jqxhr,textStatus,errorThrown) {
+    			alert(errorThrown);
+    		}	 
+				
+		});
+	});
 
 </script>
 

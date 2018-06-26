@@ -21,6 +21,7 @@ import com.pi.poslovna.converters.LegalEntityDTOToLegalEntity;
 import com.pi.poslovna.converters.LegalEntityToLegalEntityDTO;
 import com.pi.poslovna.model.Bank;
 import com.pi.poslovna.model.BankAccount;
+import com.pi.poslovna.model.clients.Individuals;
 import com.pi.poslovna.model.clients.LegalEntities;
 import com.pi.poslovna.model.dto.LegalEntityDTO;
 import com.pi.poslovna.model.users.User;
@@ -153,9 +154,29 @@ public class LegalEntityController {
 		account.setClientType(le.getClientType());
 			
 		BankAccount newAccount = accountService.save(account);
+		leService.addBankAccount(newAccount, le.getId());
 				
 		return new ResponseEntity<>(newAccount,HttpStatus.OK); 
 		
 		}
+	
+	@RequestMapping(value = "/leClient/{id}/getBankAccounts" , method = RequestMethod.GET)
+	public ResponseEntity<List<BankAccount>> getAllAccounts(@PathVariable Long id){
+		
+		LegalEntities leg = leService.findOne(id);
+		List<BankAccount> racuni = leg.getMojiRacuni();
+		return new ResponseEntity<>(racuni,HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(value = "/leClient/account/deactivate/{id}" , method = RequestMethod.GET)
+	public ResponseEntity<BankAccount> deactivateAccount(@PathVariable Long id){
+		
+		BankAccount bank_account = accountService.findOne(id);
+		bank_account.setActive(false);
+		accountService.save(bank_account);
+		return new ResponseEntity<>(bank_account,HttpStatus.OK);
+		
+	}
 	
 }
