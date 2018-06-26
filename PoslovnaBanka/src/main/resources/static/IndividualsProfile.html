@@ -25,6 +25,8 @@ $(document).ready(function(){
 					+ "<tr><td><strong>Address:</strong></td><td>" + data.address + "</td></tr>"
 					+ "<tr><td><strong>Place:</strong></td><td>" + data.place + "</td></tr>"
 					+ "<tr><td><strong>Phone:</strong></td><td>" + data.phone + "</td></tr></table>"
+					+ "<td><a class=\"details\"  href='/individual/individualClient/" + queryString + "/getBankAccounts'>" 
+					+ "<img src='images/details.gif'/></a></td>"
 			$("#individualInfo").append(info)
 		}		
 	);
@@ -53,6 +55,31 @@ $(document).ready(function(){
 		$('#bankAccountModal').modal('toggle');
 });
 });
+
+$(document).on("click", ".details", function(event){
+	//ne salji get zahtev
+		event.preventDefault(); 
+	
+		var url = $(this).attr("href")
+		//red koji se treba izbrisati ako je brisanje na serveru bilo uspesno
+		$.ajax({
+        	url: url,
+        	type: "GET",
+    		contentType:"application/json",
+    		dataType:"json",
+        	success: function(data){
+        		if(data != null) {
+        			var qs = decodeURIComponent(window.location.search);
+    				window.location.href = "racuniIndidivual.html" + qs;
+    			}
+    		},
+    		error: function(jqxhr,textStatus,errorThrown) {
+    			alert(errorThrown);
+    		}	 
+				
+		});
+});
+
 </script>
 
 

@@ -1,6 +1,7 @@
 package com.pi.poslovna.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.sql.Date;
@@ -161,6 +162,25 @@ public class IndividualClientController {
 		clientService.addBankAccount(newAccount, person.getId());
 		
 		return new ResponseEntity<>(newAccount,HttpStatus.OK); 
+	}
+	
+	@RequestMapping(value = "/individualClient/{id}/getBankAccounts" , method = RequestMethod.GET)
+	public ResponseEntity<List<BankAccount>> getAllAccounts(@PathVariable Long id){
+		
+		Individuals person = clientService.findOne(id);
+		List<BankAccount> racuni = person.getMojiRacuni();
+		return new ResponseEntity<>(racuni,HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(value = "/individualClient/account/deactivate/{id}" , method = RequestMethod.GET)
+	public ResponseEntity<BankAccount> deactivateAccount(@PathVariable Long id){
+		
+		BankAccount bank_account = accountService.findOne(id);
+		bank_account.setActive(false);
+		accountService.save(bank_account);
+		return new ResponseEntity<>(bank_account,HttpStatus.OK);
+		
 	}
 	
 }
