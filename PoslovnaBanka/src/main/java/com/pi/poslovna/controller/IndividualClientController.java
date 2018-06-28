@@ -1,7 +1,6 @@
 package com.pi.poslovna.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.sql.Date;
@@ -22,10 +21,12 @@ import com.pi.poslovna.converters.IndividualsDTOToIndividuals;
 import com.pi.poslovna.converters.IndividualsToIndividualsDTO;
 import com.pi.poslovna.model.Bank;
 import com.pi.poslovna.model.BankAccount;
+import com.pi.poslovna.model.DeactivateBankAccount;
 import com.pi.poslovna.model.clients.Individuals;
 import com.pi.poslovna.model.dto.IndividualsDTO;
 import com.pi.poslovna.model.users.User;
 import com.pi.poslovna.service.BankAccountService;
+import com.pi.poslovna.service.DeactivateBankAccountService;
 import com.pi.poslovna.service.IndividualClientService;
 import com.pi.poslovna.service.UserService;
 
@@ -52,7 +53,8 @@ public class IndividualClientController {
 	@Autowired
 	private BankAccountService accountService;
 	
-	
+	@Autowired
+	private DeactivateBankAccountService deactivateService;
 	
 	@RequestMapping(value="getIndividuals", method = RequestMethod.GET)
 	public ResponseEntity<List<IndividualsDTO>> getIndividuals() {
@@ -173,14 +175,15 @@ public class IndividualClientController {
 		
 	}
 	
-	@RequestMapping(value = "/individualClient/account/deactivate/{id}" , method = RequestMethod.GET)
-	public ResponseEntity<BankAccount> deactivateAccount(@PathVariable Long id){
+	@RequestMapping(value = "/individualClient/account/deactivate/{id}" , method = RequestMethod.POST)
+	public ResponseEntity<DeactivateBankAccount> deactivateAccount(@PathVariable Long id, @RequestBody String accountNumber){
 		
 		BankAccount bank_account = accountService.findOne(id);
 		bank_account.setActive(false);
+		DeactivateBankAccount dba = deactivateService.create(accountNumber, bank_account);
 		accountService.save(bank_account);
-		return new ResponseEntity<>(bank_account,HttpStatus.OK);
 		
+		return new ResponseEntity<>(dba,HttpStatus.OK);
 	}
 	
 }

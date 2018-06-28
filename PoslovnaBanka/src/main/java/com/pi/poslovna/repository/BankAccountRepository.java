@@ -8,5 +8,5 @@ import com.pi.poslovna.model.BankAccount;
 @Repository
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
 
-	
+	BankAccount findByAccountNumber(String accountNumber);
 }

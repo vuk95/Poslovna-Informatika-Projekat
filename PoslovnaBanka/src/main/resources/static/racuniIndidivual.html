@@ -10,8 +10,7 @@
 	<title>IndividualClientsAccounts</title>
 </head>
 <script>
-$(document).ready(
-		function() {
+$(document).ready(function() {
 			
 			var queryString = decodeURIComponent(window.location.search);
 			queryString = queryString.substring(8);
@@ -21,7 +20,6 @@ $(document).ready(
 			}).then(
 					function(data) {
 						for (i = 0; i < data.length; i++) {
-							if(data[i].active){
 							newRow = 
 								"<tr>"
 									+ "<td class=\"id\">" + data[i].id + "</td>"
@@ -29,41 +27,68 @@ $(document).ready(
 									+ "<td class=\"datum\">" + data[i].openingDate + "</td>"
 									+ "<td class=\"vazeci\">" + data[i].active + "</td>"
 									+ "<td class=\"sredstva\">" + data[i].money + "</td>"
-									+ "<td><a class=\"deactivate\" href='/individual/individualClient/account/deactivate/" + data[i].id + "'>" 
+									+ "<td><a class=\"deactivate\" data-toggle=\"modal\" data-target=\"#deactivateModal\" href='/individual/individualClient/account/deactivate/" + data[i].id + "'>" 
 									+ "<img src='images/remove.gif'/></a></td>"
 								+ "</tr>"
 							$("#dataTable").append(newRow)
-							}
 						}
 					});
-		});
-		
-$(document).on("click", ".deactivate", function(event){
-	//ne salji get zahtev
-		event.preventDefault(); 
-	
-		var url = $(this).attr("href")
-		//red koji se treba izbrisati ako je brisanje na serveru bilo uspesno
-		$.ajax({
-        	url: url,
-        	type: "GET",
-    		contentType:"application/json",
-    		dataType:"json",
-        	success: function(data){
-        		if(data != null) {
-        			var qs = decodeURIComponent(window.location.search);
-        			window.location.href = "racuniIndidivual.html" + qs;
-    				
-    			}
-    		},
-    		error: function(jqxhr,textStatus,errorThrown) {
-    			alert(errorThrown);
-    		}	 
-				
-		});
+			
+			$("#deactivate-btn").click(function(event){
+				event.preventDefault();
+				formData = $("#deactivateForm [name='accountNumber']").val();
+
+				$.ajax({
+					url: $("#deactivateForm [name='url']").val(),
+					type: "POST",
+					data: formData,
+					contentType: "application/json",
+					success: function(data) {
+						if(data != null) {
+							var qs = decodeURIComponent(window.location.search);
+		        			window.location.href = "racuniIndidivual.html" + qs;
+						} else {
+							alert('Ne postoji takav broj racuna!');
+						}
+					}
+				});
+			});
 });
+
+$(document).on("click", ".deactivate", function(event){
+	event.preventDefault();
+	var myurl = $(this).attr("href");
+	$("#deactivateModal [name='url']").val(myurl);
+});
+		
 </script>
 <body>
+	<!-- Dialog za zatvaranje racuna -->
+	<div class="modal" id="deactivateModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Unesite broj racuna na koji ce se preneti sva sredstva</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form id="deactivateForm">
+					<div class="modal-body">
+						<p>
+							<input type="hidden" name="url" id="url" disabled/> 
+							<input class="form-control" type="text" name="accountNumber" id="accountNumber" placeholder="Broj racuna" required="true"/>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+						<button type="button" class="btn btn-primary" id="deactivate-btn">Potvrdi</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
 	<h1>Individuals Accounts</h1>
 	<table border = "1" id="dataTable" class="table">
 			<tr>

@@ -1,8 +1,11 @@
 package com.pi.poslovna.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -49,6 +52,13 @@ public class BankAccount {
 	
 	@ManyToOne
 	private LegalEntities legalEntity;
+	
+	@OneToMany(
+			mappedBy = "bankAccount",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true
+	)
+	private List<DeactivateBankAccount> deactivate = new ArrayList<>();
 	
 	@Enumerated(EnumType.STRING)
 	private ClientType clientType;
@@ -155,6 +165,15 @@ public class BankAccount {
 	public void setClientType(ClientType clientType) {
 		this.clientType = clientType;
 	}
+
+
+	public List<DeactivateBankAccount> getDeactivate() {
+		return deactivate;
+	}
+
+
+	public void setDeactivate(List<DeactivateBankAccount> deactivate) {
+		this.deactivate = deactivate;
+	}
 	
-		
 }

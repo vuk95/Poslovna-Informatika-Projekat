@@ -32,6 +32,18 @@ public class BankAccountServiceImpl implements BankAccountService {
 		return repository.findAll();
 	}
 	
-	
+	@Override
+	public void prebaciSredstvaSaUgasenog(BankAccount sledbenik, BankAccount ugasen) {
+		int novaSredstva = Integer.parseInt(sledbenik.getMoney()) + Integer.parseInt(ugasen.getMoney());
+		ugasen.setMoney("0");
+		sledbenik.setMoney(Integer.toString(novaSredstva));
+		repository.save(sledbenik);
+		repository.save(ugasen);
+	}
+
+	@Override
+	public BankAccount findByAccountNumber(String accountNumber) {
+		return repository.findByAccountNumber(accountNumber);
+	}
 
 }
