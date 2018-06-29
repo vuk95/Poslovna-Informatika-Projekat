@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <nalog_za_prenos>
+        
+        <podaci_o_nalogodavcu>
+            <naziv_nalogodavca></naziv_nalogodavca>    
+            <adresa>
+                <mesto></mesto>
+                <ulica></ulica>
+                <broj></broj>
+                <postanski_broj></postanski_broj>
+            </adresa>
+        </podaci_o_nalogodavcu>
+            
+        <svrha_placanja></svrha_placanja>
+        
+        <podaci_o_primaocu>
+            <naziv_primaoca></naziv_primaoca>
+            <adresa>
+                <mesto></mesto>
+                <ulica></ulica>
+                <broj></broj>
+                <postanski_broj></postanski_broj>
+            </adresa>
+        </podaci_o_primaocu>
+        
+        
+        <podaci_o_prenosu>
+            <sifra_placanja></sifra_placanja>
+            <valuta></valuta>
+            <iznos></iznos>
+            <racun_nalogodavca></racun_nalogodavca>
+            <model></model> <!-- model zaduzenja -->
+            <poziv_na_broj_zaduznje></poziv_na_broj_zaduznje>
+            <racun_primaoca></racun_primaoca>
+            <model></model> <!-- model odobrenja -->
+            <poziv_na_broj_odobrenje></poziv_na_broj_odobrenje>
+        </podaci_o_prenosu>
+        
+        <!--
+         Na uplatnici postoji jos:
+         -potpis nalogodavca
+         --> 
+        
+        <podaci_o_prijemu>
+            <mesto_prijema></mesto_prijema>
+            <datum_prijema></datum_prijema>
+        </podaci_o_prijemu>
+        
+        <!-- Negde pise ovo, negde datum izvrsenja-->
+        <datum_valute></datum_valute>
+        
+        <hitno></hitno> <!-- Ovo polje treba da bude pretstavljeno kao check-box -->
+        
+    </nalog_za_prenos>
+        

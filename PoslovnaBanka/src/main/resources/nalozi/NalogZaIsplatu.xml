@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <nalog_za_isplatu>
+        
+        <podaci_o_platiocu>
+            <naziv_platioca></naziv_platioca>
+            <adresa>
+                <mesto></mesto>
+                <ulica></ulica>
+                <broj></broj>
+                <postanski_broj></postanski_broj>
+            </adresa>
+        </podaci_o_platiocu>
+        
+        <svrha_isplate></svrha_isplate>
+        
+        <podaci_o_primaocu>
+            <naziv_primaoca></naziv_primaoca>
+            <adresa>
+                <mesto></mesto>
+                <ulica></ulica>
+                <broj></broj>
+                <postanski_broj></postanski_broj>
+            </adresa>         
+        </podaci_o_primaocu>
+        
+        <podaci_o_isplati>
+            <sifra_placanja></sifra_placanja>
+            <valuta></valuta>
+            <iznos></iznos>
+            <racun_platioca></racun_platioca>
+            <model></model>
+            <poziv_na_broj></poziv_na_broj>
+        </podaci_o_isplati>
+        
+        <!--
+         Na uplatnici postoji jos:
+         -potpis platioca
+         -potpis primaoca (i broj licne karte)
+         --> 
+        
+        <podaci_o_prijemu>
+            <mesto_prijema></mesto_prijema>
+            <datum_prijema></datum_prijema>
+        </podaci_o_prijemu>
+        
+        <!-- Negde pise ovo, negde datum izvrsenja-->
+        <datum_valute></datum_valute>
+        
+        
+    </nalog_za_isplatu>

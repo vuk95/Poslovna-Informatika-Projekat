@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    
+    <izvod_klijenata>
+        
+        <zaglavlje_preseka>  
+            
+            <broj_racuna></broj_racuna>
+            <datum_naloga></datum_naloga>
+            <broj_preseka></broj_preseka> <!-- Redni broj preseka -->
+                
+            <stanje>
+                <prethodono_stanje></prethodono_stanje>
+                <novo_stanje></novo_stanje>
+            </stanje>
+                
+            <korist>    
+                <broj_promena_u_korist></broj_promena_u_korist>
+                <ukupno_u_korist></ukupno_u_korist>
+            </korist>
+            
+            <teret>
+                <broj_promena_na_teret></broj_promena_na_teret>
+                <ukupno_na_teret></ukupno_na_teret>
+            </teret>
+            
+        </zaglavlje_preseka>
+        
+        <stavke_preseka>
+            
+            <podaci_o_nalogodavcu>
+                <naziv_nalogodavca></naziv_nalogodavca>    
+                <adresa>
+                    <mesto></mesto>
+                    <ulica></ulica>
+                    <broj></broj>
+                    <postanski_broj></postanski_broj>
+                </adresa>
+            </podaci_o_nalogodavcu>
+            
+            <svrha_placanja></svrha_placanja>
+            
+            <podaci_o_primaocu>
+                <naziv_primaoca></naziv_primaoca>
+                <adresa>
+                    <mesto></mesto>
+                    <ulica></ulica>
+                    <broj></broj>
+                    <postanski_broj></postanski_broj>
+                </adresa>
+            </podaci_o_primaocu>
+            
+            <podaci_o_preseku> 
+                
+                <valuta></valuta> <!-- ne pise u specifikaciji, ali verujem da treba,cim postoji polje iznos-->
+                <iznos></iznos>
+                <smer></smer>
+                <racun_nalogodavca></racun_nalogodavca>
+                <model_zaduzenja></model_zaduzenja>
+                <poziv_na_broj_zaduznje></poziv_na_broj_zaduznje>
+                <racun_primaoca></racun_primaoca>
+                <model_odobrenja></model_odobrenja>
+                <poziv_na_broj_odobrenje></poziv_na_broj_odobrenje>
+                <datum_naloga></datum_naloga>
+            
+            </podaci_o_preseku>
+            
+            <!-- Negde pise ovo, negde datum izvrsenja-->
+            <datum_valute></datum_valute>
+            
+        </stavke_preseka>
+        
+        
+        
+    </izvod_klijenata>

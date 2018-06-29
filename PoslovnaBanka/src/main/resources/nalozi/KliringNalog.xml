@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <kliring_nalog>
+    
+    <!-- Struktura naloga za grupna placanja u kliringu -->
+        
+        <banka_nalogodavca>
+            <swift_kod_banke_nalogodavca></swift_kod_banke_nalogodavca>
+            <obracunski_racun_banke_nalogodavca></obracunski_racun_banke_nalogodavca>
+        </banka_nalogodavca>
+    
+        <banka_primaoca>
+            <swift_kod_banke_primaoca></swift_kod_banke_primaoca>
+            <obracunski_racun_banke_primaoca></obracunski_racun_banke_primaoca>
+        </banka_primaoca>
+    
+        <podaci_o_grupnom_nalogu>
+            <ukupan_iznos></ukupan_iznos>
+            <valuta></valuta>
+        </podaci_o_grupnom_nalogu>
+        
+        <!-- Negde pise ovo, negde datum izvrsenja-->
+        <datum_valute></datum_valute>
+        <datum></datum>
+    
+        <!-- Sekvenca za svako pojedinacno placanje koje je obuhvaceno ovim grupnim nalogom  -->
+        
+        <podaci_o_nalogodavcu>
+            <naziv_nalogodavca></naziv_nalogodavca>    
+            <adresa>
+                <mesto></mesto>
+                <ulica></ulica>
+                <broj></broj>
+                <postanski_broj></postanski_broj>
+            </adresa>
+        </podaci_o_nalogodavcu>
+        
+        <svrha_placanja></svrha_placanja>
+        
+        <podaci_o_primaocu>
+            <naziv_primaoca></naziv_primaoca>
+            <adresa>
+                <mesto></mesto>
+                <ulica></ulica>
+                <broj></broj>
+                <postanski_broj></postanski_broj>
+            </adresa>
+        </podaci_o_primaocu>
+        
+        <podaci_o_pojedinacnom_nalogu> 
+            
+            <valuta></valuta>
+            <iznos></iznos>
+            <racun_nalogodavca></racun_nalogodavca>
+            <model_zaduzenja></model_zaduzenja>
+            <poziv_na_broj_zaduznje></poziv_na_broj_zaduznje>
+            <racun_primaoca></racun_primaoca>
+            <model_odobrenja></model_odobrenja>
+            <poziv_na_broj_odobrenje></poziv_na_broj_odobrenje>
+            <datum_naloga></datum_naloga>
+        </podaci_o_pojedinacnom_nalogu>
+    
+    
+    </kliring_nalog>
