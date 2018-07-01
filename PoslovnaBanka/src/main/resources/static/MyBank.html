@@ -86,9 +86,9 @@
 			<div id="box">
 				<h3>Import stavki plaćanja</h3>
 				<hr>
-				<a href="#">Nalog za plaćanje</a><br>
-				<a href="#">Nalog za prenos</a><br>
-				<a href="#">Nalog za nešto treće</a>
+				<a href="#uplataModal" data-toggle="modal" data-target="#uplataModal">Nalog za uplatu</a><br>
+				<a href="#">Nalog za isplatu</a><br>
+				<a href="#">Nalog za prenos</a>
 			</div>
 		</div>
 		
@@ -97,6 +97,29 @@
 				<h3>Medjubankarski transfer</h3>
 				<hr>
 				<a href="#">Izvršite kliring</a><br>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modalni dijalog za nalog za uplatu -->
+	<div class="modal" id="uplataModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Nalog za uplatu</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          		<span aria-hidden="true">&times;</span>
+		        	</button>
+				</div>
+				<form id="uplataForm">
+					<div class="modal-body">
+						<input class="form-control" type="text" name="file-path" placeholder="Putanja do datoteke" required/>							
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+						<button type="button" class="btn btn-primary" id="uplataSubmit">Potvrdi</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
