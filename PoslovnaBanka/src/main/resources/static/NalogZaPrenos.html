@@ -1,0 +1,84 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="stylesheets/design.css">
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+</head>
+<body>
+	<form name="addDepositSlip">
+		<fieldset>
+
+
+		<div class="leftSideOfDepositSlip">
+			<div>
+				<label class="infoLabel"> Nalogodavac:</label> <input type="text" class="form-control bigerLabel">
+			</div>
+			<div>
+				<label class="infoLabel"> Svrha uplate:</label> <input type="text" class="form-control bigerLabel">
+			</div>
+			<div>
+				<label class="infoLabel"> Primalac:</label> <input type="text" class="form-control bigerLabel">
+			</div>
+		</div>
+		<div class="rightSideOfDepositSlip">
+			<div>
+				<div>
+				<label class="infoLabel"> Valuta</label><input type="text" class="form-control bigerLabel"/> 
+				</div>
+				<div>
+				<label class="infoLabel"> Iznos</label><input type="number" class="form-control bigerLabel"/>
+				</div>
+				
+			</div>
+
+			<div>
+				<label class="infoLabel"> Racun nalogodavca</label>
+				<input type="text" class="form-control">
+			</div>
+
+			<div>
+				<div>
+				<label class="infoLabel"> Model</label><input type="number" class="form-control">
+				</div>
+				<div>
+				<label class="infoLabel"> Poziv na broj odobrenja</label><input type="text" class="form-control">
+				</div>		
+			</div>
+
+			<div>
+				<label class="infoLabel"> Racun primaoca</label>
+				<input type="text" class="form-control">
+			</div>
+
+			<div>
+				<div>
+				<label class="infoLabel"> Model</label><input type="number" class="form-control">
+				</div>
+				<div>
+				<label class="infoLabel"> Poziv na broj odobrenja</label><input type="text" class="form-control">
+				</div>		
+			</div>
+			<br />
+			<div>
+				<label class="infoLabel"> Hitno </label> <input type="checkbox" value="1" name="" />
+			</div>
+		</div>
+
+	</fieldset>
+	<div class="dates">
+		<div class="depositSlipDateDiv">
+			<label class="infoLabel"> Datum primanja</label>
+			<input type="date" class="form-control">
+		</div>
+		<div class="currencySlipDateDiv">
+			<label class="infoLabel"> Datum valute</label>
+			<input type="date" class="form-control">
+		</div>
+	</div>
+
+	<div class="buttonsDepositSlip">
+		<button class="btn btn-primary">Posalji</button>
+		<button class="btn btn-primary">Odustani</button>
+	</div>
+	</form>
+</body>
+</html>
