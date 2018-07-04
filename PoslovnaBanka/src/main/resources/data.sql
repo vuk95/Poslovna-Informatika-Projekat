@@ -25,6 +25,10 @@ VALUES ("Humska 1",1,"kkpartizan@gmail.com","0113690395","KK Partizan","01136906
 INSERT INTO pravna_lica (adresa, tip, email, fax, naziv, telefon, poreski_identifikacioni_broj, mesto, odgovorno_lice, bank_id)
 VALUES ("Humska 1",1,"partizan@gmail.com","0113690395","Fudbalski Klub Partizan","0113690664", "100268842", "Beograd", "Milos Vazura", 2);
 
+--RACUNI
+INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("123456","2018-07-04",true,"1000",2, 3);
+INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("123457","2018-07-04",true,"100",2, 4);
+
 --DRZAVE
 INSERT INTO drzava (oznaka,naziv) values ('SRB','Srbija');
 INSERT INTO drzava (oznaka,naziv) values ('EU','Evropska unija');

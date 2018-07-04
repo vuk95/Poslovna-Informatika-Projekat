@@ -23,7 +23,29 @@
 							+ "<h5>" + data.phone + "</h5>"
 					$("#bankInfo").append(info)
 				}		
-			)
+			);
+			
+			$("#uplataSubmit").click(function(){
+				//pripremamo JSON koji cemo poslati
+				var data = {}
+				data["filePath"] = $("#uplataForm [name='file-path']").val();
+				
+				$.ajax({
+					url: "/import_uplata",
+					type: "POST",
+					data: data,
+					//saljemo json i ocekujemo json nazad
+					contentType: "application/json",
+					datatype: 'json',
+					success: function(data) {
+						alert('Uspesno ucitano')
+					  },
+					  error: function (request, status, error) {
+					        alert(request.responseText);
+					   }
+					});
+				$('#uplataModal').modal('toggle');
+			});
 		});
 	</script>
 </head>

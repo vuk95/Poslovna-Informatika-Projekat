@@ -2,6 +2,6 @@ package com.pi.poslovna.service;
 
 public interface UplataXMLReaderService {
 
-	public void readUplataXML();
+	public void readUplataXML(String filePath);
 	
 }
