@@ -2,34 +2,34 @@
     <nalog_za_isplatu>
         
         <podaci_o_platiocu>
-            <naziv_platioca></naziv_platioca>
+            <naziv_platioca>Stefan Milovic</naziv_platioca>
             <adresa>
-                <mesto></mesto>
-                <ulica></ulica>
-                <broj></broj>
-                <postanski_broj></postanski_broj>
+                <mesto>Vrbas</mesto>
+                <ulica>Rada Marjanca</ulica>
+                <broj>53/a</broj>
+                <postanski_broj>21460</postanski_broj>
             </adresa>
         </podaci_o_platiocu>
         
-        <svrha_isplate></svrha_isplate>
+        <svrha_isplate>Transfer igraca</svrha_isplate>
         
         <podaci_o_primaocu>
-            <naziv_primaoca></naziv_primaoca>
+            <naziv_primaoca>Sasa Ilic</naziv_primaoca>
             <adresa>
-                <mesto></mesto>
-                <ulica></ulica>
-                <broj></broj>
-                <postanski_broj></postanski_broj>
+                <mesto>Novi Sad</mesto>
+                <ulica>Trg Dositeja Obradovića</ulica>
+                <broj>6</broj>
+                <postanski_broj>21000</postanski_broj>
             </adresa>         
         </podaci_o_primaocu>
         
         <podaci_o_isplati>
-            <sifra_placanja></sifra_placanja>
-            <valuta></valuta>
-            <iznos></iznos>
-            <racun_platioca></racun_platioca>
-            <model></model>
-            <poziv_na_broj></poziv_na_broj>
+            <sifra_placanja>189</sifra_placanja>
+            <valuta>RSD</valuta>
+            <iznos>1000.00</iznos>
+            <racun_platioca>654321</racun_platioca>
+            <model>97</model>
+            <poziv_na_broj>1716151413121110987654321</poziv_na_broj>
         </podaci_o_isplati>
         
         <!--
@@ -40,11 +40,11 @@
         
         <podaci_o_prijemu>
             <mesto_prijema></mesto_prijema>
-            <datum_prijema></datum_prijema>
+            <datum_prijema>04-06-2018</datum_prijema>
         </podaci_o_prijemu>
         
         <!-- Negde pise ovo, negde datum izvrsenja-->
-        <datum_valute></datum_valute>
+        <datum_valute>05-06-2018</datum_valute>
         
         
     </nalog_za_isplatu>

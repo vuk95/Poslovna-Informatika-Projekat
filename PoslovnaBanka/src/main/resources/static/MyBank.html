@@ -46,6 +46,51 @@
 					});
 				$('#uplataModal').modal('toggle');
 			});
+			
+			$("#isplataSubmit").click(function(){
+				//pripremamo JSON koji cemo poslati
+				var data = {}
+				data["filePath"] = $("#isplataForm [name='file-path']").val();
+				
+				$.ajax({
+					url: "/import_isplata",
+					type: "POST",
+					data: data,
+					//saljemo json i ocekujemo json nazad
+					contentType: "application/json",
+					datatype: 'json',
+					success: function(data) {
+						alert('Uspesno ucitano')
+					  },
+					  error: function (request, status, error) {
+					        alert(request.responseText);
+					   }
+					});
+				$('#isplataModal').modal('toggle');
+			});
+			
+			$("#prenosSubmit").click(function(){
+				//pripremamo JSON koji cemo poslati
+				var data = {}
+				data["filePath"] = $("#prenosForm [name='file-path']").val();
+				
+				$.ajax({
+					url: "/import_prenos",
+					type: "POST",
+					data: data,
+					//saljemo json i ocekujemo json nazad
+					contentType: "application/json",
+					datatype: 'json',
+					success: function(data) {
+						alert('Uspesno ucitano')
+					  },
+					  error: function (request, status, error) {
+					        alert(request.responseText);
+					   }
+					});
+				$('#prenosModal').modal('toggle');
+			});
+			
 		});
 	</script>
 </head>
@@ -109,8 +154,8 @@
 				<h3>Import stavki plaćanja</h3>
 				<hr>
 				<a href="#uplataModal" data-toggle="modal" data-target="#uplataModal">Nalog za uplatu</a><br>
-				<a href="#">Nalog za isplatu</a><br>
-				<a href="#">Nalog za prenos</a>
+				<a href="#isplataModal" data-toggle="modal" data-target="#isplataModal">Nalog za isplatu</a><br>
+				<a href="#prenosModal" data-toggle="modal" data-target="#prenosModal">Nalog za prenos</a>
 			</div>
 		</div>
 		
@@ -146,6 +191,54 @@
 		</div>
 	</div>
 
+
+	<!-- Modalni dijalog za nalog za isplatu -->
+	<div class="modal" id="isplataModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Nalog za isplatu</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          		<span aria-hidden="true">&times;</span>
+		        	</button>
+				</div>
+				<form id="isplataForm">
+					<div class="modal-body">
+						<input class="form-control" type="text" name="file-path" placeholder="Putanja do datoteke" required/>							
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+						<button type="button" class="btn btn-primary" id="isplataSubmit">Potvrdi</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modalni dijalog za nalog za prenos -->
+	<div class="modal" id="prenosModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Nalog za prenos</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          		<span aria-hidden="true">&times;</span>
+		        	</button>
+				</div>
+				<form id="uplataForm">
+					<div class="modal-body">
+						<input class="form-control" type="text" name="file-path" placeholder="Putanja do datoteke" required/>							
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+						<button type="button" class="btn btn-primary" id="prenosSubmit">Potvrdi</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
 
 </body>
 </html>
