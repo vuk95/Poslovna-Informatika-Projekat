@@ -173,11 +173,13 @@ public class LegalEntityController {
 		
 	}
 	
+	//Gasenje racuna
 	@RequestMapping(value = "/leClient/account/deactivate/{id}" , method = RequestMethod.POST)
 	public ResponseEntity<DeactivateBankAccount> deactivateAccount(@PathVariable Long id, @RequestBody String accountNumber){
 		
 		BankAccount bank_account = accountService.findOne(id);
 		bank_account.setActive(false);
+		bank_account.setMoney("0");
 		DeactivateBankAccount dba = deactivateService.create(accountNumber, bank_account);
 		accountService.save(bank_account);
 		
