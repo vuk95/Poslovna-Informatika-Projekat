@@ -25,9 +25,8 @@ $(document).ready(function(){
 					+ "<tr><td><strong>Address:</strong></td><td>" + data.address + "</td></tr>"
 					+ "<tr><td><strong>Place:</strong></td><td>" + data.place + "</td></tr>"
 					+ "<tr><td><strong>Phone:</strong></td><td>" + data.phone + "</td></tr></table>"
-					+ "<td><a class=\"details\"  href='/individual/individualClient/" + queryString + "/getBankAccounts'>" 
-					+ "<img src='images/details.gif'/></a></td>"
-			$("#individualInfo").append(info)
+			$("#individualInfo").append(info);
+			$("#gasenje").append("<a class=\"details\"  href='/individual/individualClient/" + queryString + "/getBankAccounts'>Zatvori racun</a>");
 		}		
 	);
 	
@@ -158,7 +157,7 @@ $(document).on("click", ".details", function(event){
 				<h3 >Deo za funkcionalnosti nad klijentima!</h3>
 				 <ul>
       				<li><a href="#bankAccountModal" data-toggle="modal" data-target="#bankAccountModal"  id="bankAccount">Otvori racun</a></li>
-      				<li><a href="#">Zatvori racun</a></li>
+      				<li id="gasenje"></li>
       				<li><a href="#">Stanje na racunu</a></li>
       				<li><a href="#">Prihodi za odredjeni vremenski period</a></li>
       				<li><a href="#">.....</a></li>
