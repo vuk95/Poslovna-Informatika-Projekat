@@ -2,38 +2,38 @@
     <nalog_za_prenos>
         
         <podaci_o_nalogodavcu>
-            <naziv_nalogodavca></naziv_nalogodavca>    
+            <naziv_nalogodavca>Stefan Milovic</naziv_nalogodavca>    
             <adresa>
-                <mesto></mesto>
-                <ulica></ulica>
-                <broj></broj>
-                <postanski_broj></postanski_broj>
+                <mesto>Vrbas</mesto>
+                <ulica>Rada Marjanca</ulica>
+                <broj>53/a</broj>
+                <postanski_broj>21460</postanski_broj>
             </adresa>
         </podaci_o_nalogodavcu>
             
-        <svrha_placanja></svrha_placanja>
+        <svrha_placanja>Transfer igraca u drugi klub</svrha_placanja>
         
         <podaci_o_primaocu>
-            <naziv_primaoca></naziv_primaoca>
+            <naziv_primaoca>Sasa Ilic</naziv_primaoca>
             <adresa>
-                <mesto></mesto>
-                <ulica></ulica>
-                <broj></broj>
-                <postanski_broj></postanski_broj>
+                <mesto>Beograd</mesto>
+                <ulica>Humska</ulica>
+                <broj>1</broj>
+                <postanski_broj>11000</postanski_broj>
             </adresa>
         </podaci_o_primaocu>
         
         
         <podaci_o_prenosu>
-            <sifra_placanja></sifra_placanja>
-            <valuta></valuta>
-            <iznos></iznos>
-            <racun_nalogodavca></racun_nalogodavca>
-            <model></model> <!-- model zaduzenja -->
-            <poziv_na_broj_zaduznje></poziv_na_broj_zaduznje>
-            <racun_primaoca></racun_primaoca>
-            <model></model> <!-- model odobrenja -->
-            <poziv_na_broj_odobrenje></poziv_na_broj_odobrenje>
+            <sifra_placanja>189</sifra_placanja>
+            <valuta>RSD</valuta>
+            <iznos>1000.00</iznos>
+            <racun_nalogodavca>123456</racun_nalogodavca>
+            <model_zaduzenja>97</model_zaduzenja> <!-- model zaduzenja -->
+            <poziv_na_broj_zaduznje>1234567891011121314151617</poziv_na_broj_zaduznje>
+            <racun_primaoca>654321</racun_primaoca>
+            <model_odobrenja>79</model_odobrenja> <!-- model odobrenja -->
+            <poziv_na_broj_odobrenje>1716151413121110987654321</poziv_na_broj_odobrenje>
         </podaci_o_prenosu>
         
         <!--
@@ -43,13 +43,13 @@
         
         <podaci_o_prijemu>
             <mesto_prijema></mesto_prijema>
-            <datum_prijema></datum_prijema>
+            <datum_prijema>03-06-2018</datum_prijema>
         </podaci_o_prijemu>
         
         <!-- Negde pise ovo, negde datum izvrsenja-->
-        <datum_valute></datum_valute>
+        <datum_valute>05-06-2018</datum_valute>
         
-        <hitno></hitno> <!-- Ovo polje treba da bude pretstavljeno kao check-box -->
+        <hitno>true</hitno> <!-- Ovo polje treba da bude pretstavljeno kao check-box -->
         
     </nalog_za_prenos>
         

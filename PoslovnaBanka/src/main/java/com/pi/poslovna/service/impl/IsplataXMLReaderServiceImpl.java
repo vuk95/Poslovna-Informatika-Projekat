@@ -73,7 +73,7 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 		if(ispl.getNodeType() == Node.ELEMENT_NODE) {
 			Element elem = (Element) ispl;
 			
-			//TO DO: fali iznos
+			//Iznos
 			float sum = Float.parseFloat(elem.getElementsByTagName("iznos").item(0).getTextContent());
 			analitika.setSum(sum);
 			

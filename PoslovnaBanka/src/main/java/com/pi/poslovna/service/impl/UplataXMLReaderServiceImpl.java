@@ -70,10 +70,14 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 			Node uplata = podaci_upl.item(0);
 			
 			if(uplata.getNodeType() == Node.ELEMENT_NODE) {
-				//racun onog ko prima, model i poziv na broj
+				//racun onog ko prima,iznos, model i poziv na broj
 				Element el1 = (Element) uplata;
 				analitika.setAccountRecipient(el1.getElementsByTagName("racun_primaoca").item(0).getTextContent());
 	
+				//Iznos
+				float sum = Float.parseFloat(el1.getElementsByTagName("iznos").item(0).getTextContent());
+				analitika.setSum(sum);
+				
 				int modelApproval =Integer.parseInt(el1.getElementsByTagName("model").item(0).getTextContent());
 				analitika.setModelApproval(modelApproval);
 				
