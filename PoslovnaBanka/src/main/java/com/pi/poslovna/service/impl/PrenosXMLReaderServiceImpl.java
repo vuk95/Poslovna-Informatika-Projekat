@@ -51,6 +51,7 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 			System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
 			
 			AnalyticsOfStatement analitika = new AnalyticsOfStatement();
+			AnalyticsOfStatement analitika2 = new AnalyticsOfStatement();
 			
 			NodeList nalogodavac = doc.getElementsByTagName("podaci_o_nalogodavcu");
 			
@@ -59,13 +60,14 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 			//Nalogodavac (Uplatioc)
 			if(nalo.getNodeType() == Node.ELEMENT_NODE) {
 				Element elem = (Element) nalo;
-				analitika.setDebtor(elem.getElementsByTagName("naziv_nalogodavca").item(0).getTextContent());	
+				analitika.setDebtor(elem.getElementsByTagName("naziv_nalogodavca").item(0).getTextContent());
+				analitika2.setDebtor(elem.getElementsByTagName("naziv_nalogodavca").item(0).getTextContent());
 			}
 			
 			//Svrha placanja
 			Node svrha = doc.getElementsByTagName("svrha_placanja").item(0);
 			analitika.setPurposeOfPayment(svrha.getTextContent());
-			
+			analitika2.setPurposeOfPayment(svrha.getTextContent());
 			//Primaoc
 			NodeList primaoc = doc.getElementsByTagName("podaci_o_primaocu");
 			Node prim = primaoc.item(0);
@@ -73,6 +75,8 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 			if(prim.getNodeType() == Node.ELEMENT_NODE) {
 				Element elem = (Element) prim;
 				analitika.setRecipient(elem.getElementsByTagName("naziv_primaoca").item(0).getTextContent());
+				analitika2.setRecipient(elem.getElementsByTagName("naziv_primaoca").item(0).getTextContent());
+				
 			}
 			
 			//Podaci o prenosu
@@ -85,26 +89,35 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 				//Iznos
 				float sum = Float.parseFloat(elem.getElementsByTagName("iznos").item(0).getTextContent());
 				analitika.setSum(sum);
+				analitika2.setSum(sum);
 				
 				//Racun nalogodavca (platioca)
 				analitika.setDebtorAccount(elem.getElementsByTagName("racun_nalogodavca").item(0).getTextContent());
+				analitika2.setDebtorAccount(elem.getElementsByTagName("racun_nalogodavca").item(0).getTextContent());
 				
 				//Model zaduzenja
 				int modelAssigments = Integer.parseInt(elem.getElementsByTagName("model_zaduzenja").item(0).getTextContent());
 				analitika.setModelAssigments(modelAssigments);
+				analitika2.setModelAssigments(modelAssigments);
 				
 				//Poziv na broj zaduzenja
 				analitika.setReferenceNumberAssigments(elem.getElementsByTagName("poziv_na_broj_zaduznje").item(0).getTextContent());
+				analitika2.setReferenceNumberAssigments(elem.getElementsByTagName("poziv_na_broj_zaduznje").item(0).getTextContent());
 				
 				//Racun primaoca
 				analitika.setAccountRecipient(elem.getElementsByTagName("racun_primaoca").item(0).getTextContent());
+				analitika2.setAccountRecipient(elem.getElementsByTagName("racun_primaoca").item(0).getTextContent());
 				
 				//Model odobrenja
 				int modelApproval =Integer.parseInt(elem.getElementsByTagName("model_odobrenja").item(0).getTextContent());
 				analitika.setModelApproval(modelApproval);
+				analitika2.setModelApproval(modelApproval);
+				
 				
 				//Poziv na broj odobrenja
 				analitika.setReferenceNumberApproval(elem.getElementsByTagName("poziv_na_broj_odobrenje").item(0).getTextContent());
+				analitika2.setReferenceNumberApproval(elem.getElementsByTagName("poziv_na_broj_odobrenje").item(0).getTextContent());
+				
 			}
 			
 			//Podaci o prijemu
@@ -116,6 +129,8 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 				Element elem = (Element)  prij;
 				Date dateOfReceipt = format.parse(elem.getElementsByTagName("datum_prijema").item(0).getTextContent());
 				analitika.setDateOfReceipt(dateOfReceipt);
+				analitika2.setDateOfReceipt(dateOfReceipt);
+				
 			}
 			else {
 				System.out.println("Nema datuma...");
@@ -127,6 +142,7 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 			if(doc.getElementsByTagName("datum_valute").item(0).getTextContent() != "") {
 				Date currencyDate = format.parse(datumValute.getTextContent());
 				analitika.setCurrencyDate(currencyDate);
+				analitika2.setCurrencyDate(currencyDate);
 			}
 			else {
 				System.out.println("Nema datuma...");
@@ -135,7 +151,41 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 			//Hitno
 			boolean hitno = Boolean.parseBoolean(doc.getElementsByTagName("hitno").item(0).getTextContent());
 			analitika.setEmergency(hitno);
+			analitika2.setEmergency(hitno);
 			
+			//Primaoc
+			
+			DailyAccountBalance dabPrimaoc = new DailyAccountBalance();
+			dabPrimaoc.setTrafficDate(analitika.getDateOfReceipt());
+			dabPrimaoc.setTrafficToBenefit(analitika.getSum());
+			dabPrimaoc.setTrafficToTheBurden(0.0f);
+			BankAccount racunPrimaoc = accountService.findByAccountNumber(analitika.getAccountRecipient());
+			
+			dabPrimaoc.setPreviousState(Float.parseFloat(racunPrimaoc.getMoney()));
+			dabPrimaoc.setNewState(dabPrimaoc.getPreviousState() + dabPrimaoc.getTrafficToBenefit() - dabPrimaoc.getTrafficToTheBurden());
+			racunPrimaoc.setMoney(dabPrimaoc.getNewState().toString());
+			
+			dabPrimaoc.setRacun(racunPrimaoc);
+			balanceService.save(dabPrimaoc);
+			analitika.setDnevnoStanjeIzvoda(dabPrimaoc);
+			
+			//Posiljaoc
+			
+			DailyAccountBalance dabPosiljaoc = new DailyAccountBalance();
+			dabPosiljaoc.setTrafficDate(analitika2.getDateOfReceipt());
+			dabPosiljaoc.setTrafficToBenefit(0.0f);
+			dabPosiljaoc.setTrafficToTheBurden(analitika2.getSum());
+			BankAccount racunPosiljaoc = accountService.findByAccountNumber(analitika2.getDebtorAccount());
+			dabPosiljaoc.setPreviousState(Float.parseFloat(racunPosiljaoc.getMoney()));
+			dabPosiljaoc.setNewState(dabPosiljaoc.getPreviousState() + dabPosiljaoc.getTrafficToBenefit() - dabPosiljaoc.getTrafficToTheBurden());
+			racunPosiljaoc.setMoney(dabPosiljaoc.getNewState().toString());
+			
+			dabPosiljaoc.setRacun(racunPosiljaoc);
+			balanceService.save(dabPosiljaoc);
+			analitika2.setDnevnoStanjeIzvoda(dabPosiljaoc);
+			
+			analyticService.save(analitika);
+			analyticService.save(analitika2);
 			//Mora se ispraviti analitka izvoda za prenos jer tu treba da ima dva sloga.
 			}
 			catch(Exception e) {
