@@ -16,7 +16,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 import com.pi.poslovna.model.AnalyticsOfStatement;
+import com.pi.poslovna.model.BankAccount;
+import com.pi.poslovna.model.DailyAccountBalance;
 import com.pi.poslovna.service.AnalyticsOfStatementService;
+import com.pi.poslovna.service.BankAccountService;
+import com.pi.poslovna.service.DailyAccountBalanceService;
 import com.pi.poslovna.service.UplataXMLReaderService;
 
 @Transactional
@@ -26,6 +30,13 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 	@Autowired
 	private AnalyticsOfStatementService analyticsService;
 
+	@Autowired
+	private DailyAccountBalanceService balanceService;
+	
+	@Autowired
+	private BankAccountService accountService;
+	
+	
 	@Override
 	public void readUplataXML(String filePath) {
 		try {
@@ -112,7 +123,24 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 			else {
 				System.out.println("Nema datuma...");
 			}
-		
+			//kreiramo novo dnevno stanje racuna za svaku analitiku
+			DailyAccountBalance dab = new DailyAccountBalance();
+			dab.setTrafficDate(analitika.getDateOfReceipt());
+			//prihod je suma uplate iz analitike
+			dab.setTrafficToBenefit(analitika.getSum());
+			//gubitak je u slucaju naloga za uplatu 0
+			dab.setTrafficToTheBurden(0.0f);
+			//nadjemo taj racun iz analitike
+			BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
+			//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
+			dab.setPreviousState(Float.parseFloat(racun.getMoney()));
+			dab.setNewState(dab.getPreviousState() + dab.getTrafficToBenefit() - dab.getTrafficToTheBurden());
+			//setujemo novo stanje i na racun
+			racun.setMoney(dab.getNewState().toString());
+			
+			dab.setRacun(racun);
+			balanceService.save(dab);
+			analitika.setDnevnoStanjeIzvoda(dab);
 			analyticsService.save(analitika);
 			
 		} catch(Exception e) {

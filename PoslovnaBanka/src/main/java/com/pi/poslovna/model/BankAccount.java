@@ -63,7 +63,7 @@ public class BankAccount {
 	@Enumerated(EnumType.STRING)
 	private ClientType clientType;
 	
-		
+	//List DailyAccounta
 	//PODACI O KLIJENTU
 /*	private String ime;
 	private String prezime;

@@ -1,12 +1,13 @@
 package com.pi.poslovna.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "Dnevno_stanje_racuna")
 public class DailyAccountBalance {
@@ -29,6 +30,11 @@ public class DailyAccountBalance {
 	
 	@Column(name = "Novo_stanje")
 	private Float newState;
+	
+	@ManyToOne
+	private BankAccount racun;
+	
+	//List Analitika
 	
 	public DailyAccountBalance() {
 		
@@ -81,7 +87,13 @@ public class DailyAccountBalance {
 	public void setNewState(Float newState) {
 		this.newState = newState;
 	}
-	
-	
+
+	public BankAccount getRacun() {
+		return racun;
+	}
+
+	public void setRacun(BankAccount racun) {
+		this.racun = racun;
+	}
 	
 }
