@@ -16,7 +16,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.pi.poslovna.model.AnalyticsOfStatement;
+import com.pi.poslovna.model.BankAccount;
+import com.pi.poslovna.model.DailyAccountBalance;
 import com.pi.poslovna.service.AnalyticsOfStatementService;
+import com.pi.poslovna.service.BankAccountService;
+import com.pi.poslovna.service.DailyAccountBalanceService;
 import com.pi.poslovna.service.PrenosXMLReaderService;
 
 @Transactional
@@ -25,6 +29,12 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 
 	@Autowired
 	private AnalyticsOfStatementService analyticService;
+	
+	@Autowired
+	private BankAccountService accountService;
+	
+	@Autowired
+	private DailyAccountBalanceService balanceService;
 	
 	@Override
 	public void readPrenosXML(String filePath) {
@@ -126,8 +136,7 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 			boolean hitno = Boolean.parseBoolean(doc.getElementsByTagName("hitno").item(0).getTextContent());
 			analitika.setEmergency(hitno);
 			
-				analyticService.save(analitika);
-				
+			//Mora se ispraviti analitka izvoda za prenos jer tu treba da ima dva sloga.
 			}
 			catch(Exception e) {
 				e.printStackTrace();

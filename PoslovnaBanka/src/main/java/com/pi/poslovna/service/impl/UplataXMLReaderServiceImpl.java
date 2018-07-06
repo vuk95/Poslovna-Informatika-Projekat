@@ -125,6 +125,7 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 			}
 			//kreiramo novo dnevno stanje racuna za svaku analitiku
 			DailyAccountBalance dab = new DailyAccountBalance();
+			//Nisam siguran da li je ovo traffic date
 			dab.setTrafficDate(analitika.getDateOfReceipt());
 			//prihod je suma uplate iz analitike
 			dab.setTrafficToBenefit(analitika.getSum());

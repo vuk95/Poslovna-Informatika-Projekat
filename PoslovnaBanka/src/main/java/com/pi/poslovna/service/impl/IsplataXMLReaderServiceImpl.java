@@ -16,7 +16,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.pi.poslovna.model.AnalyticsOfStatement;
+import com.pi.poslovna.model.BankAccount;
+import com.pi.poslovna.model.DailyAccountBalance;
 import com.pi.poslovna.service.AnalyticsOfStatementService;
+import com.pi.poslovna.service.BankAccountService;
+import com.pi.poslovna.service.DailyAccountBalanceService;
 import com.pi.poslovna.service.IsplataXMLReaderService;
 
 
@@ -26,6 +30,12 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 
 	@Autowired
 	private AnalyticsOfStatementService analyticServise;
+	
+	@Autowired
+	private DailyAccountBalanceService balanceService;
+	
+	@Autowired
+	private BankAccountService accountService;
 	
 	@Override
 	public void readIsplataXML(String filePath) {
@@ -114,6 +124,18 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 			System.out.println("Nema datuma...");
 		}
 			
+			DailyAccountBalance dab = new DailyAccountBalance();
+			//Nisam siguran da li je ovo traffic date
+			dab.setTrafficDate(analitika.getDateOfReceipt());
+			dab.setTrafficToTheBurden(analitika.getSum());
+			dab.setTrafficToBenefit(0.0f);
+			BankAccount racunUplatioca = accountService.findByAccountNumber(analitika.getDebtorAccount());
+			dab.setPreviousState(Float.parseFloat(racunUplatioca.getMoney()));
+			dab.setNewState(dab.getPreviousState() + dab.getTrafficToBenefit() - dab.getTrafficToTheBurden());
+			racunUplatioca.setMoney(dab.getNewState().toString());
+			dab.setRacun(racunUplatioca);
+			balanceService.save(dab);
+			analitika.setDnevnoStanjeIzvoda(dab);
 			analyticServise.save(analitika);
 			
 		}

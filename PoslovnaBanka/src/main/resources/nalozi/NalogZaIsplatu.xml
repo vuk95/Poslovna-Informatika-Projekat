@@ -2,7 +2,7 @@
     <nalog_za_isplatu>
         
         <podaci_o_platiocu>
-            <naziv_platioca>Stefan Milovic</naziv_platioca>
+            <naziv_platioca>Sasa Ilic</naziv_platioca>
             <adresa>
                 <mesto>Vrbas</mesto>
                 <ulica>Rada Marjanca</ulica>
@@ -14,7 +14,7 @@
         <svrha_isplate>Transfer igraca</svrha_isplate>
         
         <podaci_o_primaocu>
-            <naziv_primaoca>Sasa Ilic</naziv_primaoca>
+            <naziv_primaoca>Stefan Milovic</naziv_primaoca>
             <adresa>
                 <mesto>Novi Sad</mesto>
                 <ulica>Trg Dositeja Obradovića</ulica>
@@ -26,8 +26,8 @@
         <podaci_o_isplati>
             <sifra_placanja>189</sifra_placanja>
             <valuta>RSD</valuta>
-            <iznos>1000.00</iznos>
-            <racun_platioca>654321</racun_platioca>
+            <iznos>1500.00</iznos>
+            <racun_platioca>123456</racun_platioca>
             <model>97</model>
             <poziv_na_broj>1716151413121110987654321</poziv_na_broj>
         </podaci_o_isplati>
