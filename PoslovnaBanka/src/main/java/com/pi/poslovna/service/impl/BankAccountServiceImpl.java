@@ -36,6 +36,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 	public void prebaciSredstvaSaUgasenog(BankAccount sledbenik, BankAccount ugasen) {
 		int novaSredstva = Integer.parseInt(sledbenik.getMoney()) + Integer.parseInt(ugasen.getMoney());
 		ugasen.setMoney("0");
+		ugasen.setActive(false);
 		sledbenik.setMoney(Integer.toString(novaSredstva));
 		repository.save(sledbenik);
 		repository.save(ugasen);

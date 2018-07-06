@@ -10,6 +10,21 @@
 	<title>LegalEntitiesAccounts</title>
 </head>
 <script>
+$(document).ready(function(){
+	$.ajax({
+		url: "http://localhost:8083/bank_accounts"
+	}).then(
+		function(data) {
+			for(i = 0; i < data.length; i++) {
+				if(data[i].active) {
+					option = "<option value='"+data[i].accountNumber+"'>"+data[i].accountNumber+"</option>"
+					$("#accountNumberSelect").append(option)
+				}
+			}
+		}
+	)
+});
+
 $(document).ready(
 		function() {
 			
@@ -28,6 +43,7 @@ $(document).ready(
 									+ "<td class=\"datum\">" + data[i].openingDate + "</td>"
 									+ "<td class=\"vazeci\">" + data[i].active + "</td>"
 									+ "<td class=\"sredstva\">" + data[i].money + "</td>"
+									+ "<td><button type=\"button\">*</button></td>"
 									+ "<td><a class=\"deactivate\" data-toggle=\"modal\" data-target=\"#deactivateModal\" href='/legalEntity/leClient/account/deactivate/" + data[i].id + "'>" 
 									+ "<img src='images/remove.gif'/></a></td>"
 								+ "</tr>"
@@ -37,7 +53,7 @@ $(document).ready(
 			
 			$("#deactivate-btn").click(function(event){
 				event.preventDefault();
-				formData = $("#deactivateForm [name='accountNumber']").val();
+				formData = $("#accountNumberSelect").val();
 
 				$.ajax({
 					url: $("#deactivateForm [name='url']").val(),
@@ -75,10 +91,11 @@ $(document).on("click", ".deactivate", function(event){
 				</div>
 				<form id="deactivateForm">
 					<div class="modal-body">
-						<p>
-							<input type="hidden" name="url" id="url" disabled/> 
-							<input class="form-control" type="text" name="accountNumber" id="accountNumber" placeholder="Broj racuna" required="true"/>
-						</p>
+						<input type="hidden" name="url" id="url" disabled/> 
+						<div class="form-group">
+							<select class="form-control" id="accountNumberSelect">
+							</select>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
@@ -97,6 +114,7 @@ $(document).on("click", ".deactivate", function(event){
 				<th>Datum otvaranja</th>
 				<th>Vazeci</th>
 				<th>Sredstva</th>
+				<th>Izvod</th>
 				<th>Deactivate</th>
 			</tr>
 	</table>

@@ -29,6 +29,9 @@ VALUES ("Humska 1",1,"partizan@gmail.com","0113690395","Fudbalski Klub Partizan"
 INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("123456","2018-07-04",true,"1000",2, 3);
 INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("123457","2018-07-04",true,"100",2, 4);
 
+INSERT INTO moji_racuni_individual (individual_id,racun_id) VALUES(3, 1);
+INSERT INTO moji_racuni_individual (individual_id,racun_id) VALUES(4, 2);
+
 --DRZAVE
 INSERT INTO drzava (oznaka,naziv) values ('SRB','Srbija');
 INSERT INTO drzava (oznaka,naziv) values ('EU','Evropska unija');
