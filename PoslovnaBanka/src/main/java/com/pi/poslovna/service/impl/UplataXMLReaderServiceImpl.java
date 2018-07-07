@@ -123,6 +123,10 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 			else {
 				System.out.println("Nema datuma...");
 			}
+			DailyAccountBalance found = balanceService.findByTrafficDate(analitika.getDateOfReceipt());
+			
+			if(found == null) {
+				
 			//kreiramo novo dnevno stanje racuna za svaku analitiku
 			DailyAccountBalance dab = new DailyAccountBalance();
 			//Nisam siguran da li je ovo traffic date
@@ -143,6 +147,27 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 			balanceService.save(dab);
 			analitika.setDnevnoStanjeIzvoda(dab);
 			analyticsService.save(analitika);
+			}
+			else {
+				System.out.println(found.getTrafficDate().toString());
+				found.setTrafficDate(analitika.getDateOfReceipt());
+				//prihod je suma uplate iz analitike
+				found.setTrafficToBenefit(analitika.getSum());
+				//gubitak je u slucaju naloga za uplatu 0
+				found.setTrafficToTheBurden(0.0f);
+				//nadjemo taj racun iz analitike
+				BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
+				//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
+				found.setPreviousState(Float.parseFloat(racun.getMoney()));
+				found.setNewState(found.getPreviousState() + found.getTrafficToBenefit() - found.getTrafficToTheBurden());
+				//setujemo novo stanje i na racun
+				racun.setMoney(found.getNewState().toString());
+				
+				found.setRacun(racun);
+				balanceService.save(found);
+				analitika.setDnevnoStanjeIzvoda(found);
+				analyticsService.save(analitika);
+			}
 			
 		} catch(Exception e) {
 			e.printStackTrace();

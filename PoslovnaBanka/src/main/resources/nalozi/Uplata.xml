@@ -2,19 +2,19 @@
     <nalog_za_uplatu>
  
         <podaci_o_uplatiocu>    
-            <naziv_uplatioca>Stefan Milovic</naziv_uplatioca>
+            <naziv_uplatioca>Pera Peric</naziv_uplatioca>
             <adresa>
-                <mesto>Vrbas</mesto>
-                <ulica>Rada Marjanca</ulica>
+                <mesto>NS</mesto>
+                <ulica>Bul.Oslobodjenja</ulica>
                 <broj>53/a</broj>
-                <postanski_broj>21460</postanski_broj>
+                <postanski_broj>21000</postanski_broj>
             </adresa>
         </podaci_o_uplatiocu>    
     
         <svrha_uplate>Prijava ispita</svrha_uplate>
         
         <podaci_o_primaocu>
-            <naziv_primaoca>Sasa Ilic</naziv_primaoca>   
+            <naziv_primaoca>FTN</naziv_primaoca>   
             <adresa>
                 <mesto>Novi Sad</mesto>
                 <ulica>Trg Dositeja Obradovića</ulica>
@@ -26,8 +26,8 @@
         <podaci_o_uplati>
             <sifra_placanja>189</sifra_placanja>
             <valuta>RSD</valuta>
-            <iznos>100.00</iznos>
-            <racun_primaoca>123456</racun_primaoca>
+            <iznos>600.00</iznos>
+            <racun_primaoca>123457</racun_primaoca>
             <model>97</model>
             <poziv_na_broj>1234567891011121314151617</poziv_na_broj>
         </podaci_o_uplati>
@@ -39,9 +39,9 @@
         
         <podaci_o_prijemu>
             <mesto_prijema></mesto_prijema>
-            <datum_prijema>11-05-2018</datum_prijema>
+            <datum_prijema>14-05-2018</datum_prijema>
         </podaci_o_prijemu>
         
-        <datum_izvrsenja>12-05-2018</datum_izvrsenja>
+        <datum_izvrsenja>15-05-2018</datum_izvrsenja>
      
     </nalog_za_uplatu>
