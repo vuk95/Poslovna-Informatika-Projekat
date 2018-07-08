@@ -49,7 +49,6 @@ public class BankAccountController {
 		User user = userService.getUserByEmail(principal.getName());
 		Bank bank = user.getBank();
 		
-		
 		List<BankAccount> racuniPravnihLica = new ArrayList<BankAccount>();
 		
 		for(int i=0;i<bank.getIndividualClients().size();i++) {
@@ -61,22 +60,31 @@ public class BankAccountController {
 		
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("COLUMN_6", bank.getName());
+		
 		for(int i=0;i<racuniPravnihLica.size();i++) {
 			parameters.put("racun_id", racuniPravnihLica.get(i).getId());
 			parameters.put("ime", racuniPravnihLica.get(i).getIndividual().getName());
 			parameters.put("prezime",racuniPravnihLica.get(i).getIndividual().getLastname());
 			parameters.put("broj_racuna",racuniPravnihLica.get(i).getAccountNumber());
 			parameters.put("raspoloziva_sredstva",racuniPravnihLica.get(i).getMoney());
+			
+			System.out.println("Racuni: " + racuniPravnihLica.get(i).getId());
+			System.out.println("Imena: " + racuniPravnihLica.get(i).getIndividual().getName());
+			System.out.println("Prezimena: " + racuniPravnihLica.get(i).getIndividual().getLastname());
+			System.out.println("Brojevi_Racuna: " + racuniPravnihLica.get(i).getAccountNumber());
+			System.out.println("Novac: " + racuniPravnihLica.get(i).getMoney());
 		}
 		
+		System.out.println("Banka:" + bank.getName());
 		
 		try {
 			JasperPrint jp = JasperFillManager.fillReport(
 			getClass().getResource("/jasper/StanjeRacuna.jasper").openStream(),
 			parameters, DBConnection.getInstance().getConnection());
 			//eksport
-			File pdf = File.createTempFile("output.", ".pdf");
-			JasperExportManager.exportReportToPdfStream(jp, new FileOutputStream(pdf));
+			//File pdf = File.createTempFile("output.", ".pdf");
+			JasperExportManager.exportReportToPdfFile(jp, "C:\\Users\\Milovic\\Documents\\proba.pdf");
+			//promenite putanju za probu.
 		}catch (Exception ex) {
 				ex.printStackTrace();
 			}
