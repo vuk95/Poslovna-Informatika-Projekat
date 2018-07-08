@@ -3,6 +3,7 @@ package com.pi.poslovna.service.impl;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -123,10 +124,13 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 			else {
 				System.out.println("Nema datuma...");
 			}
-			DailyAccountBalance found = balanceService.findByTrafficDate(analitika.getDateOfReceipt());
+			
+			BankAccount founded = accountService.findByAccountNumber(analitika.getAccountRecipient());
+			DailyAccountBalance found = balanceService.findByTrafficDateAndRacun(analitika.getDateOfReceipt(), founded);
+			
 			
 			if(found == null) {
-				
+			
 			//kreiramo novo dnevno stanje racuna za svaku analitiku
 			DailyAccountBalance dab = new DailyAccountBalance();
 			//Nisam siguran da li je ovo traffic date
@@ -149,24 +153,53 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 			analyticsService.save(analitika);
 			}
 			else {
-				System.out.println(found.getTrafficDate().toString());
-				found.setTrafficDate(analitika.getDateOfReceipt());
-				//prihod je suma uplate iz analitike
-				found.setTrafficToBenefit(analitika.getSum());
-				//gubitak je u slucaju naloga za uplatu 0
-				found.setTrafficToTheBurden(0.0f);
-				//nadjemo taj racun iz analitike
-				BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
-				//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
-				found.setPreviousState(Float.parseFloat(racun.getMoney()));
-				found.setNewState(found.getPreviousState() + found.getTrafficToBenefit() - found.getTrafficToTheBurden());
-				//setujemo novo stanje i na racun
-				racun.setMoney(found.getNewState().toString());
 				
-				found.setRacun(racun);
-				balanceService.save(found);
-				analitika.setDnevnoStanjeIzvoda(found);
-				analyticsService.save(analitika);
+				if(found.getRacun() == founded) {
+					System.out.println("Found racun:"  + found.getRacun().getAccountNumber());
+					System.out.println("Iz analitike:" + founded.getAccountNumber());
+					System.out.println(found.getTrafficDate().toString());
+					found.setTrafficDate(analitika.getDateOfReceipt());
+					//prihod je suma uplate iz analitike
+					found.setTrafficToBenefit(analitika.getSum());
+					//gubitak je u slucaju naloga za uplatu 0
+					found.setTrafficToTheBurden(0.0f);
+					//nadjemo taj racun iz analitike
+					BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
+					//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
+					found.setPreviousState(Float.parseFloat(racun.getMoney()));
+					found.setNewState(found.getPreviousState() + found.getTrafficToBenefit() - found.getTrafficToTheBurden());
+					//setujemo novo stanje i na racun
+					racun.setMoney(found.getNewState().toString());
+					
+					found.setRacun(racun);
+					balanceService.save(found);
+					analitika.setDnevnoStanjeIzvoda(found);
+					analyticsService.save(analitika);
+					
+				}
+				else {
+					//kreiramo novo dnevno stanje racuna za svaku analitiku
+					DailyAccountBalance dab = new DailyAccountBalance();
+					//Nisam siguran da li je ovo traffic date
+					dab.setTrafficDate(analitika.getDateOfReceipt());
+					//prihod je suma uplate iz analitike
+					dab.setTrafficToBenefit(analitika.getSum());
+					//gubitak je u slucaju naloga za uplatu 0
+					dab.setTrafficToTheBurden(0.0f);
+					//nadjemo taj racun iz analitike
+					BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
+					//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
+					dab.setPreviousState(Float.parseFloat(racun.getMoney()));
+					dab.setNewState(dab.getPreviousState() + dab.getTrafficToBenefit() - dab.getTrafficToTheBurden());
+					//setujemo novo stanje i na racun
+					racun.setMoney(dab.getNewState().toString());
+					
+					dab.setRacun(racun);
+					balanceService.save(dab);
+					analitika.setDnevnoStanjeIzvoda(dab);
+					analyticsService.save(analitika);
+				}
+				
 			}
 			
 		} catch(Exception e) {

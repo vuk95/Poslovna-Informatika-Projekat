@@ -1,11 +1,14 @@
 package com.pi.poslovna.service.impl;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pi.poslovna.model.BankAccount;
 import com.pi.poslovna.model.DailyAccountBalance;
 import com.pi.poslovna.repository.DailyAccountBalanceRepository;
 import com.pi.poslovna.service.DailyAccountBalanceService;
@@ -24,8 +27,8 @@ public class DailyAccountBalanceServiceImpl implements DailyAccountBalanceServic
 	}
 
 	@Override
-	public DailyAccountBalance findByTrafficDate(Date trafficDate) {
-		return dabRepository.findByTrafficDate(trafficDate);
+	public DailyAccountBalance findByTrafficDateAndRacun(Date trafficDate, BankAccount racun) {
+		return dabRepository.findByTrafficDateAndRacun(trafficDate, racun);
 	}
 
 }

@@ -26,8 +26,8 @@
         <podaci_o_uplati>
             <sifra_placanja>189</sifra_placanja>
             <valuta>RSD</valuta>
-            <iznos>600.00</iznos>
-            <racun_primaoca>123457</racun_primaoca>
+            <iznos>400.00</iznos>
+            <racun_primaoca>123456</racun_primaoca>
             <model>97</model>
             <poziv_na_broj>1234567891011121314151617</poziv_na_broj>
         </podaci_o_uplati>
@@ -39,7 +39,7 @@
         
         <podaci_o_prijemu>
             <mesto_prijema></mesto_prijema>
-            <datum_prijema>11-05-2018</datum_prijema>
+            <datum_prijema>14-05-2018</datum_prijema>
         </podaci_o_prijemu>
         
         <datum_izvrsenja>15-05-2018</datum_izvrsenja>
