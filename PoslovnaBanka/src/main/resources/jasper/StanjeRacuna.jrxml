@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StanjeRacuna" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fd706727-6d67-4fbe-86e0-21d59271ce24">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Poslovna banka"/>
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[YmFuay5iYW5rYSBBUyAsMzgxLDEwNSw5M2Q0MTBiOS0yZGY4LTRiNzgtOTQ4ZS1mYjE0ODcxMTNh
+N2Q7YmFuay5yYWN1biAsMTUsMjcsZWYwM2FkMzgtZWZlOC00Y2RmLWFiNzAtNmNkMGVkZGVhNzQ0
+O2JhbmsuZml6aWNrYV9saWNhICwyMjQsMTUsZjg1MWEwYTItZTliYS00MDQ3LTgwMzQtNmJjN2M5
+OWQ3NDUzOw==
+]]>
+	</property>
+	<queryString>
+		<![CDATA[SELECT bank.racun.racun_id,
+	bank.racun.broj_racuna,
+	bank.fizicka_lica.ime,
+	bank.fizicka_lica.prezime,
+	bank.racun.raspoloziva_sredstva,
+	bank.banka.ime
+FROM bank.racun
+	INNER JOIN bank.fizicka_lica ON 
+	 bank.racun.individual_individual_id = bank.fizicka_lica.individual_id 
+	INNER JOIN bank.banka ON 
+	 bank.racun.bank_id = bank.banka.id 
+	 AND bank.fizicka_lica.bank_id = bank.banka.id]]>
+	</queryString>
+	<field name="racun_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="racun_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="racun"/>
+	</field>
+	<field name="broj_racuna" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="broj_racuna"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="racun"/>
+	</field>
+	<field name="ime" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ime"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fizicka_lica"/>
+	</field>
+	<field name="prezime" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="prezime"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fizicka_lica"/>
+	</field>
+	<field name="raspoloziva_sredstva" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="raspoloziva_sredstva"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="racun"/>
+	</field>
+	<field name="COLUMN_6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ime"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="banka"/>
+	</field>
+	<pageHeader>
+		<band height="140" splitType="Stretch">
+			<staticText>
+				<reportElement x="-10" y="0" width="100" height="30" uuid="4e7557ee-215a-4872-9b80-2a57d64d982b"/>
+				<text><![CDATA[Datum:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="30" y="0" width="80" height="30" uuid="3f61fbad-030a-42d5-a169-8b2a5b2b8750"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="460" y="10" width="50" height="21" uuid="d8a5a62e-7fdb-4aea-a8f9-7f0de3a31c7b"/>
+				<text><![CDATA[Strana:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="494" y="10" width="51" height="21" uuid="7f0e8651-cef9-476f-b271-1dc2af488644"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="167" y="30" width="221" height="31" uuid="b205da7c-03cb-46e7-af13-0138126a9efb"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Racuni fizickih lica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-10" y="30" width="60" height="21" uuid="3aad0f90-9276-43ab-9dec-f80601fb0f00"/>
+				<text><![CDATA[Banka:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="70" width="20" height="21" uuid="bfda2a8e-876f-4096-9137-0bca4cf1e131"/>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="70" width="20" height="21" uuid="6957c75e-8725-41ae-b37b-1a04fd46052b"/>
+				<text><![CDATA[Ime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="70" width="51" height="21" uuid="d0bbffeb-c52a-435c-8a6f-08d843c1ff14"/>
+				<text><![CDATA[Prezime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="70" width="61" height="21" uuid="559c4db7-27f9-4199-952a-80ab42fb211f"/>
+				<text><![CDATA[Broj racuna]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="70" width="100" height="30" uuid="38fa9598-88bf-4f41-9632-50aac3c35c0d"/>
+				<text><![CDATA[Raspoloziva sredstva]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="30" y="30" width="100" height="30" uuid="5a89d77a-45a2-45a0-8dde-66d9ca6d57ec"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_6}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="91" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="90" height="30" uuid="217a3580-78bd-434d-b48c-f554e2fc1cb5"/>
+				<textFieldExpression><![CDATA[$F{racun_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="10" width="100" height="30" uuid="2e204cea-bf02-4bcf-9edc-0b8769931111"/>
+				<textFieldExpression><![CDATA[$F{ime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="10" width="100" height="30" uuid="e6b4156c-962e-4ff5-9d8b-719caa732794"/>
+				<textFieldExpression><![CDATA[$F{prezime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="10" width="100" height="30" uuid="0263c796-ae0f-4368-8374-fcf674b290b2"/>
+				<textFieldExpression><![CDATA[$F{broj_racuna}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="10" width="100" height="30" uuid="16417517-e637-4dee-97bc-b1f96b60c6e5"/>
+				<textFieldExpression><![CDATA[$F{raspoloziva_sredstva}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
