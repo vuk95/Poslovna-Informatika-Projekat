@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RacuniPravnihLica" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c98ae73-d681-46ba-9fdf-ff491dd4a691">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[YmFuay5iYW5rYSAsNDM0LDI0MCxhYmQyNjE4ZC1jOGVmLTQ3OWMtYTUwOC1iNGVlMmU4OWVlYTA7
+YmFuay5wcmF2bmFfbGljYSAsMjI0LDE1LDc1MDAxNzg3LTBlNDItNDQzYS1hNzRkLTU1MTc5YmFk
+MWViZjtiYW5rLnJhY3VuICwxNSwyMjYsMmE4YmM1ZmEtMGNlMy00ZDdmLTgxMjMtMTQ0NGI3YTNm
+MTUyOw==]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Poslovna banka"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT bank.banka.ime,
+	bank.pravna_lica.naziv,
+	bank.banka.ime,
+	bank.pravna_lica.naziv,
+	bank.pravna_lica.poreski_identifikacioni_broj,
+	bank.racun.broj_racuna,
+	bank.racun.raspoloziva_sredstva,
+	bank.racun.racun_id
+FROM bank.racun
+	INNER JOIN bank.pravna_lica ON 
+	 bank.racun.legal_entity_legal_id = bank.pravna_lica.legal_id 
+	INNER JOIN bank.banka ON 
+	 bank.pravna_lica.bank_id = bank.banka.id 
+	 AND bank.racun.bank_id = bank.banka.id]]>
+	</queryString>
+	<field name="ime" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ime"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="banka"/>
+	</field>
+	<field name="naziv" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="naziv"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pravna_lica"/>
+	</field>
+	<field name="poreski_identifikacioni_broj" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="poreski_identifikacioni_broj"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pravna_lica"/>
+	</field>
+	<field name="broj_racuna" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="broj_racuna"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="racun"/>
+	</field>
+	<field name="raspoloziva_sredstva" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="raspoloziva_sredstva"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="racun"/>
+	</field>
+	<field name="racun_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="racun_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="racun"/>
+	</field>
+	<pageHeader>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement x="-11" y="0" width="40" height="20" uuid="22123edf-73c8-4bde-9e22-665bbc9e60d8"/>
+				<text><![CDATA[Datum:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="30" y="0" width="90" height="20" uuid="7eaa03e0-296f-4633-8702-fb6f7e39d03e"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="30" width="221" height="31" uuid="9baafe97-78b8-402f-9bb9-1351b785b2c5"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Racuni pravnih lica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="-1" width="50" height="21" uuid="6ccdedf8-3271-49db-8927-00c6ebfdf1f1"/>
+				<text><![CDATA[Strana:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="510" y="0" width="50" height="21" uuid="6d403c79-2a60-467a-867c-35ff5b39c9f7"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-10" y="70" width="61" height="21" uuid="3edfe413-3ddf-4366-ab23-a56312ac98ec"/>
+				<text><![CDATA[Banka:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="30" y="70" width="60" height="21" uuid="5d0b6980-f987-4210-87c3-e39029ca20f8"/>
+				<textFieldExpression><![CDATA[$F{ime}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-10" y="100" width="50" height="21" uuid="5e9bee8e-b7bf-4560-8d53-89e28967087d"/>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="100" width="71" height="21" uuid="7c545f79-ec89-4af5-bf10-ee217c545918"/>
+				<text><![CDATA[Naziv]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="100" width="91" height="21" uuid="de19fbaf-365a-485a-9b5e-10385e15d183"/>
+				<text><![CDATA[PIB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="100" width="101" height="21" uuid="1d9d4fff-f601-4253-8ec0-ea90a3c2187c"/>
+				<text><![CDATA[Racun]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="100" width="101" height="21" uuid="d36504fe-ff1a-43c0-9f71-cfc68ccc9181"/>
+				<text><![CDATA[Raspoloziva sredstva]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="70" height="30" uuid="965102be-ae55-4b30-a2db-a237bb28f867"/>
+				<textFieldExpression><![CDATA[$F{naziv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="0" width="100" height="30" uuid="2852ad67-3d90-4005-b7d3-48d884d9e047"/>
+				<textFieldExpression><![CDATA[$F{poreski_identifikacioni_broj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="30" uuid="5d57b09b-fc00-4b86-905c-05dd8b75e0eb"/>
+				<textFieldExpression><![CDATA[$F{broj_racuna}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="0" width="100" height="30" uuid="8a350f7f-30bf-4cd6-8f4e-9bbb1c4b73e2"/>
+				<textFieldExpression><![CDATA[$F{raspoloziva_sredstva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-11" y="0" width="71" height="30" uuid="4d8e8089-0222-45ad-9a37-ed6735cf5bb1"/>
+				<textFieldExpression><![CDATA[$F{racun_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

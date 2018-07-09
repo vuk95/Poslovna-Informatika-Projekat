@@ -1,7 +1,5 @@
 package com.pi.poslovna.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,7 +103,7 @@ public class BankAccountController {
 			parameters, DBConnection.getInstance().getConnection());
 			//eksport
 			//File pdf = File.createTempFile("output.", ".pdf");
-			JasperExportManager.exportReportToPdfFile(jp, "C:\\Users\\Vucko\\Desktop\\proba.pdf");
+			JasperExportManager.exportReportToPdfFile(jp, "C:\\Users\\Milovic\\Documents\\proba.pdf");
 			//promenite putanju za probu.
 		}catch (Exception ex) {
 				ex.printStackTrace();
@@ -114,4 +112,55 @@ public class BankAccountController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/reportLePDF" , method = RequestMethod.GET)
+	public ResponseEntity<?> reportLEToPDF(Principal principal) {
+		
+		User user = userService.getUserByEmail(principal.getName());
+		Bank bank = user.getBank();
+		
+		List<BankAccount> racuniPravnihLica = new ArrayList<BankAccount>();
+		
+		for(int i=0;i<bank.getLegalEntityClients().size();i++) {
+			for(int j=0;j<bank.getLegalEntityClients().get(i).getMojiRacuni().size();j++) {
+				racuniPravnihLica.add(bank.getLegalEntityClients().get(i).getMojiRacuni().get(j));
+			
+			}
+		}
+		
+		
+		Map<String, Object> parameters = new HashMap<String, Object>();
+				
+		parameters.put("ime", bank.getName());
+		System.out.println("Banka:" + bank.getName());
+		
+		for(BankAccount racun: racuniPravnihLica) {
+			
+			parameters.put("racun_id", racun.getId());
+			parameters.put("naziv", racun.getLegalEntity().getName());
+			parameters.put("poreski_identifikacioni_broj",racun.getLegalEntity().getPib());
+			parameters.put("broj_racuna",racun.getAccountNumber());
+			parameters.put("raspoloziva_sredstva",racun.getMoney());
+			
+			
+			System.out.println("Racuni: " + racun.getId());
+			System.out.println("Imena: " + racun.getLegalEntity().getName());
+			System.out.println("PIB: " + racun.getLegalEntity().getPib());
+			System.out.println("Brojevi_Racuna: " + racun.getAccountNumber());
+			System.out.println("Novac: " + racun.getMoney());
+		}
+		
+		try {
+			JasperPrint jp = JasperFillManager.fillReport(
+			getClass().getResource("/jasper/RacuniPravnihLica.jasper").openStream(),
+			parameters, DBConnection.getInstance().getConnection());
+			//eksport
+			//File pdf = File.createTempFile("output.", ".pdf");
+			JasperExportManager.exportReportToPdfFile(jp, "C:\\Users\\Milovic\\Documents\\proba1.pdf");
+			//promenite putanju za probu.
+		}catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }
