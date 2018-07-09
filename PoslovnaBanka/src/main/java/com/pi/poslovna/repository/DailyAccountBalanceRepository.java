@@ -14,5 +14,6 @@ import com.pi.poslovna.model.DailyAccountBalance;
 public interface DailyAccountBalanceRepository extends JpaRepository<DailyAccountBalance, Long>{
 
 	DailyAccountBalance findByTrafficDateAndRacun(Date trafficDate, BankAccount racun);
+	DailyAccountBalance findByRacun(BankAccount racun);
 	
 }

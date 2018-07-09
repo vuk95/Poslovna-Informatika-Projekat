@@ -11,4 +11,5 @@ public interface DailyAccountBalanceService {
 	
 	public void save(DailyAccountBalance dnevnoStanjeIzvoda);
 	DailyAccountBalance findByTrafficDateAndRacun(Date trafficDate, BankAccount racun);
+	DailyAccountBalance findByRacun(BankAccount racun);
 }

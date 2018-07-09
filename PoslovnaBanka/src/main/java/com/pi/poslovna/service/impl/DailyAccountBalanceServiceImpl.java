@@ -31,4 +31,9 @@ public class DailyAccountBalanceServiceImpl implements DailyAccountBalanceServic
 		return dabRepository.findByTrafficDateAndRacun(trafficDate, racun);
 	}
 
+	@Override
+	public DailyAccountBalance findByRacun(BankAccount racun) {
+		return dabRepository.findByRacun(racun);
+	}
+
 }

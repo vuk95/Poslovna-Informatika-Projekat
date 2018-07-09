@@ -130,6 +130,9 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 			
 			
 			if(found == null) {
+				BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
+				DailyAccountBalance nadjeniPoRacunu = balanceService.findByRacun(racun);
+				
 			
 			//kreiramo novo dnevno stanje racuna za svaku analitiku
 			DailyAccountBalance dab = new DailyAccountBalance();
@@ -140,9 +143,22 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 			//gubitak je u slucaju naloga za uplatu 0
 			dab.setTrafficToTheBurden(0.0f);
 			//nadjemo taj racun iz analitike
-			BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
 			//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
-			dab.setPreviousState(Float.parseFloat(racun.getMoney()));
+			//dab.setPreviousState(Float.parseFloat(racun.getMoney()));
+			if(nadjeniPoRacunu != null) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String datFound = sdf.format(nadjeniPoRacunu.getTrafficDate());
+				String datAnalitika = sdf.format(analitika.getDateOfReceipt());
+				Date datumFound = sdf.parse(datFound);
+				Date datumAnalitika = sdf.parse(datAnalitika);
+				if(datumFound.compareTo(datumAnalitika) < 0) {
+					System.out.println(datumFound + "before " + datumAnalitika);
+					dab.setPreviousState(nadjeniPoRacunu.getNewState());
+				}
+			}
+			else {
+			dab.setPreviousState(0.0f);
+			}
 			dab.setNewState(dab.getPreviousState() + dab.getTrafficToBenefit() - dab.getTrafficToTheBurden());
 			//setujemo novo stanje i na racun
 			racun.setMoney(dab.getNewState().toString());
@@ -154,20 +170,80 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 			}
 			else {
 				
+				
+				/*if(found.getTrafficDate().equals(analitika.getDateOfReceipt())){
+					System.out.println(found.getTrafficDate().toString() + "je isto kad i:");
+					System.out.println(analitika.getDateOfReceipt().toString());
+				}
+				else if(found.getTrafficDate().before(analitika.getDateOfReceipt())) {
+					System.out.println(found.getTrafficDate().toString() + "je pre:");
+					System.out.println(analitika.getDateOfReceipt().toString());
+				}
+				else if(found.getTrafficDate().after(analitika.getDateOfReceipt())) {
+					System.out.println(found.getTrafficDate().toString() + "je posle:");
+					System.out.println(analitika.getDateOfReceipt().toString());
+				}
+				else {
+					System.out.println("How to get here?");
+				}*/
+				
+				
 				if(found.getRacun() == founded) {
+					
 					System.out.println("Found racun:"  + found.getRacun().getAccountNumber());
 					System.out.println("Iz analitike:" + founded.getAccountNumber());
-					System.out.println(found.getTrafficDate().toString());
+					//System.out.println(found.getTrafficDate().toString());
+					
+					
+					
+					
+					//if(found.getTrafficDate().equals(analitika.getDateOfReceipt())) {
+						//System.out.println("Usao ovde");
+					
+					
 					found.setTrafficDate(analitika.getDateOfReceipt());
 					//prihod je suma uplate iz analitike
 					found.setTrafficToBenefit(analitika.getSum());
 					//gubitak je u slucaju naloga za uplatu 0
 					found.setTrafficToTheBurden(0.0f);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String datFound = sdf.format(found.getTrafficDate());
+					String datAnalitika = sdf.format(analitika.getDateOfReceipt());
+					Date datumFound = sdf.parse(datFound);
+					Date datumAnalitika = sdf.parse(datAnalitika);
+				
+					Float upamtiPrethodnoStanje = 0.0f;
+					
+					if(found.getPreviousState() == 0.0f) {
+						found.setPreviousState(0.0f);
+					}
+					else{
+						
+						upamtiPrethodnoStanje = found.getPreviousState();
+						found.setPreviousState(0.0f);
+					}
+					//found.setPreviousState(0.0f);
+					System.out.println(upamtiPrethodnoStanje);
+					if(datumFound.compareTo(datumAnalitika) == 0) {
+						
+						System.out.println(datumFound + "equals " + datumAnalitika);
+						found.setNewState(found.getNewState() + found.getPreviousState() + found.getTrafficToBenefit() - found.getTrafficToTheBurden());
+						if(upamtiPrethodnoStanje != 0.0f)
+						found.setPreviousState(upamtiPrethodnoStanje);
+						
+						
+					}
+					else {
+						found.setPreviousState(0.0f);
+						found.setNewState(found.getPreviousState() + found.getTrafficToBenefit() - found.getTrafficToTheBurden());
+						
+					}
 					//nadjemo taj racun iz analitike
 					BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
 					//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
-					found.setPreviousState(Float.parseFloat(racun.getMoney()));
-					found.setNewState(found.getPreviousState() + found.getTrafficToBenefit() - found.getTrafficToTheBurden());
+				
+					//found.setPreviousState(Float.parseFloat(racun.getMoney()));
+					
 					//setujemo novo stanje i na racun
 					racun.setMoney(found.getNewState().toString());
 					
@@ -178,6 +254,16 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 					
 				}
 				else {
+					
+					if(found.getTrafficDate().compareTo(analitika.getDateOfReceipt()) < 0) {
+						System.out.println(found.getTrafficDate().toString() + "je pre:");
+						System.out.println(analitika.getDateOfReceipt().toString());
+					}
+					if(found.getTrafficDate().compareTo(analitika.getDateOfReceipt()) > 0) {
+						System.out.println(found.getTrafficDate().toString() + "je posle:");
+						System.out.println(analitika.getDateOfReceipt().toString());
+					}
+					
 					//kreiramo novo dnevno stanje racuna za svaku analitiku
 					DailyAccountBalance dab = new DailyAccountBalance();
 					//Nisam siguran da li je ovo traffic date
@@ -189,7 +275,7 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 					//nadjemo taj racun iz analitike
 					BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
 					//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
-					dab.setPreviousState(Float.parseFloat(racun.getMoney()));
+					dab.setPreviousState(0.0f);
 					dab.setNewState(dab.getPreviousState() + dab.getTrafficToBenefit() - dab.getTrafficToTheBurden());
 					//setujemo novo stanje i na racun
 					racun.setMoney(dab.getNewState().toString());

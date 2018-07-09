@@ -85,7 +85,7 @@ public class BankAccountController {
 			parameters, DBConnection.getInstance().getConnection());
 			//eksport
 			//File pdf = File.createTempFile("output.", ".pdf");
-			JasperExportManager.exportReportToPdfFile(jp, "C:\\Users\\Milovic\\Documents\\proba.pdf");
+			JasperExportManager.exportReportToPdfFile(jp, "C:\\Users\\Vucko\\Desktop\\proba.pdf");
 			//promenite putanju za probu.
 		}catch (Exception ex) {
 				ex.printStackTrace();
