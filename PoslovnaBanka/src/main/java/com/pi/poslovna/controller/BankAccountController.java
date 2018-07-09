@@ -59,23 +59,25 @@ public class BankAccountController {
 		}
 		
 		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("COLUMN_6", bank.getName());
 		
-		for(int i=0;i<racuniPravnihLica.size();i++) {
-			parameters.put("racun_id", racuniPravnihLica.get(i).getId());
-			parameters.put("ime", racuniPravnihLica.get(i).getIndividual().getName());
-			parameters.put("prezime",racuniPravnihLica.get(i).getIndividual().getLastname());
-			parameters.put("broj_racuna",racuniPravnihLica.get(i).getAccountNumber());
-			parameters.put("raspoloziva_sredstva",racuniPravnihLica.get(i).getMoney());
+		
+		for(BankAccount racun: racuniPravnihLica) {
+			parameters.put("COLUMN_6", bank.getName());
+			parameters.put("racun_id", racun.getId());
+			parameters.put("ime", racun.getIndividual().getName());
+			parameters.put("prezime",racun.getIndividual().getLastname());
+			parameters.put("broj_racuna",racun.getAccountNumber());
+			parameters.put("raspoloziva_sredstva",racun.getMoney());
 			
-			System.out.println("Racuni: " + racuniPravnihLica.get(i).getId());
-			System.out.println("Imena: " + racuniPravnihLica.get(i).getIndividual().getName());
-			System.out.println("Prezimena: " + racuniPravnihLica.get(i).getIndividual().getLastname());
-			System.out.println("Brojevi_Racuna: " + racuniPravnihLica.get(i).getAccountNumber());
-			System.out.println("Novac: " + racuniPravnihLica.get(i).getMoney());
+			System.out.println("Banka:" + bank.getName());
+			System.out.println("Racuni: " + racun.getId());
+			System.out.println("Imena: " + racun.getIndividual().getName());
+			System.out.println("Prezimena: " + racun.getIndividual().getLastname());
+			System.out.println("Brojevi_Racuna: " + racun.getAccountNumber());
+			System.out.println("Novac: " + racun.getMoney());
 		}
 		
-		System.out.println("Banka:" + bank.getName());
+		
 		
 		try {
 			JasperPrint jp = JasperFillManager.fillReport(
