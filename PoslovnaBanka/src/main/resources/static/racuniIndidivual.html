@@ -42,7 +42,8 @@ $(document).ready(function() {
 									+ "<td class=\"datum\">" + data[i].openingDate + "</td>"
 									+ "<td class=\"vazeci\">" + data[i].active + "</td>"
 									+ "<td class=\"sredstva\">" + data[i].money + "</td>"
-									+ "<td><button type=\"button\">*</button></td>"
+									+ "<td><a class=\"izvod\" data-toggle=\"modal\" data-target=\"#izvodModal\" href='/izvod_racuna/"+ data[i].id +"'>"
+									+ "<img src='images/xml.png'/></a></td>"
 									+ "<td><a class=\"deactivate\" data-toggle=\"modal\" data-target=\"#deactivateModal\" href='/individual/individualClient/account/deactivate/" + data[i].id + "'>" 
 									+ "<img src='images/remove.gif'/></a></td>"
 								+ "</tr>"
@@ -69,12 +70,31 @@ $(document).ready(function() {
 					}
 				});
 			});
+			
+			$("#izvod-btn").click(function(event) {
+				event.preventDefault();
+				
+				$.ajax({
+					url: $("#izvodForm [name='url']").val(),
+					type: "GET",
+					success: function(data) {
+						alert("Izvod je sacuvan na zeljenoj lokaciji!");
+						$("#izvodModal").modal('toggle');
+					}
+				});
+			});
 });
 
 $(document).on("click", ".deactivate", function(event){
 	event.preventDefault();
 	var myurl = $(this).attr("href");
 	$("#deactivateModal [name='url']").val(myurl);
+});
+
+$(document).on("click", ".izvod", function(event){
+	event.preventDefault();
+	var url = $(this).attr("href");
+	$("#izvodForm [name='url']").val(url);
 });
 		
 </script>
@@ -100,6 +120,30 @@ $(document).on("click", ".deactivate", function(event){
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
 						<button type="button" class="btn btn-primary" id="deactivate-btn">Potvrdi</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Dijalog za izvod -->
+	<div class="modal fade" id="izvodModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Izaberite folder gde zelite da sacuvate vas izvod</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form id="izvodForm">
+					<div class="modal-body">
+						<input type="hidden" name="url"/>
+						<input type="text" name="folder" placeholder="Folder - jos ne radi">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+						<button type="button" class="btn btn-primary" id="izvod-btn">Potvrdi</button>
 					</div>
 				</form>
 			</div>

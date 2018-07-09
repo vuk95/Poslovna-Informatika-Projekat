@@ -11,6 +11,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import com.pi.poslovna.model.Bank;
 import com.pi.poslovna.model.BankAccount;
 import com.pi.poslovna.model.users.User;
 import com.pi.poslovna.service.BankAccountService;
+import com.pi.poslovna.service.IzvodXMLWriterService;
 import com.pi.poslovna.service.UserService;
 
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -35,6 +37,9 @@ public class BankAccountController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private IzvodXMLWriterService izvodXMLService;
+	
 	@RequestMapping(value = "/bank_accounts", method = RequestMethod.GET)
 	public ResponseEntity<List<BankAccount>> getAllBankAccounts() {
 		List<BankAccount> bankAccounts = bankAccountService.findAll();
@@ -42,6 +47,21 @@ public class BankAccountController {
 		return new ResponseEntity<>(bankAccounts, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/bank_accounts/{id}", method = RequestMethod.GET)
+	public ResponseEntity<BankAccount> getBankAccount(@PathVariable Long id) {
+		BankAccount bankAccount = bankAccountService.findOne(id);
+		
+		return new ResponseEntity<>(bankAccount, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/izvod_racuna/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> izvodRacunaXML(@PathVariable Long id) {
+		BankAccount bankAccount = bankAccountService.findOne(id);
+		
+		izvodXMLService.createIzvodXML(bankAccount);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 	
 	@RequestMapping(value = "/reportPDF" , method = RequestMethod.GET)
 	public ResponseEntity<?> reportToPDF(Principal principal) {
