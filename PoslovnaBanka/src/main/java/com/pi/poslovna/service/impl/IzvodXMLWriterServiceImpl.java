@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,7 +34,7 @@ public class IzvodXMLWriterServiceImpl implements IzvodXMLWriterService {
 	public DailyAccountBalanceService dnevnoStanjeService;
 	
 	@Override
-	public void createIzvodXML(BankAccount bankAccount) {
+	public void createIzvodXML(BankAccount bankAccount, String path) {
 		
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -76,16 +75,18 @@ public class IzvodXMLWriterServiceImpl implements IzvodXMLWriterService {
 				stanje.appendChild(novo_stanje);
 			}
 			
+			String filePath = path + "izvod.xml";
+			
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File("C:\\Users\\User\\Desktop\\izvod.xml"));
+			StreamResult result = new StreamResult(new File(filePath));
 			
 			transformer.transform(source, result);
 			
-			System.out.println("Izvod je sacuvan!");
+			System.out.println("Izvod je sacuvan: [ " + filePath + "]");
 		} catch(ParserConfigurationException pce) {
 			pce.printStackTrace();
 		} catch(TransformerException tfe) {

@@ -76,7 +76,9 @@ $(document).ready(function() {
 				
 				$.ajax({
 					url: $("#izvodForm [name='url']").val(),
-					type: "GET",
+					type: "POST",
+					contentType: "text/plain",
+					data: $("#izvodForm [name='folderUpload']").val(),
 					success: function(data) {
 						alert("Izvod je sacuvan na zeljenoj lokaciji!");
 						$("#izvodModal").modal('toggle');
@@ -139,7 +141,7 @@ $(document).on("click", ".izvod", function(event){
 				<form id="izvodForm">
 					<div class="modal-body">
 						<input type="hidden" name="url"/>
-						<input type="text" name="folder" placeholder="Folder - jos ne radi">
+						<input type="text" name="folderUpload" class="form-control" required/>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
