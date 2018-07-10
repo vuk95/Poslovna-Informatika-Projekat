@@ -26,7 +26,7 @@
         <podaci_o_isplati>
             <sifra_placanja>189</sifra_placanja>
             <valuta>RSD</valuta>
-            <iznos>1500.00</iznos>
+            <iznos>1000.00</iznos>
             <racun_platioca>123456</racun_platioca>
             <model>97</model>
             <poziv_na_broj>1716151413121110987654321</poziv_na_broj>

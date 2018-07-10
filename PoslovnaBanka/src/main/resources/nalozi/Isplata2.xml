@@ -26,8 +26,8 @@
         <podaci_o_isplati>
             <sifra_placanja>189</sifra_placanja>
             <valuta>RSD</valuta>
-            <iznos>1500.00</iznos>
-            <racun_platioca>123456</racun_platioca>
+            <iznos>500.00</iznos>
+            <racun_platioca>123457</racun_platioca>
             <model>97</model>
             <poziv_na_broj>1716151413121110987654321</poziv_na_broj>
         </podaci_o_isplati>
@@ -40,7 +40,7 @@
         
         <podaci_o_prijemu>
             <mesto_prijema></mesto_prijema>
-            <datum_prijema>10-05-2018</datum_prijema>
+            <datum_prijema>04-06-2018</datum_prijema>
         </podaci_o_prijemu>
         
         <!-- Negde pise ovo, negde datum izvrsenja-->

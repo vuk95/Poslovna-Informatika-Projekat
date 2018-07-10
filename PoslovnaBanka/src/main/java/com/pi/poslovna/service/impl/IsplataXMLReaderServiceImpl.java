@@ -123,12 +123,121 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 		else {
 			System.out.println("Nema datuma...");
 		}
+		
+		BankAccount founded = accountService.findByAccountNumber(analitika.getDebtorAccount());
+		DailyAccountBalance found = balanceService.findByTrafficDateAndRacun(analitika.getDateOfReceipt(), founded);
+		
+		if(found == null) {
+			BankAccount racun = accountService.findByAccountNumber(analitika.getDebtorAccount());
+			DailyAccountBalance nadjeniPoRacunu = balanceService.findByRacun(racun);
 			
+			//kreiramo novo dnevno stanje racuna za svaku analitiku
 			DailyAccountBalance dab = new DailyAccountBalance();
 			//Nisam siguran da li je ovo traffic date
 			dab.setTrafficDate(analitika.getDateOfReceipt());
-			dab.setTrafficToTheBurden(analitika.getSum());
+			//prihod je suma uplate iz analitike
 			dab.setTrafficToBenefit(0.0f);
+			//gubitak je u slucaju naloga za uplatu 0
+			dab.setTrafficToTheBurden(analitika.getSum());
+			//nadjemo taj racun iz analitike
+			//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
+			//dab.setPreviousState(Float.parseFloat(racun.getMoney()));
+			if(nadjeniPoRacunu != null) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String datFound = sdf.format(nadjeniPoRacunu.getTrafficDate());
+				String datAnalitika = sdf.format(analitika.getDateOfReceipt());
+				Date datumFound = sdf.parse(datFound);
+				Date datumAnalitika = sdf.parse(datAnalitika);
+				if(datumFound.compareTo(datumAnalitika) < 0) {
+					//System.out.println(datumFound + "before " + datumAnalitika);
+					dab.setPreviousState(nadjeniPoRacunu.getNewState());
+				}
+			}
+			else {
+				dab.setPreviousState(0.0f);
+			}
+			dab.setNewState(dab.getPreviousState() + dab.getTrafficToBenefit() - dab.getTrafficToTheBurden());
+			//setujemo novo stanje i na racun
+			
+			racun.setMoney(dab.getNewState().toString());
+		
+			dab.setRacun(racun);
+			analitika.setDnevnoStanjeIzvoda(dab);
+			dab.getMojeAnalitike().add(analitika);
+			
+			balanceService.save(dab);
+			analyticServise.save(analitika);
+			}
+			else {
+			
+			if(found.getRacun() == founded) {
+				
+				//System.out.println("Found racun:"  + found.getRacun().getAccountNumber());
+				//System.out.println("Iz analitike:" + founded.getAccountNumber());
+		
+				found.setTrafficDate(analitika.getDateOfReceipt());
+				//prihod je suma uplate iz analitike
+				found.setTrafficToBenefit(0.0f);
+				//gubitak je u slucaju naloga za uplatu 0
+				found.setTrafficToTheBurden(analitika.getSum());
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String datFound = sdf.format(found.getTrafficDate());
+				String datAnalitika = sdf.format(analitika.getDateOfReceipt());
+				Date datumFound = sdf.parse(datFound);
+				Date datumAnalitika = sdf.parse(datAnalitika);
+			
+				Float upamtiPrethodnoStanje = 0.0f;
+				
+				if(found.getPreviousState() == 0.0f) {
+					found.setPreviousState(0.0f);
+				}
+				else{
+					
+					upamtiPrethodnoStanje = found.getPreviousState();
+					found.setPreviousState(0.0f);
+				}
+				//found.setPreviousState(0.0f);
+				if(datumFound.compareTo(datumAnalitika) == 0) {
+					
+					//System.out.println(datumFound + "equals " + datumAnalitika);
+					found.setNewState(found.getNewState() + found.getPreviousState() + found.getTrafficToBenefit() - found.getTrafficToTheBurden());
+					if(upamtiPrethodnoStanje != 0.0f)
+					found.setPreviousState(upamtiPrethodnoStanje);
+					
+					
+				}
+				/*
+				else {
+					found.setPreviousState(0.0f);
+					found.setNewState(found.getPreviousState() + found.getTrafficToBenefit() - found.getTrafficToTheBurden());
+					
+				}*/
+				//nadjemo taj racun iz analitike
+				BankAccount racun = accountService.findByAccountNumber(analitika.getDebtorAccount());
+				//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
+				//found.setPreviousState(Float.parseFloat(racun.getMoney()));
+
+				//setujemo novo stanje i na racun
+				racun.setMoney(found.getNewState().toString());
+				
+				found.setRacun(racun);
+				analitika.setDnevnoStanjeIzvoda(found);
+				found.getMojeAnalitike().add(analitika);
+				
+				balanceService.save(found);
+				//analyticsService.save(analitika);
+				
+			}
+
+		}
+	
+		
+		/*
+			DailyAccountBalance dab = new DailyAccountBalance();
+			//Nisam siguran da li je ovo traffic date
+			dab.setTrafficDate(analitika.getDateOfReceipt());
+		//	dab.setTrafficToTheBurden(analitika.getSum());
+		//	dab.setTrafficToBenefit(0.0f);
 			BankAccount racunUplatioca = accountService.findByAccountNumber(analitika.getDebtorAccount());
 			dab.setPreviousState(Float.parseFloat(racunUplatioca.getMoney()));
 			dab.setNewState(dab.getPreviousState() + dab.getTrafficToBenefit() - dab.getTrafficToTheBurden());
@@ -137,7 +246,7 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 			balanceService.save(dab);
 			analitika.setDnevnoStanjeIzvoda(dab);
 			analyticServise.save(analitika);
-			
+		*/
 		}
 		catch(Exception e) {
 			e.printStackTrace();
