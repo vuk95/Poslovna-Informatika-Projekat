@@ -4,5 +4,5 @@ import com.pi.poslovna.model.BankAccount;
 
 public interface IzvodXMLWriterService {
 
-	public void createIzvodXML(BankAccount bankAccount);
+	public void createIzvodXML(BankAccount bankAccount, String path);
 }
