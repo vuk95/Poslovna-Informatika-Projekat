@@ -2,7 +2,7 @@
     <nalog_za_prenos>
         
         <podaci_o_nalogodavcu>
-            <naziv_nalogodavca>Momcilo Vukotic</naziv_nalogodavca>    
+            <naziv_nalogodavca>Sasa Ilic</naziv_nalogodavca>    
             <adresa>
                 <mesto>Vrbas</mesto>
                 <ulica>Rada Marjanca</ulica>
@@ -14,7 +14,7 @@
         <svrha_placanja>Transfer igraca u drugi klub</svrha_placanja>
         
         <podaci_o_primaocu>
-            <naziv_primaoca>Sasa Ilic</naziv_primaoca>
+            <naziv_primaoca>Momcilo Vukotic</naziv_primaoca>
             <adresa>
                 <mesto>Beograd</mesto>
                 <ulica>Humska</ulica>
@@ -27,7 +27,7 @@
         <podaci_o_prenosu>
             <sifra_placanja>189</sifra_placanja>
             <valuta>RSD</valuta>
-            <iznos>1000.00</iznos>
+            <iznos>300.00</iznos>
             <racun_nalogodavca>123456</racun_nalogodavca>
             <model_zaduzenja>97</model_zaduzenja> <!-- model zaduzenja -->
             <poziv_na_broj_zaduznje>1234567891011121314151617</poziv_na_broj_zaduznje>
@@ -43,7 +43,7 @@
         
         <podaci_o_prijemu>
             <mesto_prijema></mesto_prijema>
-            <datum_prijema>03-06-2018</datum_prijema>
+            <datum_prijema>05-06-2018</datum_prijema>
         </podaci_o_prijemu>
         
         <!-- Negde pise ovo, negde datum izvrsenja-->
