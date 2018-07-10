@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <nalog_za_uplatu>
+ 
+        <podaci_o_uplatiocu>    
+            <naziv_uplatioca>Pera Peric</naziv_uplatioca>
+            <adresa>
+                <mesto>NS</mesto>
+                <ulica>Bul.Oslobodjenja</ulica>
+                <broj>53/a</broj>
+                <postanski_broj>21000</postanski_broj>
+            </adresa>
+        </podaci_o_uplatiocu>    
+    
+        <svrha_uplate>Prijava ispita</svrha_uplate>
+        
+        <podaci_o_primaocu>
+            <naziv_primaoca>FTN</naziv_primaoca>   
+            <adresa>
+                <mesto>Novi Sad</mesto>
+                <ulica>Trg Dositeja Obradovića</ulica>
+                <broj>6</broj>
+                <postanski_broj>21000</postanski_broj>
+            </adresa>
+        </podaci_o_primaocu>
+    
+        <podaci_o_uplati>
+            <sifra_placanja>189</sifra_placanja>
+            <valuta>RSD</valuta>
+            <iznos>300.00</iznos>
+            <racun_primaoca>123457</racun_primaoca>
+            <model>97</model>
+            <poziv_na_broj>1234567891011121314151617</poziv_na_broj>
+        </podaci_o_uplati>
+    
+        <!--
+         Na uplatnici postoji jos:
+           -potpis uplatioca
+        -->
+        
+        <podaci_o_prijemu>
+            <mesto_prijema></mesto_prijema>
+            <datum_prijema>17-05-2018</datum_prijema>
+        </podaci_o_prijemu>
+        
+        <datum_izvrsenja>17-05-2018</datum_izvrsenja>
+     
+    </nalog_za_uplatu>

@@ -128,7 +128,6 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 			BankAccount founded = accountService.findByAccountNumber(analitika.getAccountRecipient());
 			DailyAccountBalance found = balanceService.findByTrafficDateAndRacun(analitika.getDateOfReceipt(), founded);
 			
-			
 			if(found == null) {
 				BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
 				DailyAccountBalance nadjeniPoRacunu = balanceService.findByRacun(racun);
@@ -164,16 +163,18 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 				racun.setMoney(dab.getNewState().toString());
 			
 				dab.setRacun(racun);
-				balanceService.save(dab);
 				analitika.setDnevnoStanjeIzvoda(dab);
+				dab.getMojeAnalitike().add(analitika);
+				
+				balanceService.save(dab);
 				analyticsService.save(analitika);
 				}
 				else {
 				
 				if(found.getRacun() == founded) {
 					
-					System.out.println("Found racun:"  + found.getRacun().getAccountNumber());
-					System.out.println("Iz analitike:" + founded.getAccountNumber());
+					//System.out.println("Found racun:"  + found.getRacun().getAccountNumber());
+					//System.out.println("Iz analitike:" + founded.getAccountNumber());
 			
 					found.setTrafficDate(analitika.getDateOfReceipt());
 					//prihod je suma uplate iz analitike
@@ -221,9 +222,11 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 					racun.setMoney(found.getNewState().toString());
 					
 					found.setRacun(racun);
-					balanceService.save(found);
 					analitika.setDnevnoStanjeIzvoda(found);
-					analyticsService.save(analitika);
+					found.getMojeAnalitike().add(analitika);
+					
+					balanceService.save(found);
+					//analyticsService.save(analitika);
 					
 				}
 	

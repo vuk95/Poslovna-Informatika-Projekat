@@ -1,5 +1,7 @@
 package com.pi.poslovna.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +35,34 @@ public class DailyAccountBalanceServiceImpl implements DailyAccountBalanceServic
 
 	@Override
 	public DailyAccountBalance findByRacun(BankAccount racun) {
-		return dabRepository.findByRacun(racun);
+		// TODO Auto-generated method stub
+		ArrayList<DailyAccountBalance> lista = dabRepository.findByRacun(racun);
+		ArrayList<Date> listaDatuma = new ArrayList<Date>();
+		DailyAccountBalance balans = null;
+		
+		if(!lista.isEmpty()) {
+			//System.out.println(lista.size());
+			
+			for(int i = 0; i < lista.size(); i++) {
+			listaDatuma.add(lista.get(i).getTrafficDate());
+		}
+		
+		Date newest = Collections.max(listaDatuma);
+		
+		for(int i = 0; i < lista.size(); i++) {
+			if(lista.get(i).getTrafficDate() == newest) {
+				balans = lista.get(i);
+			}
+		}
+		}
+		//if(balans != null)
+		//System.out.println(balans.getTrafficDate());
+		return balans;
 	}
 
+	/*@Override
+	public DailyAccountBalance findByRacun(BankAccount racun) {
+		return dabRepository.findByRacun(racun);
+	}
+	 */
 }

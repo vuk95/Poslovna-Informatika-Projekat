@@ -2,11 +2,13 @@ package com.pi.poslovna.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity(name = "Analitika_izvoda")
@@ -14,6 +16,7 @@ public class AnalyticsOfStatement {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "analytics_id")
 	private Long id;
 	
 	@Column(name = "Duznik")
@@ -61,7 +64,8 @@ public class AnalyticsOfStatement {
 	@Column(name = "Status")
 	private String status;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "balance_id", referencedColumnName = "balance_id")
 	private DailyAccountBalance dnevnoStanjeIzvoda;
 		
 	public AnalyticsOfStatement() {

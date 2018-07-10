@@ -1,5 +1,6 @@
 package com.pi.poslovna.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +15,6 @@ import com.pi.poslovna.model.DailyAccountBalance;
 public interface DailyAccountBalanceRepository extends JpaRepository<DailyAccountBalance, Long>{
 
 	DailyAccountBalance findByTrafficDateAndRacun(Date trafficDate, BankAccount racun);
-	DailyAccountBalance findByRacun(BankAccount racun);
-	
+	//DailyAccountBalance findByRacun(BankAccount racun);
+	ArrayList<DailyAccountBalance> findByRacun(BankAccount racun);
 }

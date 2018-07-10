@@ -1,19 +1,26 @@
 package com.pi.poslovna.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 
 @Entity(name = "Dnevno_stanje_racuna")
 public class DailyAccountBalance {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "balance_id")
 	private Long id;
 	
 	@Column(name = "Datum_prometa")
@@ -35,6 +42,11 @@ public class DailyAccountBalance {
 	private BankAccount racun;
 	
 	//List Analitika
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "mojeAnalitike",
+				joinColumns = @JoinColumn(name = "balance_id", referencedColumnName = "balance_id"),
+				inverseJoinColumns = @JoinColumn(name = "analytics_id", referencedColumnName = "analytics_id"))
+	private List<AnalyticsOfStatement> mojeAnalitike = new ArrayList<AnalyticsOfStatement>();
 	
 	public DailyAccountBalance() {
 		
@@ -94,6 +106,14 @@ public class DailyAccountBalance {
 
 	public void setRacun(BankAccount racun) {
 		this.racun = racun;
+	}
+
+	public List<AnalyticsOfStatement> getMojeAnalitike() {
+		return mojeAnalitike;
+	}
+
+	public void setMojeAnalitike(List<AnalyticsOfStatement> mojeAnalitike) {
+		this.mojeAnalitike = mojeAnalitike;
 	}
 	
 }
