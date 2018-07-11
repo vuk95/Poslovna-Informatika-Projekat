@@ -211,11 +211,11 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 					if(analitika.isEmergency() || iznos > 250.000f) {
 						InterbankTransfer it = new InterbankTransfer();
 						it.setDate(analitika.getDateOfReceipt());
-						it.setReceiverBank(bank);
-						it.setSenderBank(racun.getBank());
+						it.setReceiverBank(racun.getBank());
+						it.setSenderBank(bank);
 						it.setTypeOfMessage(MessageTypes.MT103);
 						//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
-						//it.getAnalytics().add(analitika);
+						it.getAnalytics().add(analitika);
 						inbankService.save(it);
 					}
 					//else kliring
@@ -287,9 +287,6 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 					if(!racun.getMojiDnevniBalansi().contains(found))
 						racun.getMojiDnevniBalansi().add(found);
 					
-					balanceService.save(found);
-					//analyticsService.save(analitika);
-					
 					if(medjubankarski) {
 						
 						Float iznos = analitika.getSum();
@@ -297,15 +294,20 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 						if(analitika.isEmergency() || iznos > 250.000f) {
 							InterbankTransfer it = new InterbankTransfer();
 							it.setDate(analitika.getDateOfReceipt());
-							it.setReceiverBank(bank);
-							it.setSenderBank(racun.getBank());
+							it.setReceiverBank(racun.getBank());
+							it.setSenderBank(bank);
 							it.setTypeOfMessage(MessageTypes.MT103);
 							//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
-							//it.getAnalytics().add(analitika);
+							it.getAnalytics().add(analitika);
 							inbankService.save(it);
 						}
 						//else kliring
 					}
+					
+					balanceService.save(found);
+					//analyticsService.save(analitika);
+					
+					
 					
 				}
 	
