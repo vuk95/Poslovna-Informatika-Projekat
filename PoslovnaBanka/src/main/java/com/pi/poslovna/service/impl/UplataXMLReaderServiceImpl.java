@@ -28,6 +28,7 @@ import com.pi.poslovna.service.AnalyticsOfStatementService;
 import com.pi.poslovna.service.BankAccountService;
 import com.pi.poslovna.service.DailyAccountBalanceService;
 import com.pi.poslovna.service.InterbankTransferService;
+import com.pi.poslovna.service.MedjubankarskiTransferXMLWriterService;
 import com.pi.poslovna.service.UplataXMLReaderService;
 import com.pi.poslovna.service.UserService;
 
@@ -49,6 +50,9 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 	
 	@Autowired
 	private InterbankTransferService inbankService;
+	
+	@Autowired
+	private MedjubankarskiTransferXMLWriterService XMLWriterService;
 	
 	@Override
 	public void readUplataXML(String filePath, Principal principal) {
@@ -217,6 +221,7 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 						//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
 						it.getAnalytics().add(analitika);
 						inbankService.save(it);
+						XMLWriterService.createRTGSXML(it);
 					}
 					//else kliring
 					
@@ -300,6 +305,7 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 							//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
 							it.getAnalytics().add(analitika);
 							inbankService.save(it);
+							XMLWriterService.createRTGSXML(it);
 						}
 						//else kliring
 					}
