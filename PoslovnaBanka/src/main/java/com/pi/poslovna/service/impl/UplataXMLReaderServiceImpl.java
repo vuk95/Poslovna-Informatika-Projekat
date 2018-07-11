@@ -166,6 +166,8 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 				analitika.setDnevnoStanjeIzvoda(dab);
 				dab.getMojeAnalitike().add(analitika);
 				
+				if(!racun.getMojiDnevniBalansi().contains(dab))
+				racun.getMojiDnevniBalansi().add(dab);
 				balanceService.save(dab);
 				analyticsService.save(analitika);
 				}
@@ -225,6 +227,8 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 					analitika.setDnevnoStanjeIzvoda(found);
 					found.getMojeAnalitike().add(analitika);
 					
+					if(!racun.getMojiDnevniBalansi().contains(found))
+					racun.getMojiDnevniBalansi().add(found);
 					balanceService.save(found);
 					//analyticsService.save(analitika);
 					

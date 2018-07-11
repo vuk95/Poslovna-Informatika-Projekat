@@ -13,9 +13,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pi.poslovna.model.clients.ClientType;
 import com.pi.poslovna.model.clients.Individuals;
 import com.pi.poslovna.model.clients.LegalEntities;
@@ -63,7 +67,13 @@ public class BankAccount {
 	@Enumerated(EnumType.STRING)
 	private ClientType clientType;
 	
-	//List DailyAccounta
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "mojiDnevniBalansi",
+				joinColumns = @JoinColumn(name = "racun_id", referencedColumnName = "racun_id"),
+					inverseJoinColumns = @JoinColumn(name = "balance_id", referencedColumnName = "balance_id"))
+	@JsonIgnore
+	private List<DailyAccountBalance> mojiDnevniBalansi = new ArrayList<DailyAccountBalance>();
+	
 	//PODACI O KLIJENTU
 /*	private String ime;
 	private String prezime;
@@ -175,5 +185,17 @@ public class BankAccount {
 	public void setDeactivate(List<DeactivateBankAccount> deactivate) {
 		this.deactivate = deactivate;
 	}
+
+
+	public List<DailyAccountBalance> getMojiDnevniBalansi() {
+		return mojiDnevniBalansi;
+	}
+
+
+	public void setMojiDnevniBalansi(List<DailyAccountBalance> mojiDnevniBalansi) {
+		this.mojiDnevniBalansi = mojiDnevniBalansi;
+	}
+	
+	
 	
 }

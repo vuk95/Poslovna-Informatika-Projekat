@@ -165,6 +165,9 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 			analitika.setDnevnoStanjeIzvoda(dab);
 			dab.getMojeAnalitike().add(analitika);
 			
+			if(!racun.getMojiDnevniBalansi().contains(dab))
+			racun.getMojiDnevniBalansi().add(dab);
+			
 			balanceService.save(dab);
 			analyticServise.save(analitika);
 			}
@@ -224,6 +227,8 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 				analitika.setDnevnoStanjeIzvoda(found);
 				found.getMojeAnalitike().add(analitika);
 				
+				if(!racun.getMojiDnevniBalansi().contains(found))
+					racun.getMojiDnevniBalansi().add(found);
 				balanceService.save(found);
 				//analyticsService.save(analitika);
 				

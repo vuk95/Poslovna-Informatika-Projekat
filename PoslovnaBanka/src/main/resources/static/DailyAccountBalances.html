@@ -1,0 +1,56 @@
+<html>
+
+<head>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+	<script src="scripts/tether.min.js"></script>
+	<script src="scripts/bootstrap.min.js"></script>
+	<script src="scripts/functions.js"></script>
+	<script src="scripts/addIndividuals.js"></script>
+	<link rel="stylesheet" type="text/css" href="stylesheets/design.css">
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<title>DailyAccountBalances</title>
+<script>
+
+$(document).ready(function(){
+	
+	var queryString = decodeURIComponent(window.location.search);
+	queryString = queryString.substring(8);
+
+	$.ajax({
+		url : "http://localhost:8083/balansi/getBalances/" + queryString 
+	}).then(
+			function(data) {
+				for (i = 0; i < data.length; i++) {
+					newRow = 
+						"<tr>"
+							+ "<td class=\"date\">" + data[i].trafficDate + "</td>"
+							+ "<td class=\"previous\">" + data[i].previousState + "</td>"
+							+ "<td class=\"benefit\">" + data[i].trafficToBenefit + "</td>"
+							+ "<td class=\"burden\">" + data[i].trafficToTheBurden + "</td>"
+							+ "<td class=\"state\">" + data[i].newState + "</td>"
+							+ "<td><a class=\"details\"  href='/individual/indivudalClient/" + data[i].id +"'>" 
+							+ "<img src='images/details.gif'/></a></td>"
+						+ "</tr>"
+					$("#dataTable").append(newRow)
+				}
+			});
+		});
+</script>
+</head>
+<body>
+	<h1>Dnevno stanje racuna: </h1>
+		
+		<table id="dataTable" class="table">
+			<tr class="header">
+				<th>Datum prometa</th>
+				<th>Prethodno stanje</th>
+				<th>Promet u korist</th>
+				<th>Promet na teret</th>
+				<th>Novo stanje</th>
+				<th width=20px></th>
+			</tr>
+		</table>
+</body>
+
+</html>

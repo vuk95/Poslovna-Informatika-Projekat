@@ -194,6 +194,8 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 				analitika.setDnevnoStanjeIzvoda(dab);
 				dab.getMojeAnalitike().add(analitika);
 				
+				if(!racun.getMojiDnevniBalansi().contains(dab))
+					racun.getMojiDnevniBalansi().add(dab);
 				balanceService.save(dab);
 				analyticService.save(analitika);
 				}
@@ -253,6 +255,8 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 					analitika.setDnevnoStanjeIzvoda(found);
 					found.getMojeAnalitike().add(analitika);
 					
+					if(!racun.getMojiDnevniBalansi().contains(found))
+						racun.getMojiDnevniBalansi().add(found);
 					balanceService.save(found);
 					//analyticsService.save(analitika);
 					
@@ -302,6 +306,8 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 				analitika2.setDnevnoStanjeIzvoda(dab);
 				dab.getMojeAnalitike().add(analitika2);
 				
+				if(!racun.getMojiDnevniBalansi().contains(dab))
+					racun.getMojiDnevniBalansi().add(dab);
 				balanceService.save(dab);
 				analyticService.save(analitika2);
 				}
@@ -360,7 +366,8 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 					found2.setRacun(racun);
 					analitika2.setDnevnoStanjeIzvoda(found2);
 					found2.getMojeAnalitike().add(analitika2);
-					
+					if(!racun.getMojiDnevniBalansi().contains(found2))
+						racun.getMojiDnevniBalansi().add(found2);
 					balanceService.save(found2);
 					//analyticsService.save(analitika);
 					

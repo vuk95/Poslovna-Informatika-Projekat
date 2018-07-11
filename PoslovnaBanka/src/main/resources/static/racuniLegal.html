@@ -43,6 +43,8 @@ $(document).ready(
 									+ "<td class=\"datum\">" + data[i].openingDate + "</td>"
 									+ "<td class=\"vazeci\">" + data[i].active + "</td>"
 									+ "<td class=\"sredstva\">" + data[i].money + "</td>"
+									+ "<td><a class=\"dnevniizvod\" href='/balansi/getBankAccount/"+ data[i].id +"'>"
+									+ "<img src='images/nextform.gif'/></a></td>"
 									+ "<td><a class=\"izvod\" data-toggle=\"modal\" data-target=\"#izvodModal\" href='/izvod_racuna/"+ data[i].id +"'>"
 									+ "<img src='images/xml.png'/></a></td>"
 									+ "<td><a class=\"deactivate\" data-toggle=\"modal\" data-target=\"#deactivateModal\" href='/legalEntity/leClient/account/deactivate/" + data[i].id + "'>" 
@@ -99,6 +101,30 @@ $(document).on("click", ".izvod", function(event){
 	var url = $(this).attr("href");
 	$("#izvodForm [name='url']").val(url);
 });
+
+$(document).on("click", ".dnevniizvod", function(event){
+	//ne salji get zahtev
+		event.preventDefault(); 
+	
+		var url = $(this).attr("href")
+		
+		$.ajax({
+        	url: url,
+        	type: "GET",
+    		contentType:"application/json",
+    		dataType:"json",
+        	success: function(data){
+        		if(data != null) {
+        			var queryS = "?param1=" + data.id
+    				window.location.href = "DailyAccountBalances.html" + queryS;
+    			}
+    		},
+    		error: function(jqxhr,textStatus,errorThrown) {
+    			alert(errorThrown);
+    		}	 
+				
+		});
+	});
 
 </script>
 <body>
@@ -161,6 +187,7 @@ $(document).on("click", ".izvod", function(event){
 				<th>Datum otvaranja</th>
 				<th>Vazeci</th>
 				<th>Sredstva</th>
+				<th>Dnevno stanje</th>
 				<th>Izvod</th>
 				<th>Deactivate</th>
 			</tr>
