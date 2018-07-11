@@ -1,6 +1,7 @@
 package com.pi.poslovna.service.impl;
 
 import java.io.File;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -16,13 +17,19 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
+import com.pi.poslovna.model.InterbankTransfer;
+import com.pi.poslovna.model.MessageTypes;
 import com.pi.poslovna.model.AnalyticsOfStatement;
+import com.pi.poslovna.model.Bank;
 import com.pi.poslovna.model.BankAccount;
 import com.pi.poslovna.model.DailyAccountBalance;
+import com.pi.poslovna.model.users.User;
 import com.pi.poslovna.service.AnalyticsOfStatementService;
 import com.pi.poslovna.service.BankAccountService;
 import com.pi.poslovna.service.DailyAccountBalanceService;
+import com.pi.poslovna.service.InterbankTransferService;
 import com.pi.poslovna.service.UplataXMLReaderService;
+import com.pi.poslovna.service.UserService;
 
 @Transactional
 @Service
@@ -37,9 +44,14 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 	@Autowired
 	private BankAccountService accountService;
 	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private InterbankTransferService inbankService;
 	
 	@Override
-	public void readUplataXML(String filePath) {
+	public void readUplataXML(String filePath, Principal principal) {
 		try {
 			File xmlFile = new File(filePath);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -125,14 +137,31 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 				System.out.println("Nema datuma...");
 			}
 			
+			//-----------------------ODAVDE KRECE OBRADA UPLATE-------------------------
+			
 			BankAccount founded = accountService.findByAccountNumber(analitika.getAccountRecipient());
+			//nadjemo racun po datumu i broju racuna
 			DailyAccountBalance found = balanceService.findByTrafficDateAndRacun(analitika.getDateOfReceipt(), founded);
 			
-			if(found == null) {
-				BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
-				DailyAccountBalance nadjeniPoRacunu = balanceService.findByRacun(racun);
-				
 			
+			//ako nije nadjen nijedan kreiraj novo dnevno stanje i novi balans
+			if(found == null) {
+				
+				BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
+				//OVO CE NAM TREBATI DA VIDIMO DA LI JE PRETHODNIH DANA BILO NESTO ZBOG PREVIOUS STATE
+				DailyAccountBalance nadjeniPoRacunu = balanceService.findByRacun(racun);
+				//provera da li je medjubankarski transfer
+				boolean medjubankarski = false;
+				
+				User user = userService.getUserByEmail(principal.getName());
+				Bank bank = user.getBank();
+				if(bank.getId().equals(racun.getBank().getId())) {
+					medjubankarski = false;
+				}
+				else {
+					medjubankarski = true;
+				}
+				
 				//kreiramo novo dnevno stanje racuna za svaku analitiku
 				DailyAccountBalance dab = new DailyAccountBalance();
 				//Nisam siguran da li je ovo traffic date
@@ -142,8 +171,7 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 				//gubitak je u slucaju naloga za uplatu 0
 				dab.setTrafficToTheBurden(0.0f);
 				//nadjemo taj racun iz analitike
-				//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
-				//dab.setPreviousState(Float.parseFloat(racun.getMoney()));
+				//AKO IMA NESTO PROVERI DA LI JE BILO PRE TRENUTNOG I PRENESI STANJE
 				if(nadjeniPoRacunu != null) {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					String datFound = sdf.format(nadjeniPoRacunu.getTrafficDate());
@@ -155,29 +183,66 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 						dab.setPreviousState(nadjeniPoRacunu.getNewState());
 					}
 				}
+				//AKO NEMA PRETHODNO STANJE JE 0
 				else {
 					dab.setPreviousState(0.0f);
 				}
 				dab.setNewState(dab.getPreviousState() + dab.getTrafficToBenefit() - dab.getTrafficToTheBurden());
 				//setujemo novo stanje i na racun
 				racun.setMoney(dab.getNewState().toString());
-			
+				//SETUJEMO RACUN ZA BALANS
 				dab.setRacun(racun);
+				//SETUJEMO BALANS ZA ANALITIKU
 				analitika.setDnevnoStanjeIzvoda(dab);
+	
 				dab.getMojeAnalitike().add(analitika);
 				
+				//MORA BITI UNIQUE DODAJEMO BALANS U LISTU BALANSA U RACUNU
 				if(!racun.getMojiDnevniBalansi().contains(dab))
-				racun.getMojiDnevniBalansi().add(dab);
+					racun.getMojiDnevniBalansi().add(dab);
+				//CUVAMO I BALANS I ANALITIKU
 				balanceService.save(dab);
 				analyticsService.save(analitika);
+				
+				if(medjubankarski) {
+					
+					Float iznos = analitika.getSum();
+					//RTGS
+					if(analitika.isEmergency() || iznos > 250.000f) {
+						InterbankTransfer it = new InterbankTransfer();
+						it.setDate(analitika.getDateOfReceipt());
+						it.setReceiverBank(bank);
+						it.setSenderBank(racun.getBank());
+						it.setTypeOfMessage(MessageTypes.MT103);
+						//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+						//it.getAnalytics().add(analitika);
+						inbankService.save(it);
+					}
+					//else kliring
+					
 				}
-				else {
+				
+			}
+			//---------------A AKO JE NASAO NEKI SA ISTIM DATUMOM I BROJEM-----------
+			else {
 				
 				if(found.getRacun() == founded) {
 					
-					//System.out.println("Found racun:"  + found.getRacun().getAccountNumber());
-					//System.out.println("Iz analitike:" + founded.getAccountNumber());
-			
+					//provera da li je medjubankarski transfer
+					//-----------------------------------------------
+					boolean medjubankarski = false;
+					
+					User user = userService.getUserByEmail(principal.getName());
+					Bank bank = user.getBank();
+					
+					if(bank.getId().equals(found.getRacun().getBank().getId())) {
+						medjubankarski = false;
+					}
+					else {
+						medjubankarski = true;
+					}
+					//------------------------------------------------
+					
 					found.setTrafficDate(analitika.getDateOfReceipt());
 					//prihod je suma uplate iz analitike
 					found.setTrafficToBenefit(analitika.getSum());
@@ -188,38 +253,30 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 					String datAnalitika = sdf.format(analitika.getDateOfReceipt());
 					Date datumFound = sdf.parse(datFound);
 					Date datumAnalitika = sdf.parse(datAnalitika);
-				
+					//POMOCNA PROMENLJIVA
 					Float upamtiPrethodnoStanje = 0.0f;
 					
 					if(found.getPreviousState() == 0.0f) {
 						found.setPreviousState(0.0f);
 					}
 					else{
-						
 						upamtiPrethodnoStanje = found.getPreviousState();
 						found.setPreviousState(0.0f);
 					}
-					//found.setPreviousState(0.0f);
+					
 					if(datumFound.compareTo(datumAnalitika) == 0) {
 						
-						//System.out.println(datumFound + "equals " + datumAnalitika);
 						found.setNewState(found.getNewState() + found.getPreviousState() + found.getTrafficToBenefit() - found.getTrafficToTheBurden());
+						//setuj stanje od prethodnog dana
 						if(upamtiPrethodnoStanje != 0.0f)
-						found.setPreviousState(upamtiPrethodnoStanje);
+							found.setPreviousState(upamtiPrethodnoStanje);
 						
 						
 					}
-					/*
-					else {
-						found.setPreviousState(0.0f);
-						found.setNewState(found.getPreviousState() + found.getTrafficToBenefit() - found.getTrafficToTheBurden());
-						
-					}*/
+					
 					//nadjemo taj racun iz analitike
 					BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
-					//staro stanje je stanje sa racuna a novo suma starog prihoda i gubitka
-					//found.setPreviousState(Float.parseFloat(racun.getMoney()));
-	
+					
 					//setujemo novo stanje i na racun
 					racun.setMoney(found.getNewState().toString());
 					
@@ -228,9 +285,27 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 					found.getMojeAnalitike().add(analitika);
 					
 					if(!racun.getMojiDnevniBalansi().contains(found))
-					racun.getMojiDnevniBalansi().add(found);
+						racun.getMojiDnevniBalansi().add(found);
+					
 					balanceService.save(found);
 					//analyticsService.save(analitika);
+					
+					if(medjubankarski) {
+						
+						Float iznos = analitika.getSum();
+						//RTGS
+						if(analitika.isEmergency() || iznos > 250.000f) {
+							InterbankTransfer it = new InterbankTransfer();
+							it.setDate(analitika.getDateOfReceipt());
+							it.setReceiverBank(bank);
+							it.setSenderBank(racun.getBank());
+							it.setTypeOfMessage(MessageTypes.MT103);
+							//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+							//it.getAnalytics().add(analitika);
+							inbankService.save(it);
+						}
+						//else kliring
+					}
 					
 				}
 	

@@ -150,5 +150,5 @@ public class Bank {
 	public void setLegalEntityClients(List<LegalEntities> legalEntityClients) {
 		this.legalEntityClients = legalEntityClients;
 	}
-	
+
 }

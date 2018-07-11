@@ -1,7 +1,7 @@
 package com.pi.poslovna.controller;
 
 import java.io.UnsupportedEncodingException;
-
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,12 +28,12 @@ public class XMLReaderController {
 	public PrenosXMLReaderService prenosXMLReaderService;
 	
 	@RequestMapping(value="/import_uplata", method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<String> setPathToFile(@RequestBody String filePath) throws UnsupportedEncodingException{
+	public ResponseEntity<String> setPathToFile(@RequestBody String filePath, Principal principal) throws UnsupportedEncodingException{
 		
 		String decoded = java.net.URLDecoder.decode(filePath, "UTF-8");
 		String path = decoded.substring(9);
 		
-		uplataXMLReaderService.readUplataXML(path);
+		uplataXMLReaderService.readUplataXML(path, principal);
 		
 		return new ResponseEntity<>(path, HttpStatus.OK);
 		 
