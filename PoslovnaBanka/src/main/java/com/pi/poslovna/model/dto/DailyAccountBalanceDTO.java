@@ -1,14 +1,10 @@
 package com.pi.poslovna.model.dto;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-
 public class DailyAccountBalanceDTO {
 	
 	private Long id;
 	
-	private Date trafficDate;
+	private String trafficDate;
 	
 	private float previousState;
 	
@@ -26,11 +22,11 @@ public class DailyAccountBalanceDTO {
 		this.id = id;
 	}
 
-	public Date getTrafficDate() {
+	public String getTrafficDate() {
 		return trafficDate;
 	}
 
-	public void setTrafficDate(Date trafficDate) {
+	public void setTrafficDate(String trafficDate) {
 		this.trafficDate = trafficDate;
 	}
 
@@ -68,7 +64,7 @@ public class DailyAccountBalanceDTO {
 	
 	public DailyAccountBalanceDTO() {}
 
-	public DailyAccountBalanceDTO(Date trafficDate, float previousState, Float trafficToBenefit,
+	public DailyAccountBalanceDTO(String trafficDate, float previousState, Float trafficToBenefit,
 			Float trafficToTheBurden, Float newState) {
 		super();
 		this.trafficDate = trafficDate;
