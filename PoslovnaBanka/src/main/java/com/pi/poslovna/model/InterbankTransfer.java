@@ -1,12 +1,16 @@
 package com.pi.poslovna.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 @Entity(name = "Medjubankarski_prenos")
@@ -16,7 +20,8 @@ public class InterbankTransfer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String typeOfMessage; ////MT102 i MT103
+	@Enumerated(EnumType.STRING)
+	private MessageTypes typeOfMessage; //MT102-Kliring i MT103-RTGS
 	
 	private Date date;
 	
@@ -26,7 +31,10 @@ public class InterbankTransfer {
 	@ManyToOne
 	private Bank receiverBank;
 
-	//TO DO: Ukljuciti analitike izvoda - preko posebene klase (stavke prenosa) ili direktno ovde
+	
+	@OneToMany
+	private List<AnalyticsOfStatement> analytics; //lista stavki za prenos
+	
 	
 	public InterbankTransfer() {
 		
@@ -40,11 +48,12 @@ public class InterbankTransfer {
 		this.id = id;
 	}
 
-	public String getTypeOfMessage() {
+	
+	public MessageTypes getTypeOfMessage() {
 		return typeOfMessage;
 	}
 
-	public void setTypeOfMessage(String typeOfMessage) {
+	public void setTypeOfMessage(MessageTypes typeOfMessage) {
 		this.typeOfMessage = typeOfMessage;
 	}
 
@@ -70,6 +79,14 @@ public class InterbankTransfer {
 
 	public void setReceiverBank(Bank receiverBank) {
 		this.receiverBank = receiverBank;
+	}
+
+	public List<AnalyticsOfStatement> getAnalytics() {
+		return analytics;
+	}
+
+	public void setAnalytics(List<AnalyticsOfStatement> analytics) {
+		this.analytics = analytics;
 	}
 	
 	
