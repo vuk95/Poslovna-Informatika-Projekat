@@ -1,0 +1,59 @@
+<html>
+<head>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+	<script src="scripts/tether.min.js"></script>
+	<script src="scripts/bootstrap.min.js"></script>
+	<script src="scripts/functions.js"></script>
+	<link rel="stylesheet" type="text/css" href="stylesheets/design.css">
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<title>InterbankTransferList</title>
+<script>
+
+$(document).ready(function(){
+	$.ajax({
+		url : "http://localhost:8083/interbankTransfers"
+	}).then(
+			function(data) {
+				for (i = 0; i < data.length; i++) {
+					newRow = 
+						"<tr>"
+							+ + "<td class=\"id\">" + data[i].id + "</td>"
+							+ "<td class=\"date\">" + data[i].date + "</td>"
+							+ "<td class=\"sender\">" + data[i].senderBank.name + "</td>"
+							+ "<td class=\"receiver\">" + data[i].receiverBank.name + "</td>"
+							+ "<td class=\"message\">" + data[i].typeOfMessage + "</td>"
+						+ "</tr>"
+					$("#dataTable").append(newRow)
+				}
+			});
+});
+</script>		
+<style>
+
+h1 {
+
+text-align:center;
+
+}
+
+</style>
+</head>
+
+<body>
+	<h1>Interbank Transfers</h1>
+	<table border = "1" id="dataTable" class="table">
+			<tr>
+				<th>Analitic</th>
+				<th>Date</th>
+				<th>Sender</th>
+				<th>Sender Bank</th>
+				<th>Receiver</th>
+				<th>Receiver Bank</th>
+				<th>Sum</th>
+				<th>Message</th>
+			</tr>
+	</table>
+	
+</body>
+</html>
