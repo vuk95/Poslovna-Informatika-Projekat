@@ -67,6 +67,9 @@ public class AnalyticsOfStatement {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "balance_id", referencedColumnName = "balance_id")
 	private DailyAccountBalance dnevnoStanjeIzvoda;
+	
+	@ManyToOne
+	private InterbankTransfer medjubankarskiPrenos;
 		
 	public AnalyticsOfStatement() {
 		
@@ -241,5 +244,16 @@ public class AnalyticsOfStatement {
 	public void setDnevnoStanjeIzvoda(DailyAccountBalance dnevnoStanjeIzvoda) {
 		this.dnevnoStanjeIzvoda = dnevnoStanjeIzvoda;
 	}
+
+
+	public InterbankTransfer getMedjubankarskiPrenos() {
+		return medjubankarskiPrenos;
+	}
+
+
+	public void setMedjubankarskiPrenos(InterbankTransfer medjubankarskiPrenos) {
+		this.medjubankarskiPrenos = medjubankarskiPrenos;
+	}
+	
 	
 }
