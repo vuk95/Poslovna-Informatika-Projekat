@@ -210,7 +210,7 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 					//RTGS
 					if(analitika.isEmergency() || iznos > 250.000f) {
 						InterbankTransfer it = new InterbankTransfer();
-						it.setDate(analitika.getDateOfReceipt());
+						it.setDateIT(analitika.getDateOfReceipt());
 						it.setReceiverBank(racun.getBank());
 						it.setSenderBank(bank);
 						it.setTypeOfMessage(MessageTypes.MT103);
@@ -293,7 +293,7 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 						//RTGS
 						if(analitika.isEmergency() || iznos > 250.000f) {
 							InterbankTransfer it = new InterbankTransfer();
-							it.setDate(analitika.getDateOfReceipt());
+							it.setDateIT(analitika.getDateOfReceipt());
 							it.setReceiverBank(racun.getBank());
 							it.setSenderBank(bank);
 							it.setTypeOfMessage(MessageTypes.MT103);

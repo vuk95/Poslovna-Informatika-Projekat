@@ -20,6 +20,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity(name = "Medjubankarski_prenos")
 public class InterbankTransfer {
@@ -32,7 +34,7 @@ public class InterbankTransfer {
 	@Enumerated(EnumType.STRING)
 	private MessageTypes typeOfMessage; //MT102-Kliring i MT103-RTGS
 	
-	private Date date;
+	private Date dateIT;
 	
 	@ManyToOne
 	private Bank senderBank;
@@ -40,7 +42,8 @@ public class InterbankTransfer {
 	@ManyToOne
 	private Bank receiverBank;
 
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY) 	
 	private List<AnalyticsOfStatement> analytics = new ArrayList<AnalyticsOfStatement>(); //lista stavki za prenos
 	
 	
@@ -65,12 +68,13 @@ public class InterbankTransfer {
 		this.typeOfMessage = typeOfMessage;
 	}
 
-	public Date getDate() {
-		return date;
+	
+	public Date getDateIT() {
+		return dateIT;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDateIT(Date dateIT) {
+		this.dateIT = dateIT;
 	}
 
 	public Bank getSenderBank() {

@@ -67,10 +67,10 @@ public class AnalyticsOfStatement {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "balance_id", referencedColumnName = "balance_id")
 	private DailyAccountBalance dnevnoStanjeIzvoda;
-	/*
+	
 	@ManyToOne
 	private InterbankTransfer medjubankarskiPrenos;
-	*/	
+	
 	public AnalyticsOfStatement() {
 		
 	}

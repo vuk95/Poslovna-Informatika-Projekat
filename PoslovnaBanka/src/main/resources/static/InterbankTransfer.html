@@ -18,8 +18,8 @@ $(document).ready(function(){
 				for (i = 0; i < data.length; i++) {
 					newRow = 
 						"<tr>"
-							+ + "<td class=\"id\">" + data[i].id + "</td>"
-							+ "<td class=\"date\">" + data[i].date + "</td>"
+							+ "<td class=\"id\">" + data[i].id + "</td>"
+							+ "<td class=\"date\">" + data[i].dateIT + "</td>"
 							+ "<td class=\"sender\">" + data[i].senderBank.name + "</td>"
 							+ "<td class=\"receiver\">" + data[i].receiverBank.name + "</td>"
 							+ "<td class=\"message\">" + data[i].typeOfMessage + "</td>"
@@ -44,13 +44,10 @@ text-align:center;
 	<h1>Interbank Transfers</h1>
 	<table border = "1" id="dataTable" class="table">
 			<tr>
-				<th>Analitic</th>
+				<th>Analytic</th>
 				<th>Date</th>
-				<th>Sender</th>
 				<th>Sender Bank</th>
-				<th>Receiver</th>
 				<th>Receiver Bank</th>
-				<th>Sum</th>
 				<th>Message</th>
 			</tr>
 	</table>
