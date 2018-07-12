@@ -6,5 +6,5 @@ public interface MedjubankarskiTransferXMLWriterService {
 
 	public void createRTGSXML(InterbankTransfer it);
 	
-	public void createClearingXML();
+	public void createClearingXML(InterbankTransfer it);
 }

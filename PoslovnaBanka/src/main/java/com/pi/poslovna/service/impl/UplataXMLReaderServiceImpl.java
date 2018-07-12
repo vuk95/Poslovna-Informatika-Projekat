@@ -221,6 +221,7 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 						it.setTypeOfMessage(MessageTypes.MT103);
 						//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
 						it.getAnalytics().add(analitika);
+						it.setExported(true);
 						inbankService.save(it);
 						XMLWriterService.createRTGSXML(it);
 
@@ -318,6 +319,7 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 							it.setTypeOfMessage(MessageTypes.MT103);
 							//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
 							it.getAnalytics().add(analitika);
+							it.setExported(true);
 							inbankService.save(it);
 							XMLWriterService.createRTGSXML(it);
 						}

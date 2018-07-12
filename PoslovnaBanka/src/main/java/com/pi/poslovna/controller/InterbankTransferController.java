@@ -13,6 +13,7 @@ import com.pi.poslovna.converters.InterbankTransferToInterbankTransferDTO;
 import com.pi.poslovna.model.InterbankTransfer;
 import com.pi.poslovna.model.dto.InterbankTransferDTO;
 import com.pi.poslovna.service.InterbankTransferService;
+import com.pi.poslovna.service.MedjubankarskiTransferXMLWriterService;
 
 @RestController
 public class InterbankTransferController {
@@ -23,6 +24,9 @@ public class InterbankTransferController {
 	@Autowired
 	private InterbankTransferToInterbankTransferDTO toInterbankDtoService; 
 	
+	@Autowired
+	private MedjubankarskiTransferXMLWriterService XMLWriterService;
+	
 	@RequestMapping(value = "/interbankTransfers" , method = RequestMethod.GET)
 	public ResponseEntity<List<InterbankTransferDTO>> getInterbankTransfers() {
 		
@@ -30,6 +34,15 @@ public class InterbankTransferController {
 		List<InterbankTransferDTO> transfersdto = toInterbankDtoService.convert(transfers);
 		
 		return new ResponseEntity<>(transfersdto,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/clearing", method = RequestMethod.GET)
+	public ResponseEntity<?> clearing() {
+		for(InterbankTransfer it : interbankService.clearingsToExport()) {
+			XMLWriterService.createClearingXML(it);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 }

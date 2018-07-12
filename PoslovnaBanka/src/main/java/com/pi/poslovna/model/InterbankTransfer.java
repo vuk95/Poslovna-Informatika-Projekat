@@ -2,9 +2,7 @@ package com.pi.poslovna.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,8 +13,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -46,6 +42,7 @@ public class InterbankTransfer {
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY) 	
 	private List<AnalyticsOfStatement> analytics = new ArrayList<AnalyticsOfStatement>(); //lista stavki za prenos
 	
+	private boolean exported = false;
 	
 	public InterbankTransfer() {
 		
@@ -100,7 +97,13 @@ public class InterbankTransfer {
 	public void setAnalytics(List<AnalyticsOfStatement> analytics) {
 		this.analytics = analytics;
 	}
-	
-	
+
+	public boolean isExported() {
+		return exported;
+	}
+
+	public void setExported(boolean exported) {
+		this.exported = exported;
+	}
 	
 }
