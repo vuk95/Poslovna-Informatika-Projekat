@@ -28,13 +28,15 @@ VALUES ("Humska 1",1,"partizan@gmail.com","0113690395","Fudbalski Klub Partizan"
 --RACUNI
 INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("123456","2018-07-04",true,"0",2, 3);
 INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("123457","2018-07-04",true,"0",2, 4);
+INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("123459","2018-07-10",true,"0",1, 2);
 INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,legal_entity_legal_id) values("123458","2018-07-09",true,"0",1, 1);
-INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("123459","2018-07-04",true,"0",1, 5);
+INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,legal_entity_legal_id) values("123460","2018-07-12",true,"0",2, 2);
 INSERT INTO moji_racuni_individual (individual_id,racun_id) VALUES(3, 1);
 INSERT INTO moji_racuni_individual (individual_id,racun_id) VALUES(4, 2);
-INSERT INTO moji_racuni_individual (individual_id,racun_id) VALUES(5, 4);
+INSERT INTO moji_racuni_individual (individual_id,racun_id) VALUES(2, 3);
+INSERT INTO moji_racuni_legal (legal_id,racun_id) VALUES(1,4);
+INSERT INTO moji_racuni_legal (legal_id,racun_id) VALUES(2,5);
 
-INSERT INTO moji_racuni_legal (legal_id,racun_id) VALUES(1,3);
 
 --DRZAVE
 INSERT INTO drzava (oznaka,naziv) values ('SRB','Srbija');

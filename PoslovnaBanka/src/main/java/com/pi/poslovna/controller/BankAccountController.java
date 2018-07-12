@@ -1,6 +1,7 @@
 package com.pi.poslovna.controller;
 
 import java.security.Principal;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mysql.jdbc.Connection;
 import com.pi.poslovna.config.DBConnection;
 import com.pi.poslovna.model.Bank;
 import com.pi.poslovna.model.BankAccount;
@@ -23,9 +25,11 @@ import com.pi.poslovna.service.BankAccountService;
 import com.pi.poslovna.service.IzvodXMLWriterService;
 import com.pi.poslovna.service.UserService;
 
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 
 @RestController
 public class BankAccountController {
@@ -68,43 +72,19 @@ public class BankAccountController {
 		User user = userService.getUserByEmail(principal.getName());
 		Bank bank = user.getBank();
 		
-		List<BankAccount> racuniPravnihLica = new ArrayList<BankAccount>();
+		HashMap<String, Object> parameters = new HashMap<String, Object>();
 		
-		for(int i=0;i<bank.getIndividualClients().size();i++) {
-			for(int j=0;j<bank.getIndividualClients().get(i).getMojiRacuni().size();j++) {
-				racuniPravnihLica.add(bank.getIndividualClients().get(i).getMojiRacuni().get(j));
-			
-			}
-		}
-		
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		
-		
-		for(BankAccount racun: racuniPravnihLica) {
-			parameters.put("COLUMN_6", bank.getName());
-			parameters.put("racun_id", racun.getId());
-			parameters.put("ime", racun.getIndividual().getName());
-			parameters.put("prezime",racun.getIndividual().getLastname());
-			parameters.put("broj_racuna",racun.getAccountNumber());
-			parameters.put("raspoloziva_sredstva",racun.getMoney());
-			
-			System.out.println("Banka:" + bank.getName());
-			System.out.println("Racuni: " + racun.getId());
-			System.out.println("Imena: " + racun.getIndividual().getName());
-			System.out.println("Prezimena: " + racun.getIndividual().getLastname());
-			System.out.println("Brojevi_Racuna: " + racun.getAccountNumber());
-			System.out.println("Novac: " + racun.getMoney());
-		}
-		
+		parameters.put("ime_banke", bank.getName());
 		
 		
 		try {
-			JasperPrint jp = JasperFillManager.fillReport(
-			getClass().getResource("/jasper/StanjeRacuna.jasper").openStream(),
-			parameters, DBConnection.getInstance().getConnection());
-			//eksport
-			//File pdf = File.createTempFile("output.", ".pdf");
-			JasperExportManager.exportReportToPdfFile(jp, "C:\\Users\\Milovic\\Documents\\proba.pdf");
+			
+			Connection con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/bank?useSSL=true&createDatabaseIfNotExist=true","root","isatim32");
+			JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Users\\Milovic\\Desktop\\StanjeRacuna.jrxml");
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, con);
+			
+			
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Milovic\\Documents\\proba5.pdf");
 			//promenite putanju za probu.
 		}catch (Exception ex) {
 				ex.printStackTrace();
@@ -119,44 +99,18 @@ public class BankAccountController {
 		User user = userService.getUserByEmail(principal.getName());
 		Bank bank = user.getBank();
 		
-		List<BankAccount> racuniPravnihLica = new ArrayList<BankAccount>();
-		
-		for(int i=0;i<bank.getLegalEntityClients().size();i++) {
-			for(int j=0;j<bank.getLegalEntityClients().get(i).getMojiRacuni().size();j++) {
-				racuniPravnihLica.add(bank.getLegalEntityClients().get(i).getMojiRacuni().get(j));
-			
-			}
-		}
-		
 		
 		Map<String, Object> parameters = new HashMap<String, Object>();
 				
-		parameters.put("ime", bank.getName());
-		System.out.println("Banka:" + bank.getName());
+		parameters.put("ime_banke", bank.getName());
 		
-		for(BankAccount racun: racuniPravnihLica) {
-			
-			parameters.put("racun_id", racun.getId());
-			parameters.put("naziv", racun.getLegalEntity().getName());
-			parameters.put("poreski_identifikacioni_broj",racun.getLegalEntity().getPib());
-			parameters.put("broj_racuna",racun.getAccountNumber());
-			parameters.put("raspoloziva_sredstva",racun.getMoney());
-			
-			
-			System.out.println("Racuni: " + racun.getId());
-			System.out.println("Imena: " + racun.getLegalEntity().getName());
-			System.out.println("PIB: " + racun.getLegalEntity().getPib());
-			System.out.println("Brojevi_Racuna: " + racun.getAccountNumber());
-			System.out.println("Novac: " + racun.getMoney());
-		}
 		
 		try {
-			JasperPrint jp = JasperFillManager.fillReport(
-			getClass().getResource("/jasper/RacuniPravnihLica.jasper").openStream(),
-			parameters, DBConnection.getInstance().getConnection());
-			//eksport
-			//File pdf = File.createTempFile("output.", ".pdf");
-			JasperExportManager.exportReportToPdfFile(jp, "C:\\Users\\Milovic\\Documents\\proba1.pdf");
+			Connection con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/bank?useSSL=true","root","isatim32");
+			JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Users\\Milovic\\Desktop\\RacuniPravnihLica.jrxml");
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, con);
+			
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Milovic\\Documents\\proba10.pdf");
 			//promenite putanju za probu.
 		}catch (Exception ex) {
 				ex.printStackTrace();
