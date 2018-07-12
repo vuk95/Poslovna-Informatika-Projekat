@@ -80,7 +80,7 @@ public class BankAccountController {
 		try {
 			
 			Connection con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/bank?useSSL=true&createDatabaseIfNotExist=true","root","isatim32");
-			JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Users\\Milovic\\Desktop\\StanjeRacuna.jrxml");
+			JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResource("/jasper/StanjeRacuna.jrxml").openStream());
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, con);
 			
 			
@@ -102,12 +102,12 @@ public class BankAccountController {
 		
 		Map<String, Object> parameters = new HashMap<String, Object>();
 				
-		parameters.put("ime_banke", bank.getName());
+		parameters.put("banka_ime", bank.getName());
 		
 		
 		try {
-			Connection con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/bank?useSSL=true","root","isatim32");
-			JasperReport jasperReport = JasperCompileManager.compileReport("C:\\Users\\Milovic\\Desktop\\RacuniPravnihLica.jrxml");
+			Connection con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/bank?useSSL=true&createDatabaseIfNotExist=true","root","isatim32");
+			JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResource("/jasper/StanjeRacuna2.jrxml").openStream());
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, con);
 			
 			JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Milovic\\Documents\\proba10.pdf");
