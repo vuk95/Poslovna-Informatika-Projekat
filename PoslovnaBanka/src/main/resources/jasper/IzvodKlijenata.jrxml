@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="IzvodKlijenata" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bd9514e3-e8c3-43f7-a575-3ad25f9ce3b8">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[YmFuay5hbmFsaXRpa2FfaXp2b2RhIEFTICw4NSwzOSxmMzg0YTE5YS00ZTg4LTRlNDYtYTVjNC01
+ZDgwZGFmZDQwODA7
+]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Poslovna banka"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT bank.analitika_izvoda.analytics_id,
+	bank.analitika_izvoda.racun_primaoca,
+	bank.analitika_izvoda.datum_valute,
+	bank.analitika_izvoda.duznik,
+	bank.analitika_izvoda.racun_duznika,
+	bank.analitika_izvoda.svrha_placanja,
+	bank.analitika_izvoda.primalac,
+	bank.analitika_izvoda.iznos
+FROM bank.analitika_izvoda]]>
+	</queryString>
+	<field name="analytics_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="analytics_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="analitika_izvoda"/>
+	</field>
+	<field name="racun_primaoca" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="racun_primaoca"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="analitika_izvoda"/>
+	</field>
+	<field name="datum_valute" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="datum_valute"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="analitika_izvoda"/>
+	</field>
+	<field name="duznik" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="duznik"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="analitika_izvoda"/>
+	</field>
+	<field name="racun_duznika" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="racun_duznika"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="analitika_izvoda"/>
+	</field>
+	<field name="svrha_placanja" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="svrha_placanja"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="analitika_izvoda"/>
+	</field>
+	<field name="primalac" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="primalac"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="analitika_izvoda"/>
+	</field>
+	<field name="iznos" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.label" value="iznos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="analitika_izvoda"/>
+	</field>
+	<pageHeader>
+		<band height="132" splitType="Stretch">
+			<staticText>
+				<reportElement x="140" y="0" width="281" height="30" uuid="173a9e6b-2cce-4f55-8fb7-ef583e3953ea"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[POSLOVNA BANKA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="30" width="191" height="30" uuid="041b452a-9582-4af0-a047-539195ccff10"/>
+				<textElement textAlignment="Center">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Izvod klijenata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-11" y="60" width="121" height="21" uuid="30777d28-6624-4499-b058-044ed60abdb6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Datum izdavanja:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="90" y="60" width="91" height="21" uuid="b2e3ffe0-e849-4f0c-aec1-f7c4e3275b3b"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="460" y="20" width="45" height="21" uuid="39b1c364-e690-409e-b25b-71a65c0183b9"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Strana:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-11" y="110" width="31" height="21" uuid="608d68fc-aefc-4dac-b3e8-b69ed9ebb9cd"/>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="110" width="60" height="21" uuid="73875181-408f-437c-afd0-c9bcba7b01d0"/>
+				<text><![CDATA[Uplatioc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="110" width="51" height="21" uuid="d5ee6c2e-86ea-45ff-87a4-14bcc8b825ef"/>
+				<text><![CDATA[Racun uplatioca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="110" width="60" height="21" uuid="2e530565-83ac-487e-bd28-fafa04816832"/>
+				<text><![CDATA[Primaoc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="110" width="81" height="21" uuid="ec4b49a7-3922-4bf2-a9a8-04322bdaded6"/>
+				<text><![CDATA[Racun primaoca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="110" width="51" height="21" uuid="032c20ca-2a88-4bc1-aba1-41acdea2d880"/>
+				<text><![CDATA[Iznos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="457" y="110" width="80" height="21" uuid="7e9eebd5-71d2-4bc7-9812-59f6749603cd"/>
+				<text><![CDATA[Datum izvrsenja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="110" width="40" height="21" uuid="b1f79c53-afb0-450f-b3d6-dca06a75b5e2"/>
+				<text><![CDATA[Svrha]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="500" y="20" width="31" height="21" uuid="abfe4072-a800-42bf-ab21-597e332310eb"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="-11" y="10" width="31" height="30" uuid="540aeac4-a2aa-43b0-98e5-fe3e3055202a"/>
+				<textFieldExpression><![CDATA[$F{analytics_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="10" width="60" height="30" uuid="4d29390b-34b9-4597-888f-1a6614ce4ec3"/>
+				<textFieldExpression><![CDATA[$F{duznik}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="10" width="50" height="30" uuid="983b3155-56cf-4a32-a24f-e69e255f22ac"/>
+				<textFieldExpression><![CDATA[$F{racun_duznika}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="10" width="51" height="30" uuid="9791e840-39ee-406e-9e89-869030f0230f"/>
+				<textFieldExpression><![CDATA[$F{iznos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="10" width="77" height="30" uuid="79bc62a1-3dc6-486c-817b-98b749d62778"/>
+				<textFieldExpression><![CDATA[$F{datum_valute}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="10" width="50" height="30" uuid="f6892a44-0e40-446a-81b9-b217ce9eb552"/>
+				<textFieldExpression><![CDATA[$F{svrha_placanja}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="10" width="81" height="30" uuid="752787a2-eef9-4ce8-8364-a6f69a32f3a2"/>
+				<textFieldExpression><![CDATA[$F{racun_primaoca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="10" width="60" height="30" uuid="821b5faa-94e0-4c97-98da-81de7763eb07"/>
+				<textFieldExpression><![CDATA[$F{primalac}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

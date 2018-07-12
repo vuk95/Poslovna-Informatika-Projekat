@@ -118,4 +118,24 @@ public class BankAccountController {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/reportAnalitycs" , method = RequestMethod.GET)
+	public ResponseEntity<?> reportAnalyticsToPDF() {
+		
+		try {
+			Connection con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/bank?useSSL=true&createDatabaseIfNotExist=true","root","isatim32");
+			JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResource("/jasper/IzvodKlijenata.jrxml").openStream());
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,null, con);
+			
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Milovic\\Documents\\proba8.pdf");
+			//promenite putanju za probu.
+		}catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+		
+	}
+	
+	
 }
