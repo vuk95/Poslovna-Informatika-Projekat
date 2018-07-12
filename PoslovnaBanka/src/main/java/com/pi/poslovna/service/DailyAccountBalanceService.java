@@ -14,4 +14,5 @@ public interface DailyAccountBalanceService {
 	DailyAccountBalance findByTrafficDateAndRacun(Date trafficDate, BankAccount racun);
 	//DailyAccountBalance findByRacun(BankAccount racun);
 	DailyAccountBalance findByRacun(BankAccount racun);
+	public DailyAccountBalance findOne(Long id);
 }

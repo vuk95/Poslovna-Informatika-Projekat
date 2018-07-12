@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.JoinColumn;
 
 @Entity(name = "Dnevno_stanje_racuna")
@@ -46,6 +49,7 @@ public class DailyAccountBalance {
 	@JoinTable(name = "mojeAnalitike",
 				joinColumns = @JoinColumn(name = "balance_id", referencedColumnName = "balance_id"),
 				inverseJoinColumns = @JoinColumn(name = "analytics_id", referencedColumnName = "analytics_id"))
+	@JsonIgnore
 	private List<AnalyticsOfStatement> mojeAnalitike = new ArrayList<AnalyticsOfStatement>();
 	
 	public DailyAccountBalance() {

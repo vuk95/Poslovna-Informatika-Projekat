@@ -1,0 +1,74 @@
+<html>
+
+<head>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+	<script src="scripts/tether.min.js"></script>
+	<script src="scripts/bootstrap.min.js"></script>
+	<script src="scripts/functions.js"></script>
+	<script src="scripts/addIndividuals.js"></script>
+	<link rel="stylesheet" type="text/css" href="stylesheets/design.css">
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<title>AnalyticsOfStatements</title>
+<script>
+
+$(document).ready(function(){
+	
+	var queryString = decodeURIComponent(window.location.search);
+	queryString = queryString.substring(8);
+
+	$.ajax({
+		url : "http://localhost:8083/balansi/getAnalytics/" + queryString 
+	}).then(
+			function(data) {
+				for (i = 0; i < data.length; i++) {
+				
+					newRow = 
+						"<tr>"
+							+ "<td class=\"date\">" + data[i].debtor + "</td>"
+							+ "<td class=\"previous\">" + data[i].purposeOfPayment + "</td>"
+							+ "<td class=\"benefit\">" + data[i].recipient + "</td>"
+							+ "<td class=\"burden\">" + data[i].dateOfReceipt + "</td>"
+							+ "<td class=\"state\">" + data[i].currencyDate + "</td>"
+							+ "<td class=\"date\">" + data[i].debtorAccount + "</td>"
+							+ "<td class=\"previous\">" + data[i].modelAssigments + "</td>"
+							+ "<td class=\"benefit\">" + data[i].referenceNumberAssigments + "</td>"
+							+ "<td class=\"burden\">" + data[i].accountRecipient + "</td>"
+							+ "<td class=\"state\">" + data[i].modelApproval + "</td>"
+							+ "<td class=\"benefit\">" + data[i].referenceNumberApproval + "</td>"
+							+ "<td class=\"burden\">" + data[i].emergency + "</td>"
+							+ "<td class=\"state\">" + data[i].sum + "</td>"
+							+ "<td class=\"benefit\">" + data[i].typeOfMistake + "</td>"
+							+ "<td class=\"burden\">" + data[i].status + "</td>"
+						+ "</tr>"
+					$("#dataTable").append(newRow)
+				}
+			});
+		});
+</script>
+</head>
+<body>
+	<h1>Analitike izvoda: </h1>
+		
+		<table id="dataTable" class="table">
+			<tr class="header">
+				<th>Duznik</th>
+				<th>Svrha placanja</th>
+				<th>Primaoc</th>
+				<th>Datum prijema</th>
+				<th>Datum valute</th>
+				<th>Racun duznika</th>
+				<th>Model zaduzenja</th>
+				<th>Poziv na broj zaduzenja</th>
+				<th>Racun primaoca</th>
+				<th>Model odobrenja</th>
+				<th>Poziv na broj odobrenja</th>
+				<th>Hitno</th>
+				<th>Iznos</th>
+				<th>Tip greske</th>
+				<th>Status</th>
+			</tr>
+		</table>
+</body>
+
+</html>

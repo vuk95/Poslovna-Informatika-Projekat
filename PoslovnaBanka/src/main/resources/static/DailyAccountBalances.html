@@ -30,13 +30,37 @@ $(document).ready(function(){
 							+ "<td class=\"benefit\">" + data[i].trafficToBenefit + "</td>"
 							+ "<td class=\"burden\">" + data[i].trafficToTheBurden + "</td>"
 							+ "<td class=\"state\">" + data[i].newState + "</td>"
-							+ "<td><a class=\"details\"  href='/individual/indivudalClient/" + data[i].id +"'>" 
+							+ "<td><a class=\"details\"  href='/balansi/getBalans/" + data[i].id +"'>" 
 							+ "<img src='images/details.gif'/></a></td>"
 						+ "</tr>"
 					$("#dataTable").append(newRow)
 				}
 			});
 		});
+
+$(document).on("click", ".details", function(event){
+	//ne salji get zahtev
+		event.preventDefault(); 
+	
+		var url = $(this).attr("href")
+		
+		$.ajax({
+        	url: url,
+        	type: "GET",
+    		contentType:"application/json",
+    		dataType:"json",
+        	success: function(data){
+        		if(data != null) {
+        			var queryS = "?param1=" + data.id
+    				window.location.href = "AnalyticsOfStatement.html" + queryS;
+    			}
+    		},
+    		error: function(jqxhr,textStatus,errorThrown) {
+    			alert(errorThrown);
+    		}	 
+				
+		});
+});
 </script>
 </head>
 <body>

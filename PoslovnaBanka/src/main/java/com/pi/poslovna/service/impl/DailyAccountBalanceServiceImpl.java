@@ -60,6 +60,12 @@ public class DailyAccountBalanceServiceImpl implements DailyAccountBalanceServic
 		return balans;
 	}
 
+	@Override
+	public DailyAccountBalance findOne(Long id) {
+		
+		return dabRepository.findOne(id);
+	}
+
 	/*@Override
 	public DailyAccountBalance findByRacun(BankAccount racun) {
 		return dabRepository.findByRacun(racun);
