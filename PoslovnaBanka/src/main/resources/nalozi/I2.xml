@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <nalog_za_isplatu>
+        
+        <podaci_o_platiocu>
+            <naziv_platioca>Sasa Ilic</naziv_platioca>
+            <adresa>
+                <mesto>Vrbas</mesto>
+                <ulica>Rada Marjanca</ulica>
+                <broj>53/a</broj>
+                <postanski_broj>21460</postanski_broj>
+            </adresa>
+        </podaci_o_platiocu>
+        
+        <svrha_isplate>Transfer igraca</svrha_isplate>
+        
+        <podaci_o_primaocu>
+            <naziv_primaoca>Stefan Milovic</naziv_primaoca>
+            <adresa>
+                <mesto>Novi Sad</mesto>
+                <ulica>Trg Dositeja Obradovića</ulica>
+                <broj>6</broj>
+                <postanski_broj>21000</postanski_broj>
+            </adresa>         
+        </podaci_o_primaocu>
+        
+        <podaci_o_isplati>
+            <sifra_placanja>189</sifra_placanja>
+            <valuta>RSD</valuta>
+            <iznos>300000.00</iznos>
+            <racun_platioca>123458</racun_platioca>
+            <model>97</model>
+            <poziv_na_broj>1716151413121110987654321</poziv_na_broj>
+        </podaci_o_isplati>
+        
+        <!--
+         Na uplatnici postoji jos:
+         -potpis platioca
+         -potpis primaoca (i broj licne karte)
+         --> 
+        
+        <podaci_o_prijemu>
+            <mesto_prijema></mesto_prijema>
+            <datum_prijema>14-05-2018</datum_prijema>
+        </podaci_o_prijemu>
+        
+        <!-- Negde pise ovo, negde datum izvrsenja-->
+        <datum_valute>05-06-2018</datum_valute>
+        
+        
+    </nalog_za_isplatu>

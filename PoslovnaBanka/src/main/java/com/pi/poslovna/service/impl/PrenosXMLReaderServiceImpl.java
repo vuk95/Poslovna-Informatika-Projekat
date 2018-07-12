@@ -1,6 +1,7 @@
 package com.pi.poslovna.service.impl;
 
 import java.io.File;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,12 +17,19 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.pi.poslovna.model.AnalyticsOfStatement;
+import com.pi.poslovna.model.Bank;
 import com.pi.poslovna.model.BankAccount;
 import com.pi.poslovna.model.DailyAccountBalance;
+import com.pi.poslovna.model.InterbankTransfer;
+import com.pi.poslovna.model.MessageTypes;
+import com.pi.poslovna.model.users.User;
 import com.pi.poslovna.service.AnalyticsOfStatementService;
 import com.pi.poslovna.service.BankAccountService;
 import com.pi.poslovna.service.DailyAccountBalanceService;
+import com.pi.poslovna.service.InterbankTransferService;
+import com.pi.poslovna.service.MedjubankarskiTransferXMLWriterService;
 import com.pi.poslovna.service.PrenosXMLReaderService;
+import com.pi.poslovna.service.UserService;
 
 @Transactional
 @Service
@@ -36,8 +44,17 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 	@Autowired
 	private DailyAccountBalanceService balanceService;
 	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private InterbankTransferService inbankService;
+	
+	@Autowired
+	private MedjubankarskiTransferXMLWriterService XMLWriterService;
+	
 	@Override
-	public void readPrenosXML(String filePath) {
+	public void readPrenosXML(String filePath, Principal principal) {
 	
 		try {
 			
@@ -160,6 +177,17 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 				BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
 				DailyAccountBalance nadjeniPoRacunu = balanceService.findByRacun(racun);
 				
+				boolean medjubankarski = false;
+				
+				User user = userService.getUserByEmail(principal.getName());
+				Bank bank = user.getBank();
+				if(bank.getId().equals(racun.getBank().getId())) {
+					medjubankarski = false;
+				}
+				else {
+					medjubankarski = true;
+				}
+
 			
 				//kreiramo novo dnevno stanje racuna za svaku analitiku
 				DailyAccountBalance dab = new DailyAccountBalance();
@@ -198,6 +226,37 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 					racun.getMojiDnevniBalansi().add(dab);
 				balanceService.save(dab);
 				analyticService.save(analitika);
+				
+				if(medjubankarski) {
+					
+					Float iznos = analitika.getSum();
+					InterbankTransfer it = new InterbankTransfer();
+					//RTGS	
+					if(analitika.isEmergency() || iznos > 250000f) {
+						
+						it.setDateIT(analitika.getDateOfReceipt());
+						it.setReceiverBank(racun.getBank());
+						it.setSenderBank(bank);
+						it.setTypeOfMessage(MessageTypes.MT103);
+						//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+						it.getAnalytics().add(analitika);
+						inbankService.save(it);
+						XMLWriterService.createRTGSXML(it);
+
+					}
+					//KLIRING
+					else {
+						
+						it.setDateIT(analitika.getDateOfReceipt());
+						it.setReceiverBank(racun.getBank());
+						it.setSenderBank(bank);
+						it.setTypeOfMessage(MessageTypes.MT102);
+						//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+						it.getAnalytics().add(analitika);
+						inbankService.save(it);
+					}
+				
+				}
 				}
 				else {
 				
@@ -205,7 +264,19 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 					
 					//System.out.println("Found racun:"  + found.getRacun().getAccountNumber());
 					//System.out.println("Iz analitike:" + founded.getAccountNumber());
-			
+					
+					boolean medjubankarski = false;
+					
+					User user = userService.getUserByEmail(principal.getName());
+					Bank bank = user.getBank();
+					
+					if(bank.getId().equals(found.getRacun().getBank().getId())) {
+						medjubankarski = false;
+					}
+					else {
+						medjubankarski = true;
+					}
+					
 					found.setTrafficDate(analitika.getDateOfReceipt());
 					//prihod je suma uplate iz analitike
 					found.setTrafficToBenefit(analitika.getSum());
@@ -257,6 +328,36 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 					
 					if(!racun.getMojiDnevniBalansi().contains(found))
 						racun.getMojiDnevniBalansi().add(found);
+					
+					if(medjubankarski) {
+						
+						Float iznos = analitika.getSum();
+						InterbankTransfer it = new InterbankTransfer();
+						//RTGS
+						if(analitika.isEmergency() || iznos > 250000f) {
+							
+							it.setDateIT(analitika.getDateOfReceipt());
+							it.setReceiverBank(racun.getBank());
+							it.setSenderBank(bank);
+							it.setTypeOfMessage(MessageTypes.MT103);
+							//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+							it.getAnalytics().add(analitika);
+							inbankService.save(it);
+							XMLWriterService.createRTGSXML(it);
+						}
+						//KLIRING
+						else {
+							
+							it.setDateIT(analitika.getDateOfReceipt());
+							it.setReceiverBank(racun.getBank());
+							it.setSenderBank(bank);
+							it.setTypeOfMessage(MessageTypes.MT102);
+							//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+							it.getAnalytics().add(analitika);
+							inbankService.save(it);
+						}
+					}
+					
 					balanceService.save(found);
 					//analyticsService.save(analitika);
 					
@@ -271,6 +372,17 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 			if(found2 == null) {
 				BankAccount racun = accountService.findByAccountNumber(analitika2.getDebtorAccount());
 				DailyAccountBalance nadjeniPoRacunu = balanceService.findByRacun(racun);
+				
+				boolean medjubankarski = false;
+				
+				User user = userService.getUserByEmail(principal.getName());
+				Bank bank = user.getBank();
+				if(bank.getId().equals(racun.getBank().getId())) {
+					medjubankarski = false;
+				}
+				else {
+					medjubankarski = true;
+				}
 				
 				//kreiramo novo dnevno stanje racuna za svaku analitiku
 				DailyAccountBalance dab = new DailyAccountBalance();
@@ -310,6 +422,38 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 					racun.getMojiDnevniBalansi().add(dab);
 				balanceService.save(dab);
 				analyticService.save(analitika2);
+				
+				if(medjubankarski) {
+					
+					Float iznos = analitika2.getSum();
+					InterbankTransfer it = new InterbankTransfer();
+					//RTGS	
+					if(analitika.isEmergency() || iznos > 250000f) {
+						
+						it.setDateIT(analitika2.getDateOfReceipt());
+						//Nisam siguran da li bi ovde sad trebalo da je obrnuto receiver i sender jer je isplata
+						it.setReceiverBank(bank);
+						it.setSenderBank(racun.getBank());
+						it.setTypeOfMessage(MessageTypes.MT103);
+						//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+						it.getAnalytics().add(analitika2);
+						inbankService.save(it);
+						XMLWriterService.createRTGSXML(it);
+
+					}
+					//KLIRING
+					else {
+						
+						it.setDateIT(analitika2.getDateOfReceipt());
+						it.setReceiverBank(bank);
+						it.setSenderBank(racun.getBank());
+						it.setTypeOfMessage(MessageTypes.MT102);
+						//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+						it.getAnalytics().add(analitika2);
+						inbankService.save(it);
+					}
+				
+				}
 				}
 				else {
 				
@@ -317,7 +461,18 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 					
 					//System.out.println("Found racun:"  + found.getRacun().getAccountNumber());
 					//System.out.println("Iz analitike:" + founded.getAccountNumber());
-			
+					boolean medjubankarski = false;
+					
+					User user = userService.getUserByEmail(principal.getName());
+					Bank bank = user.getBank();
+					
+					if(bank.getId().equals(found.getRacun().getBank().getId())) {
+						medjubankarski = false;
+					}
+					else {
+						medjubankarski = true;
+					}
+					
 					found2.setTrafficDate(analitika2.getDateOfReceipt());
 					//prihod je suma uplate iz analitike
 					found2.setTrafficToBenefit(0.0f);
@@ -368,6 +523,36 @@ public class PrenosXMLReaderServiceImpl  implements PrenosXMLReaderService{
 					found2.getMojeAnalitike().add(analitika2);
 					if(!racun.getMojiDnevniBalansi().contains(found2))
 						racun.getMojiDnevniBalansi().add(found2);
+					/*
+					if(medjubankarski) {
+						
+						Float iznos = analitika2.getSum();
+						InterbankTransfer it = new InterbankTransfer();
+						//RTGS
+						if(analitika2.isEmergency() || iznos > 250000f) {
+							
+							it.setDateIT(analitika2.getDateOfReceipt());
+							it.setReceiverBank(bank);
+							it.setSenderBank(racun.getBank());
+							it.setTypeOfMessage(MessageTypes.MT103);
+							//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+							it.getAnalytics().add(analitika2);
+							inbankService.save(it);
+							XMLWriterService.createRTGSXML(it);
+						}
+						//KLIRING
+						else {
+							
+							it.setDateIT(analitika2.getDateOfReceipt());
+							it.setReceiverBank(bank);
+							it.setSenderBank(racun.getBank());
+							it.setTypeOfMessage(MessageTypes.MT102);
+							//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+							it.getAnalytics().add(analitika2);
+							inbankService.save(it);
+						}
+					}
+					*/
 					balanceService.save(found2);
 					//analyticsService.save(analitika);
 					

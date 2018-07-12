@@ -40,23 +40,23 @@ public class XMLReaderController {
 	}
 	
 	@RequestMapping(value = "/import_isplata" , method = RequestMethod.POST , consumes="application/json")
-	public ResponseEntity<String> setIsplataFilePath(@RequestBody String filePath) throws UnsupportedEncodingException {
+	public ResponseEntity<String> setIsplataFilePath(@RequestBody String filePath, Principal principal) throws UnsupportedEncodingException {
 	
 		String decoded = java.net.URLDecoder.decode(filePath, "UTF-8");
 		String path = decoded.substring(9);
 		
-		isplataXMLReaderService.readIsplataXML(path);
+		isplataXMLReaderService.readIsplataXML(path, principal);
 		
 		return new ResponseEntity<>(path,HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/import_prenos" , method = RequestMethod.POST , consumes="application/json")
-	public ResponseEntity<String> setPrenosFilePath(@RequestBody String filePath) throws UnsupportedEncodingException  {
+	public ResponseEntity<String> setPrenosFilePath(@RequestBody String filePath, Principal principal) throws UnsupportedEncodingException  {
 		
 		String decoded = java.net.URLDecoder.decode(filePath, "UTF-8");
 		String path = decoded.substring(9);
 		
-		prenosXMLReaderService.readPrenosXML(path);
+		prenosXMLReaderService.readPrenosXML(path, principal);
 		
 		return new ResponseEntity<>(path,HttpStatus.OK);
 	}

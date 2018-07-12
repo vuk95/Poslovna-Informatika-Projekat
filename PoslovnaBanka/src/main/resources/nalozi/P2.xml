@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <nalog_za_prenos>
+        
+        <podaci_o_nalogodavcu>
+            <naziv_nalogodavca>Sasa Ilic</naziv_nalogodavca>    
+            <adresa>
+                <mesto>Vrbas</mesto>
+                <ulica>Rada Marjanca</ulica>
+                <broj>53/a</broj>
+                <postanski_broj>21460</postanski_broj>
+            </adresa>
+        </podaci_o_nalogodavcu>
+            
+        <svrha_placanja>Transfer igraca u drugi klub</svrha_placanja>
+        
+        <podaci_o_primaocu>
+            <naziv_primaoca>Momcilo Vukotic</naziv_primaoca>
+            <adresa>
+                <mesto>Beograd</mesto>
+                <ulica>Humska</ulica>
+                <broj>1</broj>
+                <postanski_broj>11000</postanski_broj>
+            </adresa>
+        </podaci_o_primaocu>
+        
+        
+        <podaci_o_prenosu>
+            <sifra_placanja>189</sifra_placanja>
+            <valuta>RSD</valuta>
+            <iznos>300000.00</iznos>
+            <racun_nalogodavca>123456</racun_nalogodavca>
+            <model_zaduzenja>97</model_zaduzenja> <!-- model zaduzenja -->
+            <poziv_na_broj_zaduznje>1234567891011121314151617</poziv_na_broj_zaduznje>
+            <racun_primaoca>123458</racun_primaoca>
+            <model_odobrenja>79</model_odobrenja> <!-- model odobrenja -->
+            <poziv_na_broj_odobrenje>1716151413121110987654321</poziv_na_broj_odobrenje>
+        </podaci_o_prenosu>
+        
+        <!--
+         Na uplatnici postoji jos:
+         -potpis nalogodavca
+         --> 
+        
+        <podaci_o_prijemu>
+            <mesto_prijema></mesto_prijema>
+            <datum_prijema>03-06-2018</datum_prijema>
+        </podaci_o_prijemu>
+        
+        <!-- Negde pise ovo, negde datum izvrsenja-->
+        <datum_valute>05-06-2018</datum_valute>
+        
+        <hitno>false</hitno> <!-- Ovo polje treba da bude pretstavljeno kao check-box -->
+        
+    </nalog_za_prenos>
+        

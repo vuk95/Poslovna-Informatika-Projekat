@@ -1,6 +1,7 @@
 package com.pi.poslovna.service.impl;
 
 import java.io.File;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,12 +17,19 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.pi.poslovna.model.AnalyticsOfStatement;
+import com.pi.poslovna.model.Bank;
 import com.pi.poslovna.model.BankAccount;
 import com.pi.poslovna.model.DailyAccountBalance;
+import com.pi.poslovna.model.InterbankTransfer;
+import com.pi.poslovna.model.MessageTypes;
+import com.pi.poslovna.model.users.User;
 import com.pi.poslovna.service.AnalyticsOfStatementService;
 import com.pi.poslovna.service.BankAccountService;
 import com.pi.poslovna.service.DailyAccountBalanceService;
+import com.pi.poslovna.service.InterbankTransferService;
 import com.pi.poslovna.service.IsplataXMLReaderService;
+import com.pi.poslovna.service.MedjubankarskiTransferXMLWriterService;
+import com.pi.poslovna.service.UserService;
 
 
 @Transactional
@@ -37,8 +45,17 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 	@Autowired
 	private BankAccountService accountService;
 	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private InterbankTransferService inbankService;
+	
+	@Autowired
+	private MedjubankarskiTransferXMLWriterService XMLWriterService;
+	
 	@Override
-	public void readIsplataXML(String filePath) {
+	public void readIsplataXML(String filePath, Principal principal) {
 		
 		try {
 			
@@ -131,6 +148,17 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 			BankAccount racun = accountService.findByAccountNumber(analitika.getDebtorAccount());
 			DailyAccountBalance nadjeniPoRacunu = balanceService.findByRacun(racun);
 			
+			boolean medjubankarski = false;
+			
+			User user = userService.getUserByEmail(principal.getName());
+			Bank bank = user.getBank();
+			if(bank.getId().equals(racun.getBank().getId())) {
+				medjubankarski = false;
+			}
+			else {
+				medjubankarski = true;
+			}
+			
 			//kreiramo novo dnevno stanje racuna za svaku analitiku
 			DailyAccountBalance dab = new DailyAccountBalance();
 			//Nisam siguran da li je ovo traffic date
@@ -170,6 +198,38 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 			
 			balanceService.save(dab);
 			analyticServise.save(analitika);
+			
+			if(medjubankarski) {
+				
+				Float iznos = analitika.getSum();
+				InterbankTransfer it = new InterbankTransfer();
+				//RTGS	
+				if(analitika.isEmergency() || iznos > 250000f) {
+					
+					it.setDateIT(analitika.getDateOfReceipt());
+					//Nisam siguran da li bi ovde sad trebalo da je obrnuto receiver i sender jer je isplata
+					it.setReceiverBank(bank);
+					it.setSenderBank(racun.getBank());
+					it.setTypeOfMessage(MessageTypes.MT103);
+					//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+					it.getAnalytics().add(analitika);
+					inbankService.save(it);
+					XMLWriterService.createRTGSXML(it);
+
+				}
+				//KLIRING
+				else {
+					
+					it.setDateIT(analitika.getDateOfReceipt());
+					it.setReceiverBank(bank);
+					it.setSenderBank(racun.getBank());
+					it.setTypeOfMessage(MessageTypes.MT102);
+					//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+					it.getAnalytics().add(analitika);
+					inbankService.save(it);
+				}
+			
+			}
 			}
 			else {
 			
@@ -177,7 +237,19 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 				
 				//System.out.println("Found racun:"  + found.getRacun().getAccountNumber());
 				//System.out.println("Iz analitike:" + founded.getAccountNumber());
-		
+				boolean medjubankarski = false;
+				
+				User user = userService.getUserByEmail(principal.getName());
+				Bank bank = user.getBank();
+				
+				if(bank.getId().equals(found.getRacun().getBank().getId())) {
+					medjubankarski = false;
+				}
+				else {
+					medjubankarski = true;
+				}
+				
+				
 				found.setTrafficDate(analitika.getDateOfReceipt());
 				//prihod je suma uplate iz analitike
 				found.setTrafficToBenefit(0.0f);
@@ -229,6 +301,36 @@ public class IsplataXMLReaderServiceImpl  implements IsplataXMLReaderService{
 				
 				if(!racun.getMojiDnevniBalansi().contains(found))
 					racun.getMojiDnevniBalansi().add(found);
+				
+				if(medjubankarski) {
+					
+					Float iznos = analitika.getSum();
+					InterbankTransfer it = new InterbankTransfer();
+					//RTGS
+					if(analitika.isEmergency() || iznos > 250000f) {
+						
+						it.setDateIT(analitika.getDateOfReceipt());
+						it.setReceiverBank(bank);
+						it.setSenderBank(racun.getBank());
+						it.setTypeOfMessage(MessageTypes.MT103);
+						//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+						it.getAnalytics().add(analitika);
+						inbankService.save(it);
+						XMLWriterService.createRTGSXML(it);
+					}
+					//KLIRING
+					else {
+						
+						it.setDateIT(analitika.getDateOfReceipt());
+						it.setReceiverBank(bank);
+						it.setSenderBank(racun.getBank());
+						it.setTypeOfMessage(MessageTypes.MT102);
+						//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+						it.getAnalytics().add(analitika);
+						inbankService.save(it);
+					}
+				}
+				
 				balanceService.save(found);
 				//analyticsService.save(analitika);
 				

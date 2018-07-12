@@ -154,7 +154,7 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 				BankAccount racun = accountService.findByAccountNumber(analitika.getAccountRecipient());
 				//OVO CE NAM TREBATI DA VIDIMO DA LI JE PRETHODNIH DANA BILO NESTO ZBOG PREVIOUS STATE
 				DailyAccountBalance nadjeniPoRacunu = balanceService.findByRacun(racun);
-				//provera da li je medjubankarski transfer
+				
 				boolean medjubankarski = false;
 				
 				User user = userService.getUserByEmail(principal.getName());
@@ -211,9 +211,10 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 				if(medjubankarski) {
 					
 					Float iznos = analitika.getSum();
-					//RTGS
-					if(analitika.isEmergency() || iznos > 250.000f) {
-						InterbankTransfer it = new InterbankTransfer();
+					InterbankTransfer it = new InterbankTransfer();
+					//RTGS	
+					if(analitika.isEmergency() || iznos > 250000f) {
+						
 						it.setDateIT(analitika.getDateOfReceipt());
 						it.setReceiverBank(racun.getBank());
 						it.setSenderBank(bank);
@@ -222,8 +223,20 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 						it.getAnalytics().add(analitika);
 						inbankService.save(it);
 						XMLWriterService.createRTGSXML(it);
+
 					}
-					//else kliring
+					//KLIRING
+					else {
+						
+						it.setDateIT(analitika.getDateOfReceipt());
+						it.setReceiverBank(racun.getBank());
+						it.setSenderBank(bank);
+						it.setTypeOfMessage(MessageTypes.MT102);
+						//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+						it.getAnalytics().add(analitika);
+						inbankService.save(it);
+					}
+					
 					
 				}
 				
@@ -295,9 +308,10 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 					if(medjubankarski) {
 						
 						Float iznos = analitika.getSum();
+						InterbankTransfer it = new InterbankTransfer();
 						//RTGS
-						if(analitika.isEmergency() || iznos > 250.000f) {
-							InterbankTransfer it = new InterbankTransfer();
+						if(analitika.isEmergency() || iznos > 250000f) {
+							
 							it.setDateIT(analitika.getDateOfReceipt());
 							it.setReceiverBank(racun.getBank());
 							it.setSenderBank(bank);
@@ -307,7 +321,17 @@ public class UplataXMLReaderServiceImpl implements UplataXMLReaderService {
 							inbankService.save(it);
 							XMLWriterService.createRTGSXML(it);
 						}
-						//else kliring
+						//KLIRING
+						else {
+							
+							it.setDateIT(analitika.getDateOfReceipt());
+							it.setReceiverBank(racun.getBank());
+							it.setSenderBank(bank);
+							it.setTypeOfMessage(MessageTypes.MT102);
+							//ovde baca null pointer treba u modelu vrv promeniti nesto kod liste
+							it.getAnalytics().add(analitika);
+							inbankService.save(it);
+						}
 					}
 					
 					balanceService.save(found);
