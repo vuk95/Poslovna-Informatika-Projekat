@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<rtgs_nalog>
+<kliring_nalog>
   <banka_nalogodavca>
     <ime_banke>Banca Intesa</ime_banke>
     <pib_banke>100001159</pib_banke>
@@ -15,15 +15,15 @@
   </banka_primaoca>
   <podaci_o_primaocu>
     <primalac>Momcilo Vukotic</primalac>
-    <racun_poverioca>123458</racun_poverioca>
+    <racun_poverioca>123459</racun_poverioca>
   </podaci_o_primaocu>
   <podaci_o_nalogu>
-    <datum_prijema>03-06-2018</datum_prijema>
+    <datum_prijema>04-06-2018</datum_prijema>
     <datum_valute>05-06-2018</datum_valute>
     <model_zaduzenja>97</model_zaduzenja>
     <poziv_na_broj_zaduzenja>1234567891011121314151617</poziv_na_broj_zaduzenja>
     <model_odobrenja>79</model_odobrenja>
     <poziv_na_broj_odobrenja>1716151413121110987654321</poziv_na_broj_odobrenja>
-    <iznos>300000.0</iznos>
+    <iznos>1000.0</iznos>
   </podaci_o_nalogu>
-</rtgs_nalog>
+</kliring_nalog>

@@ -93,6 +93,17 @@
 			
 		});
 		
+		$(document).on("click", ".clearing", function(event) {
+			event.preventDefault();
+			
+			$.ajax({
+				url: "http://localhost:8083/clearing",
+				success: function() {
+					alert('Kliring je izvrsen. XML datoteka se nalazi u folderu "kliring"');
+				}
+			});
+		});
+		
 	</script>
 </head>
 <body>
@@ -167,7 +178,7 @@
 				<h3>Medjubankarski transfer</h3>
 				<hr>
 				<a href="InterbankTransfer.html">Stanja medjubankarskih prenosa </a><br>
-				<a href="#">Izvršite kliring</a><br>
+				<a class="clearing" href="#">Izvršite kliring</a><br>
 				<a href="/reportAnalitycs">Izvodi kljenata</a><br>
 			</div>
 		</div>

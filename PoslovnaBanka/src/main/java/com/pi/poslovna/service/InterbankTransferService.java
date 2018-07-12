@@ -9,5 +9,6 @@ public interface InterbankTransferService {
 	public InterbankTransfer findOne(Long id);
 	public List<InterbankTransfer> findAll();
 	public void save(InterbankTransfer it);
+	public List<InterbankTransfer> clearingsToExport();
 	
 }
