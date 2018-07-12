@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StanjeRacuna" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fd706727-6d67-4fbe-86e0-21d59271ce24">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Poslovna banka"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables">
 		<![CDATA[YmFuay5iYW5rYSBBUyAsMzgxLDEwNSw5M2Q0MTBiOS0yZGY4LTRiNzgtOTQ4ZS1mYjE0ODcxMTNh
 N2Q7YmFuay5yYWN1biAsMTUsMjcsZWYwM2FkMzgtZWZlOC00Y2RmLWFiNzAtNmNkMGVkZGVhNzQ0
 O2JhbmsuZml6aWNrYV9saWNhICwyMjQsMTUsZjg1MWEwYTItZTliYS00MDQ3LTgwMzQtNmJjN2M5
-OWQ3NDUzOw==
-]]>
+OWQ3NDUzOw==]]>
 	</property>
+	<parameter name="ime_banke" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT bank.racun.racun_id,
 	bank.racun.broj_racuna,
@@ -16,11 +16,12 @@ OWQ3NDUzOw==
 	bank.fizicka_lica.prezime,
 	bank.racun.raspoloziva_sredstva,
 	bank.banka.ime
-FROM bank.racun
+FROM bank.racun 
 	INNER JOIN bank.fizicka_lica ON 
 	 bank.racun.individual_individual_id = bank.fizicka_lica.individual_id 
 	INNER JOIN bank.banka ON 
-	 bank.racun.bank_id = bank.banka.id 
+	 bank.racun.bank_id = bank.banka.id
+	 WHERE bank.banka.ime = $P{ime_banke} 
 	 AND bank.fizicka_lica.bank_id = bank.banka.id]]>
 	</queryString>
 	<field name="racun_id" class="java.lang.Long">
@@ -95,8 +96,8 @@ FROM bank.racun
 				<text><![CDATA[Raspoloziva sredstva]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="30" y="30" width="100" height="30" uuid="5a89d77a-45a2-45a0-8dde-66d9ca6d57ec"/>
-				<textFieldExpression><![CDATA[$F{COLUMN_6}]]></textFieldExpression>
+				<reportElement x="30" y="30" width="100" height="30" uuid="6a561b1f-72dd-487d-9351-322f14261151"/>
+				<textFieldExpression><![CDATA[$P{ime_banke}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
