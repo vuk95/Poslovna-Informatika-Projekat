@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <nalog_za_isplatu>
+        <!--Platioc Sasa Ilic-->
+		<!--Ova sluzi za demonstraciju isplate-->
+        <podaci_o_platiocu>
+            <naziv_platioca>Sasa Ilic</naziv_platioca>
+            <adresa>
+                <mesto>Beograd</mesto>
+                <ulica>Trg Dositeja Obradovića</ulica>
+                <broj>6</broj>
+                <postanski_broj>11000</postanski_broj>
+            </adresa>
+        </podaci_o_platiocu>
+        
+        <svrha_isplate>Krsenje klupskog reda</svrha_isplate>
+        
+        <podaci_o_primaocu>
+            <naziv_primaoca>FK Partizan</naziv_primaoca>
+            <adresa>
+                <mesto>Beograd</mesto>
+                <ulica>Humska</ulica>
+                <broj>1</broj>
+                <postanski_broj>11000</postanski_broj>
+            </adresa>         
+        </podaci_o_primaocu>
+        
+        <podaci_o_isplati>
+            <sifra_placanja>189</sifra_placanja>
+            <valuta>RSD</valuta>
+            <iznos>1500.00</iznos>
+            <racun_platioca>970773841592005818</racun_platioca>
+            <model>97</model>
+            <poziv_na_broj>1716151413121110987654321</poziv_na_broj>
+        </podaci_o_isplati>
+        
+        <!--
+         Na uplatnici postoji jos:
+         -potpis platioca
+         -potpis primaoca (i broj licne karte)
+         --> 
+        
+        <podaci_o_prijemu>
+            <mesto_prijema></mesto_prijema>
+            <datum_prijema>15-05-2018</datum_prijema>
+        </podaci_o_prijemu>
+        
+        <!-- Negde pise ovo, negde datum izvrsenja-->
+        <datum_valute>05-06-2018</datum_valute>
+        
+        
+    </nalog_za_isplatu>

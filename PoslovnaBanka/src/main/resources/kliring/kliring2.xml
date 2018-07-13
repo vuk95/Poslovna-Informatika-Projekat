@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <kliring_nalog>
   <banka_nalogodavca>
-    <ime_banke>Erste Bank</ime_banke>
-    <pib_banke>101626723</pib_banke>
-  </banka_nalogodavca>
-  <podaci_nalogodavca>
-    <naziv_nalogodavca>Sasa Ilic</naziv_nalogodavca>
-    <racun_duznika>123459</racun_duznika>
-  </podaci_nalogodavca>
-  <svrha_placanja>Transfer igraca</svrha_placanja>
-  <banka_primaoca>
     <ime_banke>Banca Intesa</ime_banke>
     <pib_banke>100001159</pib_banke>
+  </banka_nalogodavca>
+  <podaci_nalogodavca>
+    <naziv_nalogodavca>FK Partizan</naziv_nalogodavca>
+    <racun_duznika/>
+  </podaci_nalogodavca>
+  <svrha_placanja>Dug</svrha_placanja>
+  <banka_primaoca>
+    <ime_banke>Erste Bank</ime_banke>
+    <pib_banke>101626723</pib_banke>
   </banka_primaoca>
   <podaci_o_primaocu>
-    <primalac>Stefan Milovic</primalac>
-    <racun_poverioca/>
+    <primalac>Jovan Jankovic</primalac>
+    <racun_poverioca>840862485100392367</racun_poverioca>
   </podaci_o_primaocu>
   <podaci_o_nalogu>
-    <datum_prijema>24-05-2018</datum_prijema>
-    <datum_valute>05-06-2018</datum_valute>
-    <model_zaduzenja>97</model_zaduzenja>
-    <poziv_na_broj_zaduzenja>1716151413121110987654321</poziv_na_broj_zaduzenja>
-    <model_odobrenja>0</model_odobrenja>
-    <poziv_na_broj_odobrenja/>
-    <iznos>200.0</iznos>
+    <datum_prijema>26-05-2018</datum_prijema>
+    <datum_valute>26-05-2018</datum_valute>
+    <model_zaduzenja>0</model_zaduzenja>
+    <poziv_na_broj_zaduzenja/>
+    <model_odobrenja>97</model_odobrenja>
+    <poziv_na_broj_odobrenja>1234567891011121314151617</poziv_na_broj_odobrenja>
+    <iznos>1000.0</iznos>
   </podaci_o_nalogu>
 </kliring_nalog>

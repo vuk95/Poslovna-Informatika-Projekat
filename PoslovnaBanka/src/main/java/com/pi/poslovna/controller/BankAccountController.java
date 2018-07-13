@@ -84,7 +84,7 @@ public class BankAccountController {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, con);
 			
 			
-			JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Milovic\\Documents\\proba5.pdf");
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Vucko\\Desktop\\proba5.pdf");
 			//promenite putanju za probu.
 		}catch (Exception ex) {
 				ex.printStackTrace();
@@ -110,7 +110,7 @@ public class BankAccountController {
 			JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResource("/jasper/StanjeRacuna2.jrxml").openStream());
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, con);
 			
-			JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Milovic\\Documents\\proba10.pdf");
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Vucko\\Desktop\\proba10.pdf");
 			//promenite putanju za probu.
 		}catch (Exception ex) {
 				ex.printStackTrace();
@@ -127,7 +127,7 @@ public class BankAccountController {
 			JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResource("/jasper/IzvodKlijenata.jrxml").openStream());
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,null, con);
 			
-			JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Milovic\\Documents\\proba8.pdf");
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Vucko\\Desktop\\proba8.pdf");
 			//promenite putanju za probu.
 		}catch (Exception ex) {
 				ex.printStackTrace();

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <nalog_za_uplatu>
+		<!--Prima Momcilo Vukotic-->
+		<!--Ova sluzi za demonstraciju exporta dnevnog stanja--> 
+        <podaci_o_uplatiocu>    
+            <naziv_uplatioca>FK Partizan</naziv_uplatioca>
+            <adresa>
+                <mesto>Beograd</mesto>
+                <ulica>Humska</ulica>
+                <broj>1</broj>
+                <postanski_broj>11000</postanski_broj>
+            </adresa>
+        </podaci_o_uplatiocu>    
+    
+        <svrha_uplate>Plata</svrha_uplate>
+        
+        <podaci_o_primaocu>
+            <naziv_primaoca>Momcilo Vukotic</naziv_primaoca>   
+            <adresa>
+                <mesto>Beograd</mesto>
+                <ulica>Trg Dositeja Obradovića</ulica>
+                <broj>116</broj>
+                <postanski_broj>11000</postanski_broj>
+            </adresa>
+        </podaci_o_primaocu>
+    
+        <podaci_o_uplati>
+            <sifra_placanja>189</sifra_placanja>
+            <valuta>RSD</valuta>
+            <iznos>30000.00</iznos>
+            <racun_primaoca>970092678341129525</racun_primaoca>
+            <model>97</model>
+            <poziv_na_broj>1234567891011121314151617</poziv_na_broj>
+        </podaci_o_uplati>
+    
+        <!--
+         Na uplatnici postoji jos:
+           -potpis uplatioca
+        -->
+        
+        <podaci_o_prijemu>
+            <mesto_prijema></mesto_prijema>
+            <datum_prijema>14-07-2018</datum_prijema>
+        </podaci_o_prijemu>
+        
+        <datum_izvrsenja>14-07-2018</datum_izvrsenja>
+     
+    </nalog_za_uplatu>

@@ -26,6 +26,11 @@ INSERT INTO pravna_lica (adresa, tip, email, fax, naziv, telefon, poreski_identi
 VALUES ("Humska 1",1,"partizan@gmail.com","0113690395","Fudbalski Klub Partizan","0113690664", "100268842", "Beograd", "Milos Vazura", 2);
 
 --RACUNI
+--INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("123456","2018-07-04",true,"0",2, 3);
+--INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("123457","2018-07-04",true,"0",2, 4);
+--INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("123459","2018-07-10",true,"0",1, 2);
+--INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,legal_entity_legal_id) values("123458","2018-07-09",true,"0",1, 1);
+--INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,legal_entity_legal_id) values("123460","2018-07-12",true,"0",2, 2);
 INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("970773841592005818","2018-07-04",true,"0",2, 3);
 INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("970092678341129525","2018-07-04",true,"0",2, 4);
 INSERT INTO racun(broj_racuna, datum_otvaranja,vazeci,raspoloziva_sredstva,bank_id,individual_individual_id) values("840862485100392367","2018-07-10",true,"0",1, 2);

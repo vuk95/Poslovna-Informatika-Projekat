@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <nalog_za_uplatu>
+ 		<!--Prima Jovan Jankovic-->
+	<!--Primer uplatnice Kliring-->
+        <podaci_o_uplatiocu>    
+            <naziv_uplatioca>FK Partizan</naziv_uplatioca>
+            <adresa>
+                <mesto>Beograd</mesto>
+                <ulica>Humska</ulica>
+                <broj>1</broj>
+                <postanski_broj>11000</postanski_broj>
+            </adresa>
+        </podaci_o_uplatiocu>    
+    
+        <svrha_uplate>Dug</svrha_uplate>
+        
+        <podaci_o_primaocu>
+            <naziv_primaoca>Jovan Jankovic</naziv_primaoca>   
+            <adresa>
+                <mesto>Beograd</mesto>
+                <ulica>Trg Dositeja Obradovića</ulica>
+                <broj>6</broj>
+                <postanski_broj>11000</postanski_broj>
+            </adresa>
+        </podaci_o_primaocu>
+    
+        <podaci_o_uplati>
+            <sifra_placanja>189</sifra_placanja>
+            <valuta>RSD</valuta>
+            <iznos>1000.00</iznos>
+            <racun_primaoca>840862485100392367</racun_primaoca>
+            <model>97</model>
+            <poziv_na_broj>1234567891011121314151617</poziv_na_broj>
+        </podaci_o_uplati>
+    
+        <!--
+         Na uplatnici postoji jos:
+           -potpis uplatioca
+        -->
+        
+        <podaci_o_prijemu>
+            <mesto_prijema></mesto_prijema>
+            <datum_prijema>25-05-2018</datum_prijema>
+        </podaci_o_prijemu>
+        
+        <datum_izvrsenja>25-05-2018</datum_izvrsenja>
+     
+    </nalog_za_uplatu>

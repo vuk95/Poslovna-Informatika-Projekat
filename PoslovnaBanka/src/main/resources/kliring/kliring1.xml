@@ -5,25 +5,25 @@
     <pib_banke>100001159</pib_banke>
   </banka_nalogodavca>
   <podaci_nalogodavca>
-    <naziv_nalogodavca>Sasa Ilic</naziv_nalogodavca>
-    <racun_duznika>123456</racun_duznika>
+    <naziv_nalogodavca>FK Partizan</naziv_nalogodavca>
+    <racun_duznika/>
   </podaci_nalogodavca>
-  <svrha_placanja>Transfer igraca u drugi klub</svrha_placanja>
+  <svrha_placanja>Dug</svrha_placanja>
   <banka_primaoca>
     <ime_banke>Erste Bank</ime_banke>
     <pib_banke>101626723</pib_banke>
   </banka_primaoca>
   <podaci_o_primaocu>
-    <primalac>Momcilo Vukotic</primalac>
-    <racun_poverioca>123459</racun_poverioca>
+    <primalac>Jovan Jankovic</primalac>
+    <racun_poverioca>840862485100392367</racun_poverioca>
   </podaci_o_primaocu>
   <podaci_o_nalogu>
-    <datum_prijema>04-06-2018</datum_prijema>
-    <datum_valute>05-06-2018</datum_valute>
-    <model_zaduzenja>97</model_zaduzenja>
-    <poziv_na_broj_zaduzenja>1234567891011121314151617</poziv_na_broj_zaduzenja>
-    <model_odobrenja>79</model_odobrenja>
-    <poziv_na_broj_odobrenja>1716151413121110987654321</poziv_na_broj_odobrenja>
+    <datum_prijema>25-05-2018</datum_prijema>
+    <datum_valute>25-05-2018</datum_valute>
+    <model_zaduzenja>0</model_zaduzenja>
+    <poziv_na_broj_zaduzenja/>
+    <model_odobrenja>97</model_odobrenja>
+    <poziv_na_broj_odobrenja>1234567891011121314151617</poziv_na_broj_odobrenja>
     <iznos>1000.0</iznos>
   </podaci_o_nalogu>
 </kliring_nalog>
